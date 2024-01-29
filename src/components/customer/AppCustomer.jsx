@@ -63,8 +63,8 @@ function AppCustomer() {
 
   const columns = [
     {
-      field: "CustomerID",
-      header: "CustomerID",
+      field: "CustomerCode",
+      header: "CustomerCode",
     },
     {
       field: "CustomerName",
@@ -79,10 +79,10 @@ function AppCustomer() {
       header: "Address2",
     },
     {
-      field: "FlagCancel",
-      header: "FlagCancel",
+      field: "Cancel",
+      header: "Cancel",
       body: (rowData) => {
-        return rowData.FlagCancel === "N" ? "ใช้งาน" : "ยกเลิก";
+        return rowData.FlagCancel === "0" ? "ใช้งาน" : "ยกเลิก";
       },
     },
   ];
@@ -192,7 +192,7 @@ function AppCustomer() {
     zuCheckUser(() => navigate("/"));
     zuResetData();
     const urlread =
-      "https://theothai.com/ttw_webreport/API/api/customer/read.php";
+      "https://theothai.com/tww37_webreport/API/api/Customer/read.php";
     const optionread = {
       method: "GET",
       headers: {
