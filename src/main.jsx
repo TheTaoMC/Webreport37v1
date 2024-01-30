@@ -9,7 +9,7 @@ import "primereact/resources/themes/bootstrap4-light-blue/theme.css"; // theme
 //import "primeflex/primeflex.css"; // css utility
 import "primeicons/primeicons.css";
 import "primereact/resources/primereact.css"; // core css
-import { BrowserRouter } from "react-router-dom";
+
 
 
 //import { RecoilDevTools } from "recoil-gear";
@@ -17,11 +17,9 @@ import { BrowserRouter } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <React.StrictMode>
-
       <PrimeReactProvider>
         <App />
       </PrimeReactProvider>
-
     </React.StrictMode>
   </>
 );

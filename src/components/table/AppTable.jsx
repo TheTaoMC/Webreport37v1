@@ -2,13 +2,13 @@ import { useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import header from "./HeaderBtn";
-
+import { v4 as uuidv4 } from "uuid";
 import { useStore } from "../../zustand/Store";
 
 function AppTable({ sortField, minWidth, onSearchFiltersChange }) {
   const { zu_Data, zu_SelectedList, zu_Columns, zu_Title } = useStore();
   const { zuSelectedList } = useStore();
-  const [selectedList, setSelectedList] = useState([]);
+  //const [selectedList, setSelectedList] = useState([]);
   const dt = useRef(null);
 
   const funheader = () => {
@@ -22,8 +22,6 @@ function AppTable({ sortField, minWidth, onSearchFiltersChange }) {
         </div>
         <div className="card">
           <DataTable
-            //tableClassName="text-red-500"
-            //className="text-red-500"
             sortField={sortField}
             sortOrder={1}
             value={zu_Data}
@@ -43,11 +41,9 @@ function AppTable({ sortField, minWidth, onSearchFiltersChange }) {
             selectionMode="single"
             selection={zu_SelectedList}
             onSelectionChange={(e) => {
-              //setSelectedList(e.value);
-              //selectedlistOut(e.value);
               zuSelectedList(e.value);
             }}
-            dataKey="DataID"
+            //dataKey={uuidv4()}
             metaKeySelection={true}
           >
             {zu_Columns.map((e, i) => (

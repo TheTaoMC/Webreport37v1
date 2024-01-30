@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { useStore } from "../../zustand/Store";
 
 function AppNavber({ title }) {
-  const { zuCheckUser,zuSetTitleFromAddEdit } = useStore();
+  const { zuCheckUser, zuSetTitleFromAddEdit } = useStore();
   const navigate = useNavigate();
   const menuData = useRef(null);
   const menuReport = useRef(null);
@@ -16,6 +16,13 @@ function AppNavber({ title }) {
       //icon: "pi pi-plus",
       command: () => {
         navigate("/Weighttype");
+      },
+    },
+    {
+      label: "Company",
+      //icon: "pi pi-fw pi-pencil",
+      command: () => {
+        navigate("/Company");
       },
     },
     {
@@ -50,6 +57,13 @@ function AppNavber({ title }) {
       label: "User",
       command: () => {
         navigate("/User");
+      },
+      //icon: "pi pi-times",
+    },
+    {
+      label: "MoistTH",
+      command: () => {
+        navigate("/MoistTH");
       },
       //icon: "pi pi-times",
     },

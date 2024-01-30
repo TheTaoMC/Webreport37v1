@@ -147,7 +147,7 @@ export const useStore = create((set, get) => ({
     zu_MasterDrivers: [],
     zu_MasterTransporters: [],
 
-    zu_Url_Base: "https://theothai.com/ttw_webreport/API/api/",
+    zu_Url_Base: "https://theothai.com/tww37_webreport/API/api/",
 
     zu_Url_Fetch: "",
     zu_Option_Fetch: {},
@@ -227,7 +227,7 @@ export const useStore = create((set, get) => ({
     zuFetch: async () => {
         try {
             //console.log('get() ', get().zu_Url_Fetch, get().zu_Option_Fetch);
-            const response = await fetch(get().zu_Url_Fetch, get().zu_Option_Fetch);
+            const response = await fetch(get().zu_Url_Base + get().zu_Url_Fetch, get().zu_Option_Fetch);
             if (!response.ok) {
                 set({ zu_Data: [] });
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -245,12 +245,12 @@ export const useStore = create((set, get) => ({
     },
     zuAddData: async () => {
         try {
-            console.log(get().zu_DataID, get().zu_ID);
-            if (get().zu_DataID === "" || get().zu_ID === "") {
+            console.log(get().zu_ID);
+            if (get().zu_ID === "") {
                 return false;
             }
 
-            const response = await fetch(get().zu_Url_Add, get().zu_Option_Add);
+            const response = await fetch(get().zu_Url_Base + get().zu_Url_Add, get().zu_Option_Add);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -265,37 +265,23 @@ export const useStore = create((set, get) => ({
     },
     zuEditData: async () => {
         try {
-            console.log('294 ', get().zu_Url_Edit, get().zu_Option_Edit);
-            console.log('295 ', get().zu_DataID, get().zu_ID);
-            console.log('get().zu_Title_Form_AddEdit ', get().zu_Title_Form_AddEdit);
-            console.log('get().zu_DataID ', get().zu_DataID);
-            /*       console.log(
-                                "76",
-                                get().zu_Url_Edit,
-                                get().zu_Option_Edit,
-                                get().zu_SelectedList
-                              );
-                              console.log(get().zu_SelectedList);
-                              console.log(typeof get().zu_SelectedList);
-                        
-                              console.log(get().zu_SelectedList.length); */
+            console.log('zuEditData ', get().zu_Url_Base + get().zu_Url_Edit, get().zu_Option_Edit);
+
             //ผิดก็ผิดตรงนี้หละ
-            if (get().zu_Title_Form_AddEdit !== 'edit' && get().zu_DataID === "") {
-                if (get().zu_DataID === "" || get().zu_ID === "") {
+            if (get().zu_Title_Form_AddEdit !== 'edit') {
+                if (get().zu_ID === "") {
                     console.log('309');
                     return false;
                 }
             }
-
-
 
             if (get().zu_SelectedList.length === 0) {
                 console.log("ไม่ได้เลือกข้อมูล กรุณาเลือกข้อมูลที่ต้องการแก้ไข");
                 return false;
             }
 
-            const response = await fetch(get().zu_Url_Edit, get().zu_Option_Edit);
-            console.log("response");
+            const response = await fetch(get().zu_Url_Base + get().zu_Url_Edit, get().zu_Option_Edit);
+            //console.log("response", response);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -323,7 +309,7 @@ export const useStore = create((set, get) => ({
                 return;
             }
 
-            const response = await fetch(get().zu_Url_Del, get().zu_Option_Del);
+            const response = await fetch(get().zu_Url_Base + get().zu_Url_Del, get().zu_Option_Del);
 
             if (!response.ok) {
                 // หากไม่ปกติ ให้ throw ข้อผิดพลาด
@@ -342,7 +328,7 @@ export const useStore = create((set, get) => ({
         const url = get().zu_Url_Base + 'userlogin/login.php'
         try {
             //console.log(get().zu_Url_Fetch, get().zu_Option_Fetch);
-            const response = await fetch('https://theothai.com/ttw_webreport/API/api/userlogin/login.php', {
+            const response = await fetch(get().zu_Url_Base + 'userlogin/login.php', {
                 method: 'POST',
                 body: JSON.stringify(/* {
                     "LogInName": username,
@@ -352,14 +338,12 @@ export const useStore = create((set, get) => ({
                 )
             });
             if (!response.ok) {
-                //set({ zu_Data: [] });
                 console.log(response.message);
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             if (response.ok) {
                 const data = await response.json();
-                //console.log('data ', data);
                 const logInName = data.LogInName;
                 const permission = data.Permission;
                 const authenticatedUser = { logInName, permission };

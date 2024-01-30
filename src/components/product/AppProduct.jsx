@@ -86,9 +86,7 @@ function AppProduct() {
     },
   ];
 
-  const handleBlur = (e) => {
-    setProductID(e.target.value);
-  };
+
 
   const addedit = (
     <div>

@@ -18,6 +18,8 @@ import AppLogin from "./components/login/AppLogin.jsx";
 import AppWeightreport from "./components/weightreport/AppWeightreport.jsx";
 import AppMain from "./components/main/AppMain.jsx";
 import AppUser from "./components/user/AppUser.jsx";
+import AppCompany from "./components/company/AppCompany.jsx";
+import AppMoistTH from "./components/moistTH/AppMoistTH.jsx";
 
 const router = createBrowserRouter(
   [
@@ -61,6 +63,14 @@ const router = createBrowserRouter(
     {
       path: "user",
       element: <AppUser />,
+    },
+    {
+      path: "company",
+      element: <AppCompany />,
+    },
+    {
+      path: "moistTH",
+      element: <AppMoistTH />,
     },
     {
       path: "login",

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import AppNavber from "../navbar/AppNavber";
 import AppTable from "../../components/table/AppTable";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import { Checkbox } from "primereact/checkbox";
 
 import { useStore } from "../../zustand/Store";
 
-function AppCustomer() {
+function AppCompany() {
   const {
     zu_Data,
     zu_SelectedList,
@@ -30,15 +29,15 @@ function AppCustomer() {
     zuCheckUser,
   } = useStore();
   const navigate = useNavigate();
-  const [customerCode, setCustomerCode] = useState("");
-  const [customerName, setCustomerName] = useState("");
+  const [companyCode, setCompanyCode] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [cancel, setCancel] = useState(false);
 
   const resetState = () => {
-    setCustomerCode("");
-    setCustomerName("");
+    setCompanyCode("");
+    setCompanyName("");
     setAddress1("");
     setAddress2("");
     setCancel(false);
@@ -46,8 +45,8 @@ function AppCustomer() {
 
   const setState = () => {
     //setDataID(zu_SelectedList.DataID);
-    setCustomerCode(zu_SelectedList.CustomerCode);
-    setCustomerName(zu_SelectedList.CustomerName);
+    setCompanyCode(zu_SelectedList.CompanyCode);
+    setCompanyName(zu_SelectedList.CompanyName);
     setAddress1(zu_SelectedList.Address1);
     setAddress2(zu_SelectedList.Address2);
     setCancel(zu_SelectedList.Cancel === 0 ? false : true);
@@ -60,11 +59,11 @@ function AppCustomer() {
 
   const columns = [
     {
-      field: "CustomerCode",
+      field: "CompanyCode",
       header: "รหัส",
     },
     {
-      field: "CustomerName",
+      field: "CompanyName",
       header: "ชื่อ",
     },
     {
@@ -92,9 +91,9 @@ function AppCustomer() {
           autoFocus
           disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          defaultValue={customerCode}
+          defaultValue={companyCode}
           onBlur={(e) => {
-            setCustomerCode(e.target.value);
+            setCompanyCode(e.target.value);
           }}
         />
       </div>
@@ -102,8 +101,8 @@ function AppCustomer() {
       <div>
         <InputText
           className="w-[100%]"
-          defaultValue={customerName}
-          onBlur={(e) => setCustomerName(e.target.value)}
+          defaultValue={companyName}
+          onBlur={(e) => setCompanyName(e.target.value)}
         />
       </div>
       <div>{columns[2].header}</div>
@@ -128,8 +127,8 @@ function AppCustomer() {
           <div className="flex gap-2 items-center">
             <div>สถานะ</div>
             <Checkbox
-              checked={cancel}
               onChange={(e) => setCancel(e.checked)}
+              checked={cancel}
             ></Checkbox>
             <label htmlFor="ingredient1" className="">
               ยกเลิก
@@ -144,49 +143,49 @@ function AppCustomer() {
   useEffect(() => {
     if (zu_Title_Form_AddEdit === "add") {
       console.log("Add...");
-      const urladd = "Customer/create.php";
+      const urladd = "Company/create.php";
       const optionadd = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
         body: JSON.stringify({
-          CustomerCode: customerCode,
-          CustomerName: customerName,
+          CompanyCode: companyCode,
+          CompanyName: companyName,
           Address1: address1,
           Address2: address2,
           Cancel: !cancel ? 0 : 1,
         }),
       };
-      zuSetDataID(customerCode);
+      zuSetDataID(companyCode);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);
     }
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
-      const urledit = "Customer/update.php";
+      const urledit = "Company/update.php";
       const optionedit = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
         body: JSON.stringify({
-          CustomerCode: customerCode,
-          CustomerName: customerName,
+          CompanyCode: companyCode,
+          CompanyName: companyName,
           Address1: address1,
           Address2: address2,
           Cancel: !cancel ? 0 : 1,
         }),
       };
-      zuSetDataID(customerCode);
+      zuSetDataID(companyCode);
       zuSetFromAddEdit(addedit);
       zuSetEdit(urledit, optionedit);
       console.log(urledit, optionedit);
     }
   }, [
-    customerCode,
-    customerName,
+    companyCode,
+    companyName,
     address1,
     address2,
     cancel,
@@ -197,7 +196,7 @@ function AppCustomer() {
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread = "Customer/read.php";
+    const urlread = "Company/read.php";
     const optionread = {
       method: "GET",
       headers: {
@@ -207,25 +206,25 @@ function AppCustomer() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("ลูกค้า");
+    zuSetTitle("บริษัท");
     zuFetch();
   }, []);
 
-
+  //console.log(zu_SelectedList);
   //setDel
   useEffect(() => {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel = "Customer/delete.php";
+    const urldel = "Company/delete.php";
     const optiondel = {
       method: "POST",
       headers: {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
       body: JSON.stringify({
-        CustomerCode: zu_SelectedList.CustomerCode
-          ? zu_SelectedList.CustomerCode
+        CompanyCode: zu_SelectedList.CompanyCode
+          ? zu_SelectedList.CompanyCode
           : "",
       }),
     };
@@ -234,9 +233,9 @@ function AppCustomer() {
   return (
     <div>
       <AppNavber />
-      <AppTable sortField={"CustomerName"} minWidth={"10rem"} />
+      <AppTable sortField={"CompanyName"} minWidth={"10rem"} />
     </div>
   );
 }
 
-export default AppCustomer;
+export default AppCompany;
