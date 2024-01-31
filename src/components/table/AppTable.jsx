@@ -36,7 +36,7 @@ function AppTable({ sortField, minWidth, onSearchFiltersChange }) {
             removableSort
             scrollable
             scrollHeight={window.innerHeight - 250}
-            tableStyle={{ minWidth: minWidth }}
+            tableStyle={{ minWidth: "50rem" }}
             //selection
             selectionMode="single"
             selection={zu_SelectedList}
@@ -54,6 +54,7 @@ function AppTable({ sortField, minWidth, onSearchFiltersChange }) {
                 body={e.body}
                 align={e.align}
                 sortable
+                style={{ minWidth: e.minWidth }}
                 pt={{
                   headerCell: { className: "bg-sky-400" },
                   headerTitle: { className: " text-black" },

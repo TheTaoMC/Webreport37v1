@@ -5,7 +5,7 @@ import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
-function AppCustomer() {
+function AppPacking() {
   const {
     zu_Data,
     zu_SelectedList,
@@ -30,42 +30,71 @@ function AppCustomer() {
   const navigate = useNavigate();
 
   const initialData = {
+    TransactionKey: null,
+    TicketCode: null,
+    TransactionTypeCode: null,
+    VahicleCode: null,
+    CompanyCode: null,
     CustomerCode: null,
-    CustomerName: null,
-    Address1: null,
-    Address2: null,
+    ProductCode: null,
+    InboundDate: null,
+    InboundTime: null,
+    InboundWeight: null,
+    OutboundDate: null,
+    OutboundTime: null,
+    OutboundWeight: null,
+    Moisture: null,
+    MoistureTableCode: null,
+    MoistureDeduct: null,
+    Price: null,
+    TradingUnit: null,
+    KgPerTradingUnit: null,
+    Quantity: null,
+    PackingCode: null,
+    SagWeight: null,
+    DeductWeight: null,
+    VariedDeductWeight1: null,
+    VariedDeductWeight2: null,
+    FixedDeductAmount1: null,
+    VariedDeductAmount1: null,
+    FixedDeductAmount2: null,
+    VariedDeductAmount2: null,
+    Remark1: null,
+    Remark2: null,
+    Remark3: null,
+    Remark4: null,
+    InboundUsername: null,
+    OutboundUsername: null,
     Cancel: false,
   };
 
-  const [customerData, setCustomerData] = useState(initialData);
+  //แก้
+  const [packingData, setPackingData] = useState(initialData);
 
   const handleInputChange = (event) => {
     console.log(event.target);
     const { name, value, checked } = event.target;
     console.log(name, value);
 
-    setCustomerData((prevData) => ({
+    setPackingData((prevData) => ({
       ...prevData,
       [name]: value === null ? checked : value,
     }));
   };
 
+  //แก้
   const columns = [
     {
-      field: "CustomerCode",
+      field: "PackingCode",
       header: "รหัส",
     },
     {
-      field: "CustomerName",
+      field: "PackingName",
       header: "ชื่อ",
     },
     {
-      field: "Address1",
-      header: "ที่อยู่1",
-    },
-    {
-      field: "Address2",
-      header: "ที่อยู่2",
+      field: "PackingWeight",
+      header: "น้ำหนัก",
     },
     {
       field: "Cancel",
@@ -76,20 +105,21 @@ function AppCustomer() {
     },
   ];
   const setState = () => {
-    setCustomerData({
+    setPackingData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
     });
   };
 
   const resetState = () => {
-    setCustomerData(initialData);
+    setPackingData(initialData);
   };
   //setState
   useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
   //resetState
   useEffect(() => resetState(), [zu_ToggleResetState]);
 
+  //แก้
   const addedit = (
     <div>
       <div>{columns[0].header}</div>
@@ -98,8 +128,8 @@ function AppCustomer() {
           autoFocus
           disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          name="CustomerCode"
-          defaultValue={customerData.CustomerCode}
+          name="PackingCode"
+          defaultValue={packingData.PackingCode}
           onBlur={handleInputChange}
         />
       </div>
@@ -107,8 +137,8 @@ function AppCustomer() {
       <div>
         <InputText
           className="w-[100%]"
-          name="CustomerName"
-          defaultValue={customerData.CustomerName}
+          name="PackingName"
+          defaultValue={packingData.PackingName}
           onBlur={handleInputChange}
         />
       </div>
@@ -116,17 +146,8 @@ function AppCustomer() {
       <div>
         <InputText
           className="w-[100%]"
-          name="Address1"
-          defaultValue={customerData.Address1}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>{columns[3].header}</div>
-      <div>
-        <InputText
-          className="w-[100%]"
-          name="Address2"
-          defaultValue={customerData.Address2}
+          name="PackingWeight"
+          defaultValue={packingData.PackingWeight}
           onBlur={handleInputChange}
         />
       </div>
@@ -136,7 +157,7 @@ function AppCustomer() {
             <div>สถานะ</div>
             <Checkbox
               name="Cancel"
-              checked={customerData.Cancel}
+              checked={packingData.Cancel}
               onChange={handleInputChange}
             />
             <label htmlFor="ingredient1" className="">
@@ -148,12 +169,12 @@ function AppCustomer() {
     </div>
   );
 
-  const urlapimain = "Customer";
+  const urlapimain = "Packing";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread = urlapimain+"/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
@@ -163,7 +184,7 @@ function AppCustomer() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("คู่ค้า");
+    zuSetTitle("การบรรจุ");
     zuFetch();
   }, []);
 
@@ -171,59 +192,59 @@ function AppCustomer() {
   useEffect(() => {
     if (zu_Title_Form_AddEdit === "add") {
       console.log("Add...");
-      const urladd = urlapimain+"/create.php";
+      const urladd = urlapimain + "/create.php";
       const optionadd = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(customerData),
+        body: JSON.stringify(packingData),
       };
-      //zuSetDataID(columnsData.CustomerCode);
+      zuSetDataID(packingData.TradingUnitCode);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);
     }
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
-      const urledit = urlapimain+"/update.php";
+      const urledit = urlapimain + "/update.php";
       const optionedit = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(customerData),
+        body: JSON.stringify(packingData),
       };
-      //zuSetDataID(columnsData.ProductCode);
+      zuSetDataID(packingData.ProductCode);
       zuSetFromAddEdit(addedit);
       zuSetEdit(urledit, optionedit);
       console.log(urledit, optionedit);
     }
-  }, [customerData, zu_Title_Form_AddEdit]);
+  }, [packingData, zu_Title_Form_AddEdit]);
 
   //Del
   useEffect(() => {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel = urlapimain+"/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
       headers: {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
       body: JSON.stringify({
-        CustomerCode: customerData.CustomerCode,
+        PackingCode: packingData.PackingCode,
       }),
     };
     zuSetDel(urldel, optiondel);
-  }, [customerData]);
+  }, [packingData]);
   return (
     <div>
       <AppNavber />
-      <AppTable sortField={"CustomerName"} minWidth={"10rem"} />
+      <AppTable sortField={"PackingName"} minWidth={"10rem"} />
     </div>
   );
 }
 
-export default AppCustomer;
+export default AppPacking;

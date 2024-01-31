@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useStore } from "../../zustand/Store";
 import AppNavber from "../navbar/AppNavber";
-import AppTable from "../../components/table/AppTable";
-import { useNavigate } from "react-router-dom";
+import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
-
-import { useStore } from "../../zustand/Store";
-
+import { useNavigate } from "react-router-dom";
 function AppCompany() {
   const {
     zu_Data,
@@ -15,6 +13,7 @@ function AppCompany() {
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
   } = useStore();
+
   const {
     zuFetch,
     zuSetFetch,
@@ -29,34 +28,30 @@ function AppCompany() {
     zuCheckUser,
   } = useStore();
   const navigate = useNavigate();
-  const [companyCode, setCompanyCode] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [cancel, setCancel] = useState(false);
 
-  const resetState = () => {
-    setCompanyCode("");
-    setCompanyName("");
-    setAddress1("");
-    setAddress2("");
-    setCancel(false);
+  const initialData = {
+    CompanyCode: null,
+    CompanyName: null,
+    Address1: null,
+    Address2: null,
+    Cancel: false,
   };
 
-  const setState = () => {
-    //setDataID(zu_SelectedList.DataID);
-    setCompanyCode(zu_SelectedList.CompanyCode);
-    setCompanyName(zu_SelectedList.CompanyName);
-    setAddress1(zu_SelectedList.Address1);
-    setAddress2(zu_SelectedList.Address2);
-    setCancel(zu_SelectedList.Cancel === 0 ? false : true);
+  //แก้
+  const [companyData, setCompanyData] = useState(initialData);
+
+  const handleInputChange = (event) => {
+    console.log(event.target);
+    const { name, value, checked } = event.target;
+    console.log(name, value);
+
+    setCompanyData((prevData) => ({
+      ...prevData,
+      [name]: value === null ? checked : value,
+    }));
   };
 
-  //setState
-  useEffect(() => setState(), [zu_ToggleEdit]);
-  //resetState
-  useEffect(() => resetState(), [zu_ToggleResetState]);
-
+  //แก้
   const columns = [
     {
       field: "CompanyCode",
@@ -68,11 +63,11 @@ function AppCompany() {
     },
     {
       field: "Address1",
-      header: "ที่อยู่ 1",
+      header: "ที่อยู่1",
     },
     {
       field: "Address2",
-      header: "ที่อยู่ 2",
+      header: "ที่อยู่2",
     },
     {
       field: "Cancel",
@@ -82,7 +77,22 @@ function AppCompany() {
       },
     },
   ];
+  const setState = () => {
+    setCompanyData({
+      ...zu_SelectedList,
+      Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+    });
+  };
 
+  const resetState = () => {
+    setCompanyData(initialData);
+  };
+  //setState
+  useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
+  //resetState
+  useEffect(() => resetState(), [zu_ToggleResetState]);
+
+  //แก้
   const addedit = (
     <div>
       <div>{columns[0].header}</div>
@@ -91,45 +101,47 @@ function AppCompany() {
           autoFocus
           disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          defaultValue={companyCode}
-          onBlur={(e) => {
-            setCompanyCode(e.target.value);
-          }}
+          name="CompanyCode"
+          defaultValue={companyData.CompanyCode}
+          onBlur={handleInputChange}
         />
       </div>
       <div>{columns[1].header}</div>
       <div>
         <InputText
           className="w-[100%]"
-          defaultValue={companyName}
-          onBlur={(e) => setCompanyName(e.target.value)}
+          name="CompanyName"
+          defaultValue={companyData.CompanyName}
+          onBlur={handleInputChange}
         />
       </div>
       <div>{columns[2].header}</div>
       <div>
         <InputText
           className="w-[100%]"
-          defaultValue={address1}
-          onBlur={(e) => setAddress1(e.target.value)}
+          name="Address1"
+          defaultValue={companyData.Address1}
+          onBlur={handleInputChange}
         />
       </div>
       <div>{columns[3].header}</div>
       <div>
         <InputText
           className="w-[100%]"
-          defaultValue={address2}
-          onBlur={(e) => setAddress2(e.target.value)}
+          name="Address2"
+          defaultValue={companyData.Address2}
+          onBlur={handleInputChange}
         />
       </div>
-
       <div>
         <div className="flex gap-2  justify-between">
           <div className="flex gap-2 items-center">
             <div>สถานะ</div>
             <Checkbox
-              onChange={(e) => setCancel(e.checked)}
-              checked={cancel}
-            ></Checkbox>
+              name="Cancel"
+              checked={companyData.Cancel}
+              onChange={handleInputChange}
+            />
             <label htmlFor="ingredient1" className="">
               ยกเลิก
             </label>
@@ -139,64 +151,12 @@ function AppCompany() {
     </div>
   );
 
-  //setFromAddEdit //AddData
-  useEffect(() => {
-    if (zu_Title_Form_AddEdit === "add") {
-      console.log("Add...");
-      const urladd = "Company/create.php";
-      const optionadd = {
-        method: "POST",
-        headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
-        },
-        body: JSON.stringify({
-          CompanyCode: companyCode,
-          CompanyName: companyName,
-          Address1: address1,
-          Address2: address2,
-          Cancel: !cancel ? 0 : 1,
-        }),
-      };
-      zuSetDataID(companyCode);
-      zuSetFromAddEdit(addedit);
-      zuSetAdd(urladd, optionadd);
-      console.log(urladd, optionadd);
-    }
-    if (zu_Title_Form_AddEdit === "edit") {
-      console.log("Edit...");
-      const urledit = "Company/update.php";
-      const optionedit = {
-        method: "POST",
-        headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
-        },
-        body: JSON.stringify({
-          CompanyCode: companyCode,
-          CompanyName: companyName,
-          Address1: address1,
-          Address2: address2,
-          Cancel: !cancel ? 0 : 1,
-        }),
-      };
-      zuSetDataID(companyCode);
-      zuSetFromAddEdit(addedit);
-      zuSetEdit(urledit, optionedit);
-      console.log(urledit, optionedit);
-    }
-  }, [
-    companyCode,
-    companyName,
-    address1,
-    address2,
-    cancel,
-    zu_Title_Form_AddEdit,
-  ]);
-
+  const urlapimain = "Company";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread = "Company/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
@@ -210,26 +170,57 @@ function AppCompany() {
     zuFetch();
   }, []);
 
-  //console.log(zu_SelectedList);
-  //setDel
+  //Add or Edit
+  useEffect(() => {
+    if (zu_Title_Form_AddEdit === "add") {
+      console.log("Add...");
+      const urladd = urlapimain + "/create.php";
+      const optionadd = {
+        method: "POST",
+        headers: {
+          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        },
+        body: JSON.stringify(companyData),
+      };
+      zuSetDataID(companyData.CompanyCode);
+      zuSetFromAddEdit(addedit);
+      zuSetAdd(urladd, optionadd);
+      console.log(urladd, optionadd);
+    }
+    if (zu_Title_Form_AddEdit === "edit") {
+      console.log("Edit...");
+      const urledit = urlapimain + "/update.php";
+      const optionedit = {
+        method: "POST",
+        headers: {
+          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        },
+        body: JSON.stringify(companyData),
+      };
+      zuSetDataID(companyData.CompanyCode);
+      zuSetFromAddEdit(addedit);
+      zuSetEdit(urledit, optionedit);
+      console.log(urledit, optionedit);
+    }
+  }, [companyData, zu_Title_Form_AddEdit]);
+
+  //Del
   useEffect(() => {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel = "Company/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
       headers: {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
       body: JSON.stringify({
-        CompanyCode: zu_SelectedList.CompanyCode
-          ? zu_SelectedList.CompanyCode
-          : "",
+        CompanyCode: companyData.CompanyCode,
       }),
     };
     zuSetDel(urldel, optiondel);
-  }, [zu_SelectedList]);
+  }, [companyData]);
   return (
     <div>
       <AppNavber />

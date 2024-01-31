@@ -13,6 +13,7 @@ function AppTranType() {
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
   } = useStore();
+
   const {
     zuFetch,
     zuSetFetch,
@@ -27,24 +28,26 @@ function AppTranType() {
     zuCheckUser,
   } = useStore();
   const navigate = useNavigate();
-  const [tranTypeData, setTranTypeData] = useState({
+
+  const initialData = {
     TransactionTypeCode: null,
     TransactionTypeName: null,
     WeighingType: null,
     InboundTicketFormat: null,
-    InboundAferOutTicketFormat: null,
+    InboundAfterOutTicketFormat: null,
     OutboundTicketFormat: null,
-    CalAmountFrom: null,
-    CalStockFrom: null,
-    StockAction: null,
     StockFactor: null,
-    LastTickerCode: null,
-    StatonCode: null,
+    LastTicketCode: null,
     Cancel: false,
-  });
+  };
+
+  //แก้
+  const [tranTypeData, setTranTypeData] = useState(initialData);
 
   const handleInputChange = (event) => {
+    console.log(event.target);
     const { name, value, checked } = event.target;
+    console.log(name, value);
 
     setTranTypeData((prevData) => ({
       ...prevData,
@@ -52,6 +55,7 @@ function AppTranType() {
     }));
   };
 
+  //แก้
   const columns = [
     {
       field: "TransactionTypeCode",
@@ -60,10 +64,37 @@ function AppTranType() {
     {
       field: "TransactionTypeName",
       header: "ชื่อ",
+      minWidth: "10rem",
     },
     {
       field: "WeighingType",
-      header: "WeighingType",
+      header: "วิธีการชั่ง",
+      minWidth: "15rem",
+    },
+    {
+      field: "InboundTicketFormat",
+      header: "File บัตรชั่งเข้า",
+      minWidth: "15rem",
+    },
+    {
+      field: "InboundAfterOutTicketFormat",
+      header: "File บัตรชั่งเข้าหลังชั่งออกแล้ว",
+      minWidth: "16rem",
+    },
+    {
+      field: "OutboundTicketFormat",
+      header: "File บัตรชั่งออก",
+      minWidth: "15rem",
+    },
+    {
+      field: "StockFactor",
+      header: "สัมประสิทธิ Stock",
+      minWidth: "15rem",
+    },
+    {
+      field: "LastTicketCode",
+      header: "เลขที่ชั่งล่าสุด",
+      minWidth: "15rem",
     },
     {
       field: "Cancel",
@@ -73,7 +104,6 @@ function AppTranType() {
       },
     },
   ];
-
   const setState = () => {
     setTranTypeData({
       ...zu_SelectedList,
@@ -82,27 +112,14 @@ function AppTranType() {
   };
 
   const resetState = () => {
-    setTranTypeData({
-      TransactionTypeCode: null,
-      TransactionTypeName: null,
-      WeighingType: null,
-      InboundTicketFormat: null,
-      InboundAferOutTicketFormat: null,
-      OutboundTicketFormat: null,
-      CalAmountFrom: null,
-      CalStockFrom: null,
-      StockAction: null,
-      StockFactor: null,
-      LastTickerCode: null,
-      StatonCode: null,
-      Cancel: false,
-    });
+    setTranTypeData(initialData);
   };
   //setState
   useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
   //resetState
   useEffect(() => resetState(), [zu_ToggleResetState]);
 
+  //แก้
   const addedit = (
     <div>
       <div>{columns[0].header}</div>
@@ -111,8 +128,8 @@ function AppTranType() {
           autoFocus
           disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          name="TableCode"
-          defaultValue={moistTHData.TableCode}
+          name="TransactionTypeCode"
+          defaultValue={tranTypeData.TransactionTypeCode}
           onBlur={handleInputChange}
         />
       </div>
@@ -120,8 +137,62 @@ function AppTranType() {
       <div>
         <InputText
           className="w-[100%]"
-          name="StdMoisture"
-          defaultValue={moistTHData.StdMoisture}
+          name="TransactionTypeName"
+          defaultValue={tranTypeData.TransactionTypeName}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[2].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="WeighingType"
+          defaultValue={tranTypeData.WeighingType}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[3].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="InboundTicketFormat"
+          defaultValue={tranTypeData.InboundTicketFormat}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[4].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="InboundAfterOutTicketFormat"
+          defaultValue={tranTypeData.InboundAfterOutTicketFormat}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[5].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="OutboundTicketFormat"
+          defaultValue={tranTypeData.OutboundTicketFormat}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[6].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="StockFactor"
+          defaultValue={tranTypeData.StockFactor}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[7].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="LastTicketCode"
+          defaultValue={tranTypeData.LastTicketCode}
           onBlur={handleInputChange}
         />
       </div>
@@ -131,7 +202,7 @@ function AppTranType() {
             <div>สถานะ</div>
             <Checkbox
               name="Cancel"
-              checked={moistTHData.Cancel}
+              checked={tranTypeData.Cancel}
               onChange={handleInputChange}
             />
             <label htmlFor="ingredient1" className="">
@@ -143,11 +214,12 @@ function AppTranType() {
     </div>
   );
 
+  const urlapimain = "TranType";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread = "MoistTH/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
@@ -157,7 +229,7 @@ function AppTranType() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("ความชื้น");
+    zuSetTitle("ประเภทชั่ง");
     zuFetch();
   }, []);
 
@@ -165,57 +237,57 @@ function AppTranType() {
   useEffect(() => {
     if (zu_Title_Form_AddEdit === "add") {
       console.log("Add...");
-      const urladd = "MoistTH/create.php";
+      const urladd = urlapimain + "/create.php";
       const optionadd = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(moistTHData),
+        body: JSON.stringify(tranTypeData),
       };
-      zuSetDataID(moistTHData.TableCode);
+      zuSetDataID(tranTypeData.TransactionTypeCode);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);
     }
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
-      const urledit = "MoistTH/update.php";
+      const urledit = urlapimain + "/update.php";
       const optionedit = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(moistTHData),
+        body: JSON.stringify(tranTypeData),
       };
-      zuSetDataID(moistTHData.TableCode);
+      zuSetDataID(tranTypeData.TransactionTypeCode);
       zuSetFromAddEdit(addedit);
       zuSetEdit(urledit, optionedit);
       console.log(urledit, optionedit);
     }
-  }, [moistTHData, zu_Title_Form_AddEdit]);
+  }, [tranTypeData, zu_Title_Form_AddEdit]);
 
   //Del
   useEffect(() => {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel = "MoistTH/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
       headers: {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
       body: JSON.stringify({
-        TableCode: moistTHData.TableCode,
+        TransactionTypeCode: tranTypeData.TransactionTypeCode,
       }),
     };
     zuSetDel(urldel, optiondel);
-  }, [moistTHData]);
+  }, [tranTypeData]);
   return (
     <div>
       <AppNavber />
-      <AppTable sortField={"StdMoisture"} minWidth={"10rem"} />
+      <AppTable sortField={"PackingName"} minWidth={"50rem"} />
     </div>
   );
 }

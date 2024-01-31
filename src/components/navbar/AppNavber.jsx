@@ -40,13 +40,6 @@ function AppNavber({ title }) {
       },
     },
     {
-      label: "Driver",
-      //icon: "pi pi-times",
-      command: () => {
-        navigate("/Driver");
-      },
-    },
-    {
       label: "Transporter",
       command: () => {
         navigate("/Transporter");
@@ -66,6 +59,24 @@ function AppNavber({ title }) {
         navigate("/MoistTH");
       },
       //icon: "pi pi-times",
+    },
+    {
+      label: "TrdUnt",
+      command: () => {
+        navigate("/TrdUnt");
+      },
+    },
+    {
+      label: "Packing",
+      command: () => {
+        navigate("/Packing");
+      },
+    },
+    {
+      label: "TranType",
+      command: () => {
+        navigate("/TranType");
+      },
     },
     {
       label: "Weight",

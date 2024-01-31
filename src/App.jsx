@@ -20,6 +20,9 @@ import AppMain from "./components/main/AppMain.jsx";
 import AppUser from "./components/user/AppUser.jsx";
 import AppCompany from "./components/company/AppCompany.jsx";
 import AppMoistTH from "./components/moistTH/AppMoistTH.jsx";
+import AppTrdUnt from "./components/trdUnt/AppTrdUnt.jsx";
+import AppPacking from "./components/packing/AppPacking.jsx";
+import AppTranType from "./components/tranType/AppTranType.jsx";
 
 const router = createBrowserRouter(
   [
@@ -71,6 +74,18 @@ const router = createBrowserRouter(
     {
       path: "moistTH",
       element: <AppMoistTH />,
+    },
+    {
+      path: "trdUnt",
+      element: <AppTrdUnt />,
+    },
+    {
+      path: "packing",
+      element: <AppPacking />,
+    },
+    {
+      path: "tranType",
+      element: <AppTranType />,
     },
     {
       path: "login",

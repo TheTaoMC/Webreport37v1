@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import AppNavber from "../navbar/AppNavber";
-import AppTable from "../../components/table/AppTable";
-import { useNavigate } from "react-router-dom";
-import { InputText } from "primereact/inputtext";
-import { InputNumber } from "primereact/inputnumber";
-import { Checkbox } from "primereact/checkbox";
-
 import { useStore } from "../../zustand/Store";
-
+import AppNavber from "../navbar/AppNavber";
+import AppTable from "../table/AppTable";
+import { InputText } from "primereact/inputtext";
+import { Checkbox } from "primereact/checkbox";
+import { useNavigate } from "react-router-dom";
 function AppProduct() {
   const {
     zu_Data,
@@ -17,6 +13,7 @@ function AppProduct() {
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
   } = useStore();
+
   const {
     zuFetch,
     zuSetFetch,
@@ -31,108 +28,145 @@ function AppProduct() {
     zuCheckUser,
   } = useStore();
   const navigate = useNavigate();
-  const [dataID, setDataID] = useState("");
-  const [productID, setProductID] = useState("");
-  const [productName, setProductName] = useState("");
-  const [price, setPrice] = useState(0.0);
-  const [flagCancel, setFlagCancel] = useState(false);
 
-  const resetState = () => {
-    setDataID("");
-    setProductID("");
-    setProductName("");
-    setPrice(0.0);
-    setFlagCancel(false);
+  const initialData = {
+    ProductCode: null,
+    ProductName: null,
+    Price: null,
+    TradingUnit: null,
+    PackingCode: null,
+    MoistureTableCode: null,
+    Cancel: false,
   };
 
-  const setState = () => {
-    setDataID(zu_SelectedList.DataID);
-    setProductID(zu_SelectedList.ProductID);
-    setProductName(zu_SelectedList.ProductName);
-    setPrice(zu_SelectedList.Price);
-    setFlagCancel(zu_SelectedList.FlagCancel === "Y" ? true : false);
+  const [productData, setProductData] = useState(initialData);
+
+  const handleInputChange = (event) => {
+    console.log(event.target);
+    const { name, value, checked } = event.target;
+    console.log(name, value);
+
+    setProductData((prevData) => ({
+      ...prevData,
+      [name]: value === null ? checked : value,
+    }));
   };
-  //setState
-  useEffect(() => setState(), [zu_ToggleEdit]);
-  //resetState
-  useEffect(() => resetState(), [zu_ToggleResetState]);
 
   const columns = [
     {
-      field: "ProductID",
-      header: "ProductID",
+      field: "ProductCode",
+      header: "รหัส",
     },
     {
       field: "ProductName",
-      header: "ProductName",
+      header: "ชื่อ",
     },
     {
       field: "Price",
-      header: "Price",
-      align: "right",
-      alignHeader: "right",
-      body: (rowData) => {
-        return rowData.Price.toFixed(2);
-      },
+      header: "ราคา",
     },
     {
-      field: "FlagCancel",
-      header: "FlagCancel",
-      align: "center",
-      alignHeader: "center",
+      field: "TradingUnit",
+      header: "หน่วยซื้อขาย",
+    },
+    {
+      field: "PackingCode",
+      header: "การบรรจุ",
+    },
+    {
+      field: "MoistureTableCode",
+      header: "ตารางความชื้น",
+    },
+    {
+      field: "Cancel",
+      header: "สถานะ",
       body: (rowData) => {
-        return rowData.FlagCancel === "N" ? "ใช้งาน" : "ยกเลิก";
+        return rowData.Cancel === 0 ? "ใช้งาน" : "ยกเลิก";
       },
     },
   ];
-
-
+  const setState = () => {
+    setProductData({
+      ...zu_SelectedList,
+      Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+    });
+  };
+  console.log(productData);
+  const resetState = () => {
+    setProductData(initialData);
+  };
+  //setState
+  useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
+  //resetState
+  useEffect(() => resetState(), [zu_ToggleResetState]);
 
   const addedit = (
     <div>
-      <div>ProductID</div>
+      <div>{columns[0].header}</div>
       <div>
         <InputText
           autoFocus
+          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          defaultValue={productID}
-          //onBlur={handleBlur}
-          //onChange={handleBlur}
-          onBlur={(e) => {
-            setProductID(e.target.value);
-          }}
+          name="ProductCode"
+          defaultValue={productData.ProductCode}
+          onBlur={handleInputChange}
         />
       </div>
-      <div>ProductName</div>
+      <div>{columns[1].header}</div>
       <div>
         <InputText
           className="w-[100%]"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
+          name="ProductName"
+          defaultValue={productData.ProductName}
+          onBlur={handleInputChange}
         />
       </div>
-      <div>Price</div>
+      <div>{columns[2].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="Price"
+          defaultValue={productData.Price}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[3].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="TradingUnit"
+          defaultValue={productData.TradingUnit}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[4].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="PackingCode"
+          defaultValue={productData.PackingCode}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[5].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="MoistureTableCode"
+          defaultValue={productData.MoistureTableCode}
+          onBlur={handleInputChange}
+        />
+      </div>
       <div>
         <div className="flex gap-2  justify-between">
-          <div className="flex gap-1 items-center">
-            <InputNumber
-              size={5}
-              inputClassName="text-right"
-              inputId="minmaxfraction"
-              value={price}
-              onValueChange={(e) => setPrice(e.value)}
-              minFractionDigits={2}
-              maxFractionDigits={7}
-            />
-
-            <label htmlFor="ingredient1">บาท</label>
-          </div>
-
-          <div className="flex gap-1 items-center">
+          <div className="flex gap-2 items-center">
+            <div>สถานะ</div>
             <Checkbox
-              onChange={(e) => setFlagCancel(e.checked)}
-              checked={flagCancel}
-            ></Checkbox>
+              name="Cancel"
+              checked={productData.Cancel}
+              onChange={handleInputChange}
+            />
             <label htmlFor="ingredient1" className="">
               ยกเลิก
             </label>
@@ -142,82 +176,76 @@ function AppProduct() {
     </div>
   );
 
-  //setFromAddEdit //AddData
-  useEffect(() => {
-    if (zu_Title_Form_AddEdit === "add") {
-      /* if (zu_SelectedList.length === 0) { */
-      console.log("Add...");
-      const uuidDataID = uuidv4();
-      const urladd =
-        "https://theothai.com/ttw_webreport/API/api/product/create.php";
-      const optionadd = {
-        method: "POST",
-        body: JSON.stringify({
-          DataID: productID === "" ? "" : uuidDataID,
-          ProductID: productID,
-          ProductName: productName,
-          Price: price,
-          FlagCancel: flagCancel ? "Y" : "N",
-        }),
-      };
-      zuSetDataID(uuidDataID, productID);
-      zuSetFromAddEdit(addedit);
-      zuSetAdd(urladd, optionadd);
-      console.log(urladd, optionadd);
-    } else {
-      console.log("Edit...");
-      const urledit =
-        "https://theothai.com/ttw_webreport/API/api/product/update.php";
-      const optionedit = {
-        method: "POST",
-        body: JSON.stringify({
-          DataID: dataID,
-          ProductID: productID,
-          ProductName: productName,
-          Price: price,
-          FlagCancel: flagCancel ? "Y" : "N",
-        }),
-      };
-      zuSetDataID(dataID, productID);
-      zuSetFromAddEdit(addedit);
-      zuSetEdit(urledit, optionedit);
-      console.log(urledit, optionedit);
-    }
-  }, [productID, productName, price, flagCancel]);
-
+  const urlapimain = "Product";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread =
-      "https://theothai.com/tww37_webreport/API/api/Customer/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
     };
+    zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("สินค้า");
+    zuSetTitle("ความชื้น");
     zuFetch();
   }, []);
 
-  //setDel
+  //Add or Edit
+  useEffect(() => {
+    if (zu_Title_Form_AddEdit === "add") {
+      console.log("Add...");
+      const urladd = urlapimain + "/create.php";
+      const optionadd = {
+        method: "POST",
+        headers: {
+          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        },
+        body: JSON.stringify(productData),
+      };
+      zuSetDataID(productData.TradingUnitCode);
+      zuSetFromAddEdit(addedit);
+      zuSetAdd(urladd, optionadd);
+      console.log(urladd, optionadd);
+    }
+    if (zu_Title_Form_AddEdit === "edit") {
+      console.log("Edit...");
+      const urledit = urlapimain + "/update.php";
+      const optionedit = {
+        method: "POST",
+        headers: {
+          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        },
+        body: JSON.stringify(productData),
+      };
+      zuSetDataID(productData.ProductCode);
+      zuSetFromAddEdit(addedit);
+      zuSetEdit(urledit, optionedit);
+      console.log(urledit, optionedit);
+    }
+  }, [productData, zu_Title_Form_AddEdit]);
+
+  //Del
   useEffect(() => {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel =
-      "https://theothai.com/ttw_webreport/API/api/product/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
+      headers: {
+        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+      },
       body: JSON.stringify({
-        DataID: zu_SelectedList.DataID ? zu_SelectedList.DataID : "",
+        ProductCode: productData.ProductCode,
       }),
     };
     zuSetDel(urldel, optiondel);
-  }, [zu_SelectedList]);
+  }, [productData]);
   return (
     <div>
       <AppNavber />

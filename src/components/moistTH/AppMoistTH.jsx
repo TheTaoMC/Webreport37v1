@@ -27,11 +27,12 @@ function AppMoistTH() {
     zuCheckUser,
   } = useStore();
   const navigate = useNavigate();
-  const [moistTHData, setMoistTHData] = useState({
+
+  const initialData = {
     TableCode: null,
-    StdMoisture: null,
     Cancel: false,
-  });
+  };
+  const [moistTHData, setMoistTHData] = useState(initialData);
 
   const handleInputChange = (event) => {
     console.log(event.target);
@@ -50,10 +51,6 @@ function AppMoistTH() {
       header: "รหัส",
     },
     {
-      field: "StdMoisture",
-      header: "ชื่อ",
-    },
-    {
       field: "Cancel",
       header: "สถานะ",
       body: (rowData) => {
@@ -69,11 +66,7 @@ function AppMoistTH() {
   };
   console.log(moistTHData);
   const resetState = () => {
-    setMoistTHData({
-      TableCode: null,
-      StdMoisture: null,
-      Cancel: false,
-    });
+    setMoistTHData(initialData);
   };
   //setState
   useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
@@ -90,15 +83,6 @@ function AppMoistTH() {
           className="w-[100%]"
           name="TableCode"
           defaultValue={moistTHData.TableCode}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>{columns[1].header}</div>
-      <div>
-        <InputText
-          className="w-[100%]"
-          name="StdMoisture"
-          defaultValue={moistTHData.StdMoisture}
           onBlur={handleInputChange}
         />
       </div>

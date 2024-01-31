@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useStore } from "../../zustand/Store";
 import AppNavber from "../navbar/AppNavber";
-import AppTable from "../../components/table/AppTable";
-import { useNavigate } from "react-router-dom";
+import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
-
-import { useStore } from "../../zustand/Store";
-import { Dropdown } from "primereact/dropdown";
-
+import { useNavigate } from "react-router-dom";
 function AppUser() {
   const {
     zu_Data,
@@ -16,8 +12,8 @@ function AppUser() {
     zu_ToggleResetState,
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
-    zu_Option_Edit,
   } = useStore();
+
   const {
     zuFetch,
     zuSetFetch,
@@ -32,118 +28,119 @@ function AppUser() {
     zuCheckUser,
   } = useStore();
   const navigate = useNavigate();
-  const [dataID, setDataID] = useState("");
-  const [logInName, setLogInName] = useState("");
-  const [logInPassword, setLogInPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [permission, setPermission] = useState(false);
-  const [flagCancel, setFlagCancel] = useState(false);
 
-  //console.log(zu_Option_Edit);
-  //console.log(zu_Data);
-  const resetState = () => {
-    setDataID("");
-    setLogInName("");
-    setLogInPassword("");
-    setFullName("");
-    setPermission(false);
-    setFlagCancel(false);
+  const initialData = {
+    Username: null,
+    FullName: null,
+    Pwd: null,
+    CanEditUser: "admin",
+    Cancel: false,
   };
 
-  const setState = () => {
-    setDataID(zu_SelectedList.DataID);
-    setLogInName(zu_SelectedList.LogInName);
-    setLogInPassword(zu_SelectedList.LogInPassword);
-    setFullName(zu_SelectedList.FullName);
-    setPermission(zu_SelectedList.Permission === "Y" ? true : false);
-    setFlagCancel(zu_SelectedList.FlagCancel === "Y" ? true : false);
+  //แก้
+  const [usersData, setUsersData] = useState(initialData);
+
+  const handleInputChange = (event) => {
+    console.log(event.target);
+    const { name, value, checked } = event.target;
+    console.log(name, value);
+
+    setUsersData((prevData) => ({
+      ...prevData,
+      [name]: value === null ? checked : value,
+    }));
   };
 
-  //setState
-  useEffect(() => setState(), [zu_ToggleEdit]);
-  //resetState
-  useEffect(() => resetState(), [zu_ToggleResetState]);
-
+  //แก้
   const columns = [
     {
-      field: "LogInName",
-      header: "LogInName",
+      field: "Username",
+      header: "ชื่อ",
     },
     {
       field: "FullName",
-      header: "FullName",
+      header: "ชื่อเต็ม",
     },
     {
-      field: "FlagCancel",
-      header: "FlagCancel",
+      field: "CanEditUser",
+      header: "ระดับ",
       body: (rowData) => {
-        return rowData.FlagCancel === "N" ? "ใช้งาน" : "ยกเลิก";
+        return rowData.CanEditUser === 0 ? "User" : "Admin";
       },
     },
     {
-      field: "Permission",
-      header: "Permission",
+      field: "Cancel",
+      header: "สถานะ",
       body: (rowData) => {
-        return rowData.Permission === "Y" ? "Admin" : "User";
+        return rowData.Cancel === 0 ? "ใช้งาน" : "ยกเลิก";
       },
     },
   ];
+  const setState = () => {
+    setUsersData({
+      ...zu_SelectedList,
+      Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+    });
+  };
 
+  const resetState = () => {
+    setUsersData(initialData);
+  };
+  //setState
+  useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
+  //resetState
+  useEffect(() => resetState(), [zu_ToggleResetState]);
+
+  //แก้
   const addedit = (
     <div>
-      <div>logInName</div>
+      <div>{columns[0].header}</div>
       <div>
         <InputText
           autoFocus
+          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          value={logInName}
-          onChange={(e) => {
-            setLogInName(e.target.value);
-          }}
+          name="Username"
+          defaultValue={usersData.Username}
+          onBlur={handleInputChange}
         />
       </div>
-      <div>logInPassword</div>
+      <div>{columns[1].header}</div>
       <div>
         <InputText
           className="w-[100%]"
-          value={logInPassword}
-          onChange={(e) => setLogInPassword(e.target.value)}
+          name="FullName"
+          defaultValue={usersData.FullName}
+          onBlur={handleInputChange}
         />
       </div>
-      <div>fullName</div>
+      <div>รหัสผ่าน</div>
       <div>
         <InputText
           className="w-[100%]"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          name="Pwd"
+          defaultValue={usersData.Pwd}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>{columns[2].header}</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="CanEditUser"
+          defaultValue={usersData.CanEditUser}
+          onBlur={handleInputChange}
         />
       </div>
       <div>
-        <div className="">
-          <div>สถานะผู้ใช้งาน</div>
-          <div className="">
-            <Dropdown
-              className="min-w-[30%]"
-              value={permission}
-              onChange={(e) => setPermission(e.value)}
-              options={[
-                { show: "Admin", value: true },
-                { show: "User", value: false },
-              ].map((data) => ({
-                value: data.value,
-                label: data.show,
-              }))}
-              placeholder="Select a Country"
-            />
-          </div>
-        </div>
         <div className="flex gap-2  justify-between">
           <div className="flex gap-2 items-center">
             <div>สถานะ</div>
             <Checkbox
-              onChange={(e) => setFlagCancel(e.checked)}
-              checked={flagCancel}
-            ></Checkbox>
+              name="Cancel"
+              checked={usersData.Cancel}
+              onChange={handleInputChange}
+            />
             <label htmlFor="ingredient1" className="">
               ยกเลิก
             </label>
@@ -153,88 +150,80 @@ function AppUser() {
     </div>
   );
 
-  //setFromAddEdit //AddData
-  useEffect(() => {
-    if (zu_Title_Form_AddEdit === "add") {
-      /* if (zu_SelectedList.length === 0) { */
-      console.log("Add...");
-      const uuidDataID = uuidv4();
-      const urladd =
-        "https://theothai.com/ttw_webreport/API/api/userlogin/create.php";
-      const optionadd = {
-        method: "POST",
-        body: JSON.stringify({
-          DataID: logInName === "" ? "" : uuidDataID,
-          LogInName: logInName,
-          LogInPassword: logInPassword,
-          FullName: fullName,
-          Permission: permission ? "Y" : "N",
-          FlagCancel: flagCancel ? "Y" : "N",
-        }),
-      };
-      zuSetDataID(uuidDataID, logInName);
-      zuSetFromAddEdit(addedit);
-      zuSetAdd(urladd, optionadd);
-      console.log(urladd, optionadd);
-    } else {
-      console.log("Edit...");
-      const urledit =
-        "https://theothai.com/ttw_webreport/API/api/userlogin/update.php";
-      const optionedit = {
-        method: "POST",
-        body: JSON.stringify({
-          DataID: dataID,
-          LogInName: logInName,
-          LogInPassword: logInPassword,
-          FullName: fullName,
-          Permission: permission ? "Y" : "N",
-          FlagCancel: flagCancel ? "Y" : "N",
-        }),
-      };
-      zuSetDataID(dataID, logInName);
-      zuSetFromAddEdit(addedit);
-      zuSetEdit(urledit, optionedit);
-      //console.log("???? ", urledit, optionedit);
-    }
-  }, [logInName, logInPassword, fullName, flagCancel, permission]);
-
+  const urlapimain = "Users";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread =
-      "https://theothai.com/tww37_webreport/API/api/Customer/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
     };
+    zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("ผู้ใช้งาน");
+    zuSetTitle("การบรรจุ");
     zuFetch();
   }, []);
 
-  //setDel
+  //Add or Edit
+  useEffect(() => {
+    if (zu_Title_Form_AddEdit === "add") {
+      console.log("Add...");
+      const urladd = urlapimain + "/create.php";
+      const optionadd = {
+        method: "POST",
+        headers: {
+          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        },
+        body: JSON.stringify(usersData),
+      };
+      zuSetDataID(usersData.Username);
+      zuSetFromAddEdit(addedit);
+      zuSetAdd(urladd, optionadd);
+      console.log(urladd, optionadd);
+    }
+    if (zu_Title_Form_AddEdit === "edit") {
+      console.log("Edit...");
+      const urledit = urlapimain + "/update.php";
+      const optionedit = {
+        method: "POST",
+        headers: {
+          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        },
+        body: JSON.stringify(usersData),
+      };
+      zuSetDataID(usersData.Username);
+      zuSetFromAddEdit(addedit);
+      zuSetEdit(urledit, optionedit);
+      console.log(urledit, optionedit);
+    }
+  }, [usersData, zu_Title_Form_AddEdit]);
+
+  //Del
   useEffect(() => {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel =
-      "https://theothai.com/ttw_webreport/API/api/userlogin/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
+      headers: {
+        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+      },
       body: JSON.stringify({
-        DataID: zu_SelectedList.DataID ? zu_SelectedList.DataID : "",
+        Username: usersData.Username,
       }),
     };
     zuSetDel(urldel, optiondel);
-  }, [zu_SelectedList]);
+  }, [usersData]);
   return (
     <div>
       <AppNavber />
-      <AppTable sortField={"DriverName"} minWidth={"10rem"} />
+      <AppTable sortField={"Username"} minWidth={"10rem"} />
     </div>
   );
 }

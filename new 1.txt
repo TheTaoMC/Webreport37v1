@@ -1,0 +1,137 @@
+"ProductCode": "01-01" รหัส
+        "ProductName": "ไม้ยูคา",  ชื่อ
+        "Price": 10000, ราคา
+        "TradingUnit": "ตัน", หน่วยซื้อขาย
+        "PackingCode": null, การบรรจุ
+        "MoistureTableCode": null, ตารางความชื้น
+        "Cancel": 0, ยกเลิก
+		
+class Company
+{
+    public $CompanyCode; รหัส
+    public $CompanyName; ชื่อ
+    public $Address1; ที่อยู่1
+    public $Address2; ที่อยู่2
+    public $ContactPerson1; ไม่ใช้
+    public $LastTicketCode; ไม่ใช้
+    public $Cancel; ยกเลิก
+    public $DataId; ไม่ใช้
+}
+
+class Customer
+{// Columns
+    public $CustomerCode; รหัส
+    public $CustomerName; ชื่อ
+    public $Address1; ที่อยู่1
+    public $Address2; ที่อยู่2
+    public $ContactPerson1; ไม่ใช้
+    public $LastTicketCode; ไม่ใช้
+    public $Cancel; ยกเลิก
+    public $DataId; ไม่ใช้
+}
+
+class MoistTH
+{
+    public $TableCode; ชื่อตาราง
+    public $StdMoisture; ไม่ใช้
+    public $Cancel; สถานะยกเลิก
+    public $DataId; ไม่ใช้
+}
+
+class Packing
+{/
+    public $PackingCode; รหัส
+    public $PackingName; ชื่อ
+    public $PackingWeight; น้ำหนัก
+    public $Cancel; สถานะยกเลิก
+    public $DataId; ไม่ใช้
+}
+
+class TranType
+{
+    public $TransactionTypeCode; รหัส
+    public $TransactionTypeName; ชื่อ
+    public $WeighingType; วิธีการชั่ง
+    public $InboundTicketFormat; File บัตรชั่งเข้า
+    public $InboundAfterOutTicketFormat; File บัตรชั่งเข้าหลังชั่งออกแล้ว
+    public $OutboundTicketFormat; File บัตรชั่งออก
+    public $CalAmountFrom; ไม่ใช้
+    public $CalStockFrom; ไม่ใช้
+    public $StockAction; ไม่ใช้
+    public $StockFactor; สัมประสิทธิ Stock
+    public $LastTicketCode; เลขที่ชั่งล่าสุด
+    public $StatonCode; ไม่ใช้
+    public $Cancel; สถานะยกเลิก
+    public $DataId; ไม่ใช้
+}
+
+class TrdUnt
+{
+    public $TradingUnitCode; รหัส
+    public $TradingUnitName; ชื่อ
+    public $TradingUnitFactor; กก./1หน่วย
+    public $Cancel; สถานะยกเลิก
+    public $DataId; ไม่ใช้
+}
+
+class Users
+{
+    public $Usernamee; ชื่อ
+    public $FullName; ชื่อเต็ม
+    public $Pwd; รหัสผ่าน
+    public $CanEditUser; สถานะเป็น admin
+    public $Cancel; สถานะยกเลิก
+    public $DataId; ไม่ใช้
+}
+
+class Transctn
+{
+    public $TransactionKey; primary key
+    public $ItemNo; ไม่ใช้
+    public $TicketCode; เลขที่ตั๋ว
+    public $TransactionTypeCode; รหัสประเภทชั่ง
+    public $VahicleCode; ทะเบียนรถ
+    public $CompanyCode; รหัสโกดัง
+    public $CustomerCode; รหัสคู่ค้า
+    public $ProductCode; รหัสสินค้า
+    public $StoreCode; ไม่ใช้
+    public $RFIDTagCode; ไม่ใช้
+    public $InboundDate; วันที่ชั่งเข้า
+    public $InboundTime; เวลาชั่งเข้า
+public $InboundWeight; น้ำหนักเข้า
+    public $OutboundDate; วันที่ชั่งออก
+    public $OutboundTime; เวลาชั่งออก
+    public $OutboundWeight; น้ำหนักออก
+    public $Moisture; ความชื้น
+    public $MoistureTableCode; รหัสตารางความชื้น
+    public $MoistureDeduct; หักความชื้น
+    public $Price; ราคา
+    public $TradingUnit; หน่วยซื้อขาย
+    public $KgPerTradingUnit; กก.ต่อหน่วย
+    public $Vat; ไม่ใช้
+    public $Quantity; จำนวน
+    public $PackingCode; รหัสการบรรจุ
+    public $SagWeight; นน.กระสอบ
+    public $DeductWeight;  นน.หัก
+    public $FixedDeductWeight1; ไม่ใช้
+    public $VariedDeductWeight1; หักสิ่งเจือปน
+    public $VariedDeductWeight1Factor; ไม่ใช้
+    public $FixedDeductWeight2; ไม่ใช้
+    public $VariedDeductWeight2; สิ่งเจือปนวัดได้
+    public $VariedDeductWeight2Factor; ไม่ใช้
+    public $FixedDeductAmount1; ค่าชั่งเหมา
+    public $VariedDeductAmount1; ค่าชั่งต่อตัน
+    public $VariedDeductAmount1Factor; ไม่ใช้
+    public $FixedDeductAmount2; ค่าลงเหมา
+    public $VariedDeductAmount2; ค่าลงต่อตัน
+    public $VariedDeductAmount2Factor; ไม่ใช้
+    public $Remark1; หมายเหตุ 1
+    public $Remark2;หมายเหตุ2
+    public $Remark3;หมายเหตุ3
+    public $Remark4;หมายเหตุ4
+    public $InboundUsername; ผู้ชั่งเข้า
+    public $OutboundUsername; ผู้ชั่งออก
+    public $StationCode; ไม่ใช้
+    public $Cancel; สถานะยกเลิก
+    public $DataId; ไม่ใช้
+}

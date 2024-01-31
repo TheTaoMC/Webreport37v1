@@ -5,7 +5,7 @@ import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
-function AppCustomer() {
+function AppTrdUnt() {
   const {
     zu_Data,
     zu_SelectedList,
@@ -13,7 +13,6 @@ function AppCustomer() {
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
   } = useStore();
-
   const {
     zuFetch,
     zuSetFetch,
@@ -30,21 +29,20 @@ function AppCustomer() {
   const navigate = useNavigate();
 
   const initialData = {
-    CustomerCode: null,
-    CustomerName: null,
-    Address1: null,
-    Address2: null,
+    TradingUnitCode: null,
+    TradingUnitName: null,
+    TradingUnitFactor: null,
     Cancel: false,
   };
 
-  const [customerData, setCustomerData] = useState(initialData);
+  const [trdUntData, setTrdUntData] = useState(initialData);
 
   const handleInputChange = (event) => {
     console.log(event.target);
     const { name, value, checked } = event.target;
     console.log(name, value);
 
-    setCustomerData((prevData) => ({
+    setTrdUntData((prevData) => ({
       ...prevData,
       [name]: value === null ? checked : value,
     }));
@@ -52,20 +50,16 @@ function AppCustomer() {
 
   const columns = [
     {
-      field: "CustomerCode",
+      field: "TradingUnitCode",
       header: "รหัส",
     },
     {
-      field: "CustomerName",
+      field: "TradingUnitName",
       header: "ชื่อ",
     },
     {
-      field: "Address1",
-      header: "ที่อยู่1",
-    },
-    {
-      field: "Address2",
-      header: "ที่อยู่2",
+      field: "TradingUnitFactor",
+      header: "TradingUnitFactor",
     },
     {
       field: "Cancel",
@@ -76,14 +70,14 @@ function AppCustomer() {
     },
   ];
   const setState = () => {
-    setCustomerData({
+    setTrdUntData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
     });
   };
-
+  console.log(trdUntData);
   const resetState = () => {
-    setCustomerData(initialData);
+    setTrdUntData(initialData);
   };
   //setState
   useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
@@ -98,8 +92,8 @@ function AppCustomer() {
           autoFocus
           disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          name="CustomerCode"
-          defaultValue={customerData.CustomerCode}
+          name="TradingUnitCode"
+          defaultValue={trdUntData.TradingUnitCode}
           onBlur={handleInputChange}
         />
       </div>
@@ -107,8 +101,8 @@ function AppCustomer() {
       <div>
         <InputText
           className="w-[100%]"
-          name="CustomerName"
-          defaultValue={customerData.CustomerName}
+          name="TradingUnitName"
+          defaultValue={trdUntData.TradingUnitName}
           onBlur={handleInputChange}
         />
       </div>
@@ -116,17 +110,8 @@ function AppCustomer() {
       <div>
         <InputText
           className="w-[100%]"
-          name="Address1"
-          defaultValue={customerData.Address1}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>{columns[3].header}</div>
-      <div>
-        <InputText
-          className="w-[100%]"
-          name="Address2"
-          defaultValue={customerData.Address2}
+          name="TradingUnitFactor"
+          defaultValue={trdUntData.TradingUnitFactor}
           onBlur={handleInputChange}
         />
       </div>
@@ -136,7 +121,7 @@ function AppCustomer() {
             <div>สถานะ</div>
             <Checkbox
               name="Cancel"
-              checked={customerData.Cancel}
+              checked={trdUntData.Cancel}
               onChange={handleInputChange}
             />
             <label htmlFor="ingredient1" className="">
@@ -147,13 +132,12 @@ function AppCustomer() {
       </div>
     </div>
   );
-
-  const urlapimain = "Customer";
+  const urlapimain = "TrdUnt";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread = urlapimain+"/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
@@ -163,7 +147,7 @@ function AppCustomer() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("คู่ค้า");
+    zuSetTitle("ความชื้น");
     zuFetch();
   }, []);
 
@@ -171,59 +155,59 @@ function AppCustomer() {
   useEffect(() => {
     if (zu_Title_Form_AddEdit === "add") {
       console.log("Add...");
-      const urladd = urlapimain+"/create.php";
+      const urladd = urlapimain + "/create.php";
       const optionadd = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(customerData),
+        body: JSON.stringify(trdUntData),
       };
-      //zuSetDataID(columnsData.CustomerCode);
+      zuSetDataID(trdUntData.TradingUnitCode);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);
     }
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
-      const urledit = urlapimain+"/update.php";
+      const urledit = urlapimain + "/update.php";
       const optionedit = {
         method: "POST",
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(customerData),
+        body: JSON.stringify(trdUntData),
       };
-      //zuSetDataID(columnsData.ProductCode);
+      zuSetDataID(trdUntData.TradingUnitCode);
       zuSetFromAddEdit(addedit);
       zuSetEdit(urledit, optionedit);
       console.log(urledit, optionedit);
     }
-  }, [customerData, zu_Title_Form_AddEdit]);
+  }, [trdUntData, zu_Title_Form_AddEdit]);
 
   //Del
   useEffect(() => {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel = urlapimain+"/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
       headers: {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
       body: JSON.stringify({
-        CustomerCode: customerData.CustomerCode,
+        TradingUnitCode: trdUntData.TradingUnitCode,
       }),
     };
     zuSetDel(urldel, optiondel);
-  }, [customerData]);
+  }, [trdUntData]);
   return (
     <div>
       <AppNavber />
-      <AppTable sortField={"CustomerName"} minWidth={"10rem"} />
+      <AppTable sortField={"TradingUnitCode"} minWidth={"10rem"} />
     </div>
   );
 }
 
-export default AppCustomer;
+export default AppTrdUnt;
