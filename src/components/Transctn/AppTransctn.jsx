@@ -5,7 +5,7 @@ import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
-function AppPacking() {
+function AppTransctn() {
   const {
     zu_Data,
     zu_SelectedList,
@@ -69,14 +69,14 @@ function AppPacking() {
   };
 
   //แก้
-  const [packingData, setPackingData] = useState(initialData);
+  const [transctnData, setTransctnData] = useState(initialData);
 
   const handleInputChange = (event) => {
     console.log(event.target);
     const { name, value, checked } = event.target;
     console.log(name, value);
 
-    setPackingData((prevData) => ({
+    setTransctnData((prevData) => ({
       ...prevData,
       [name]: value === null ? checked : value,
     }));
@@ -85,16 +85,144 @@ function AppPacking() {
   //แก้
   const columns = [
     {
-      field: "PackingCode",
+      field: "TransactionKey",
       header: "รหัส",
     },
     {
-      field: "PackingName",
-      header: "ชื่อ",
+      field: "TicketCode",
+      header: "เลขที่ตั๋ว",
     },
     {
-      field: "PackingWeight",
-      header: "น้ำหนัก",
+      field: "TransactionTypeCode",
+      header: "รหัสประเภทชั่ง",
+    },
+    {
+      field: "VahicleCode",
+      header: "ทะเบียนรถ",
+    },
+    {
+      field: "CompanyCode",
+      header: "รหัสโกดัง",
+    },
+    {
+      field: "CustomerCode",
+      header: "รหัสคู่ค้า",
+    },
+    {
+      field: "ProductCode",
+      header: "รหัสสินค้า",
+    },
+    {
+      field: "InboundDate",
+      header: "วันที่ชั่งเข้า",
+    },
+    {
+      field: "InboundTime",
+      header: "เวลาชั่งเข้า",
+    },
+    {
+      field: "InboundWeight",
+      header: "น้ำหนักเข้า",
+    },
+    {
+      field: "OutboundDate",
+      header: "วันที่ชั่งออก",
+    },
+    {
+      field: "OutboundTime",
+      header: "เวลาชั่งออก",
+    },
+    {
+      field: "OutboundWeight",
+      header: "น้ำหนักออก",
+    },
+    {
+      field: "Moisture",
+      header: "ความชื้น",
+    },
+    {
+      field: "MoistureTableCode",
+      header: "รหัสตารางความชื้น",
+    },
+    {
+      field: "MoistureDeduct",
+      header: "หักความชื้น",
+    },
+    {
+      field: "Price",
+      header: "ราคา",
+    },
+    {
+      field: "TradingUnit",
+      header: "หน่วยซื้อขาย",
+    },
+    {
+      field: "KgPerTradingUnit",
+      header: "กก.ต่อหน่วย",
+    },
+    {
+      field: "Quantity",
+      header: "จำนวน",
+    },
+    {
+      field: "PackingCode",
+      header: "รหัสการบรรจุ",
+    },
+    {
+      field: "SagWeight",
+      header: "นน.กระสอบ",
+    },
+    {
+      field: "DeductWeight",
+      header: "นน.หัก",
+    },
+    {
+      field: "VariedDeductWeight1",
+      header: "หักสิ่งเจือปน",
+    },
+    {
+      field: "VariedDeductWeight2",
+      header: "สิ่งเจือปนวัดได้",
+    },
+    {
+      field: "FixedDeductAmount1",
+      header: "ค่าชั่งเหมา",
+    },
+    {
+      field: "VariedDeductAmount1",
+      header: "ค่าชั่งต่อตัน",
+    },
+    {
+      field: "FixedDeductAmount2",
+      header: "ค่าลงเหมา",
+    },
+    {
+      field: "VariedDeductAmount2",
+      header: "ค่าลงต่อตัน",
+    },
+    {
+      field: "Remark1",
+      header: "หมายเหตุ 1",
+    },
+    {
+      field: "Remark2",
+      header: "หมายเหตุ 2",
+    },
+    {
+      field: "Remark3",
+      header: "หมายเหตุ 3",
+    },
+    {
+      field: "Remark4",
+      header: "หมายเหตุ 4",
+    },
+    {
+      field: "InboundUsername",
+      header: "ผู้ชั่งเข้า",
+    },
+    {
+      field: "OutboundUsername",
+      header: "ผู้ชั่งออก",
     },
     {
       field: "Cancel",
@@ -105,14 +233,14 @@ function AppPacking() {
     },
   ];
   const setState = () => {
-    setPackingData({
+    setTransctnData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
     });
   };
 
   const resetState = () => {
-    setPackingData(initialData);
+    setTransctnData(initialData);
   };
   //setState
   useEffect(() => setState(), [zu_ToggleEdit, zu_SelectedList]);
@@ -122,14 +250,14 @@ function AppPacking() {
   //แก้
   const addedit = (
     <div>
-      <div>{columns[0].header}</div>
+      <div>{columns[0].header} </div>
       <div>
         <InputText
           autoFocus
           disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          name="PackingCode"
-          defaultValue={packingData.PackingCode}
+          name="TransactionKey"
+          defaultValue={transctnData.TransactionKey}
           onBlur={handleInputChange}
         />
       </div>
@@ -137,8 +265,8 @@ function AppPacking() {
       <div>
         <InputText
           className="w-[100%]"
-          name="PackingName"
-          defaultValue={packingData.PackingName}
+          name="TicketCode"
+          defaultValue={transctnData.TicketCode}
           onBlur={handleInputChange}
         />
       </div>
@@ -146,8 +274,8 @@ function AppPacking() {
       <div>
         <InputText
           className="w-[100%]"
-          name="PackingWeight"
-          defaultValue={packingData.PackingWeight}
+          name="TransactionTypeCode"
+          defaultValue={transctnData.TransactionTypeCode}
           onBlur={handleInputChange}
         />
       </div>
@@ -157,7 +285,7 @@ function AppPacking() {
             <div>สถานะ</div>
             <Checkbox
               name="Cancel"
-              checked={packingData.Cancel}
+              checked={transctnData.Cancel}
               onChange={handleInputChange}
             />
             <label htmlFor="ingredient1" className="">
@@ -169,7 +297,7 @@ function AppPacking() {
     </div>
   );
 
-  const urlapimain = "Packing";
+  const urlapimain = "Transctn";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
@@ -184,7 +312,7 @@ function AppPacking() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("การบรรจุ");
+    zuSetTitle("ข้อมูลชั่งน้ำหนัก");
     zuFetch();
   }, []);
 
@@ -198,9 +326,9 @@ function AppPacking() {
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(packingData),
+        body: JSON.stringify(transctnData),
       };
-      zuSetDataID(packingData.TradingUnitCode);
+      zuSetDataID(transctnData.TransactionKey);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);
@@ -213,14 +341,14 @@ function AppPacking() {
         headers: {
           "API-KEY": "857F7237C03246028748D51C97D4BADE",
         },
-        body: JSON.stringify(packingData),
+        body: JSON.stringify(transctnData),
       };
-      zuSetDataID(packingData.ProductCode);
+      zuSetDataID(transctnData.TransactionKey);
       zuSetFromAddEdit(addedit);
       zuSetEdit(urledit, optionedit);
       console.log(urledit, optionedit);
     }
-  }, [packingData, zu_Title_Form_AddEdit]);
+  }, [transctnData, zu_Title_Form_AddEdit]);
 
   //Del
   useEffect(() => {
@@ -234,17 +362,17 @@ function AppPacking() {
         "API-KEY": "857F7237C03246028748D51C97D4BADE",
       },
       body: JSON.stringify({
-        PackingCode: packingData.PackingCode,
+        TransactionKey: transctnData.TransactionKey,
       }),
     };
     zuSetDel(urldel, optiondel);
-  }, [packingData]);
+  }, [transctnData]);
   return (
     <div>
       <AppNavber />
-      <AppTable sortField={"PackingName"} minWidth={"10rem"} />
+      <AppTable sortField={"TransactionKey"} minWidth={"10rem"} />
     </div>
   );
 }
 
-export default AppPacking;
+export default AppTransctn;

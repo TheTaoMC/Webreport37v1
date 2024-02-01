@@ -79,6 +79,12 @@ function AppNavber({ title }) {
       },
     },
     {
+      label: "Transctn",
+      command: () => {
+        navigate("/Transctn");
+      },
+    },
+    {
       label: "Weight",
       command: () => {
         zuSetTitleFromAddEdit("weight");

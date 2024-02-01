@@ -5,6 +5,7 @@ import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from "primereact/dropdown";
 function AppUser() {
   const {
     zu_Data,
@@ -28,7 +29,6 @@ function AppUser() {
     zuCheckUser,
   } = useStore();
   const navigate = useNavigate();
-
   const initialData = {
     Username: null,
     FullName: null,
@@ -65,21 +65,21 @@ function AppUser() {
       field: "CanEditUser",
       header: "ระดับ",
       body: (rowData) => {
-        return rowData.CanEditUser === 0 ? "User" : "Admin";
+        return rowData.CanEditUser ? "Admin" : "User";
       },
     },
     {
       field: "Cancel",
       header: "สถานะ",
       body: (rowData) => {
-        return rowData.Cancel === 0 ? "ใช้งาน" : "ยกเลิก";
+        return rowData.Cancel ? "ยกเลิก" : "ใช้งาน";
       },
     },
   ];
   const setState = () => {
     setUsersData({
       ...zu_SelectedList,
-      Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      Cancel: zu_SelectedList.Cancel ? true : false,
     });
   };
 
@@ -125,11 +125,22 @@ function AppUser() {
       </div>
       <div>{columns[2].header}</div>
       <div>
-        <InputText
+        {/*         <InputText
           className="w-[100%]"
           name="CanEditUser"
           defaultValue={usersData.CanEditUser}
           onBlur={handleInputChange}
+        /> */}
+        <Dropdown
+          className="w-[100%]"
+          name="CanEditUser"
+          value={usersData.CanEditUser}
+          options={[
+            { name: "Admin", value: true },
+            { name: "User", value: false },
+          ]}
+          optionLabel="name"
+          onChange={handleInputChange}
         />
       </div>
       <div>

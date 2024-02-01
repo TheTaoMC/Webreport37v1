@@ -32,14 +32,11 @@ function AppSearch() {
     zu_MasterTransporters,
   } = useStore();
 
-  //Master ต่างๆ
   const [dataCustomers, setDataCustomers] = useState([]);
   const [dataProducts, setDataProducts] = useState([]);
   const [dataWeighttypes, setDataWeighttypes] = useState([]);
   const [dataDrivers, setDataDrivers] = useState([]);
   const [dataTransporters, setDataTransporters] = useState([]);
-
-  //สถานะ Accordion
   const [activeIndex, setActiveIndex] = useState();
 
   const [searchFilters, setSearchFilters] = useState([
@@ -155,7 +152,6 @@ function AppSearch() {
     },
   ]);
 
-  //set ลำดับข้อมูล
   useEffect(() => {
     setDataCustomers(
       zu_MasterCustomers.sort((a, b) =>
@@ -186,7 +182,7 @@ function AppSearch() {
     zu_MasterTransporters,
   ]);
 
-  //set Checkbox
+  //filterKey คือตัวเลข
   const handleCheckbox = (i) => {
     const updatedFilters = [...searchFilters];
     //console.log([...searchFilters]);
@@ -197,7 +193,24 @@ function AppSearch() {
     setSearchFilters(updatedFilters);
   };
 
-  //set อะไรวะ
+  /*   const handleText = (index, fromorto, newValue) => {
+    //console.log("newValue ", newValue);
+    if (fromorto === "From") {
+      const updatedFilters = [...zu_SearchFilters];
+      updatedFilters[index] = {
+        ...updatedFilters[index],
+        From: newValue,
+      };
+      zuSetSearchFiltersTextbox(updatedFilters);
+    } else if (fromorto === "To") {
+      const updatedFilters = [...zu_SearchFilters];
+      updatedFilters[index] = {
+        ...updatedFilters[index],
+        To: newValue,
+      };
+      zuSetSearchFiltersTextbox(updatedFilters);
+    }
+  }; */
   const handleText = _debounce((index, fromorto, newValue) => {
     if (fromorto === "From") {
       const updatedFilters = [...searchFilters];
@@ -220,7 +233,6 @@ function AppSearch() {
     zuSetSearchFiltersTextbox(searchFilters);
   };
 
-  //set type input
   const renderSwitch = (
     typeinput,
     filter,
@@ -415,7 +427,6 @@ function AppSearch() {
     }
   };
 
-  //เปิด - ปิด Accordion
   const onClickClose = () => {
     if (activeIndex.length === 0) {
       // If no tabs are open, open all tabs
@@ -426,9 +437,6 @@ function AppSearch() {
     }
   };
 
-  //set ชื่อ zuSetTitleFromAddEdit
-  //set handlesend อัพเดท zuSetSearchFiltersTextbox(searchFilters)
-  //set zuToggleSearch
   const handleSearch = () => {
     zuSetTitleFromAddEdit("search");
     handlesend();
@@ -451,6 +459,7 @@ function AppSearch() {
           <div className="">
             <div className="flex flex-col align-items-center">
               {searchFilters.map((e, i) => (
+                // eslint-disable-next-line react/jsx-key
                 <div key={i} className="flex flex-col md:flex-row">
                   <div className="flex">
                     {e.Typeinput === "Singledropdown" ? (

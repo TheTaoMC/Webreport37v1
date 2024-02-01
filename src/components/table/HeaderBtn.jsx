@@ -237,18 +237,6 @@ const header = (dt, onSearchFiltersChange) => {
         <ConfirmDialog className="text-6xl border border-gray-950" />
 
         <div className="flex sm:hidden self-start">
-          {/*           <Menu
-            model={
-              zu_Title === "รายงานชั่ง"
-                ? menuItems2
-                : zu_Title === "ข้อมูลชั่งน้ำหนัก"
-                ? menuItems3
-                : menuItems1
-            }
-            popup
-            ref={menuLeft}
-            id="popup_menu_left"
-          /> */}
           <Menu model={menuItems1} popup ref={menuLeft} id="popup_menu_left" />
           <Button
             label="Menu"
