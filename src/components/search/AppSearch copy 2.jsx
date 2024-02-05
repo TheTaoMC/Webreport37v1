@@ -25,23 +25,19 @@ function AppSearch() {
 
   const {
     zu_SearchFilters,
-    zu_MasterTranTypes,
-    zu_MasterCompanys,
     zu_MasterCustomers,
     zu_MasterProducts,
-    zu_MasterPackings,
-    zu_MasterTrdUnts,
-    zu_MasterMoistTHs,
+    zu_MasterWeighttypes,
+    zu_MasterDrivers,
+    zu_MasterTransporters,
   } = useStore();
 
   //Master ต่างๆ
-  const [dataTranTypes, setDataTranTypes] = useState([]);
-  const [dataCompanys, setDataCompanys] = useState([]);
   const [dataCustomers, setDataCustomers] = useState([]);
   const [dataProducts, setDataProducts] = useState([]);
-  const [dataPackings, setDataPackings] = useState([]);
-  const [dataTrdUnts, setDataTrdUnts] = useState([]);
-  const [dataMoistTHs, setDataMoistTHs] = useState([]);
+  const [dataWeighttypes, setDataWeighttypes] = useState([]);
+  const [dataDrivers, setDataDrivers] = useState([]);
+  const [dataTransporters, setDataTransporters] = useState([]);
 
   //สถานะ Accordion
   const [activeIndex, setActiveIndex] = useState();
@@ -93,7 +89,6 @@ function AppSearch() {
       Typeinput: "text",
       From: "",
       To: "",
-      disabled: true,
     },
     {
       Title: "เครื่องชั่งขาออก",
@@ -101,22 +96,20 @@ function AppSearch() {
       Typeinput: "text",
       From: "",
       To: "",
-      disabled: true,
     },
     {
       Title: "วันที่ชั่งเข้า",
       Filter: false,
       Typeinput: "calendar",
-      From: moment(new Date()).startOf("day"),
-      To: moment(new Date()).startOf("day"),
-      disabled: true,
+      From: moment(new Date()).startOf("day").format("DD/MM/YYYY HH:mm:ss"),
+      To: moment(new Date()).startOf("day").format("DD/MM/YYYY HH:mm:ss"),
     },
     {
-      Title: "วันที่ชั่ง",
-      Filter: true,
+      Title: "วันที่ชั่งออก",
+      Filter: false,
       Typeinput: "calendar",
-      From: moment(new Date()).startOf("day"),
-      To: moment(new Date()).startOf("day"),
+      From: moment(new Date()).startOf("day").format("DD/MM/YYYY HH:mm:ss"),
+      To: moment(new Date()).startOf("day").format("DD/MM/YYYY HH:mm:ss"),
     },
     {
       Title: "เลขที่เข้า",
@@ -134,22 +127,14 @@ function AppSearch() {
     },
     {
       Title: "ทะเบียนรถ",
-      Filter: false,
+      Filter: true,
       Typeinput: "text",
       From: "80-0004",
       To: "80-0004",
     },
     {
-      Tablename: "tranType",
+      Tablename: "weighttype",
       Title: "ประเภทชั่ง",
-      Filter: false,
-      Typeinput: "dropdown",
-      From: "",
-      To: "",
-    },
-    {
-      Tablename: "company",
-      Title: "บริษัท",
       Filter: false,
       Typeinput: "dropdown",
       From: "",
@@ -172,24 +157,16 @@ function AppSearch() {
       To: "",
     },
     {
-      Tablename: "packing",
-      Title: "บรรจุภัณฑ์",
+      Tablename: "transporter",
+      Title: "ผู้ขนส่ง",
       Filter: false,
       Typeinput: "dropdown",
       From: "",
       To: "",
     },
     {
-      Tablename: "trdUnt",
-      Title: "หน่วย",
-      Filter: false,
-      Typeinput: "dropdown",
-      From: "",
-      To: "",
-    },
-    {
-      Tablename: "moistTH",
-      Title: "ตารางความชึ้น",
+      Tablename: "driver",
+      Title: "พนักงานขับรถ",
       Filter: false,
       Typeinput: "dropdown",
       From: "",
@@ -220,47 +197,33 @@ function AppSearch() {
 
   //set ลำดับข้อมูล
   useEffect(() => {
-    setDataTranTypes(
-      zu_MasterTranTypes.sort((a, b) =>
-        a.TransactionTypeCode.localeCompare(b.TransactionTypeCode)
-      )
-    );
-    setDataCompanys(
-      zu_MasterCompanys.sort((a, b) =>
-        a.CompanyCode.localeCompare(b.CompanyCode)
-      )
-    );
     setDataCustomers(
       zu_MasterCustomers.sort((a, b) =>
-        a.CustomerCode.localeCompare(b.CustomerCode)
+        a.CustomerID.localeCompare(b.CustomerID)
       )
     );
     setDataProducts(
-      zu_MasterProducts.sort((a, b) =>
-        a.ProductCode.localeCompare(b.ProductCode)
+      zu_MasterProducts.sort((a, b) => a.ProductID.localeCompare(b.ProductID))
+    );
+    setDataWeighttypes(
+      zu_MasterWeighttypes.sort((a, b) =>
+        a.WeightTypeID.localeCompare(b.WeightTypeID)
       )
     );
-    setDataPackings(
-      zu_MasterPackings.sort((a, b) =>
-        a.PackingCode.localeCompare(b.PackingCode)
-      )
+    setDataDrivers(
+      zu_MasterDrivers.sort((a, b) => a.DriverID.localeCompare(b.DriverID))
     );
-    setDataTrdUnts(
-      zu_MasterTrdUnts.sort((a, b) =>
-        a.TradingUnitCode.localeCompare(b.TradingUnitCode)
+    setDataTransporters(
+      zu_MasterTransporters.sort((a, b) =>
+        a.TransporterID.localeCompare(b.TransporterID)
       )
-    );
-    setDataMoistTHs(
-      zu_MasterMoistTHs.sort((a, b) => a.TableCode.localeCompare(b.TableCode))
     );
   }, [
-    zu_MasterTranTypes,
-    zu_MasterCompanys,
     zu_MasterCustomers,
     zu_MasterProducts,
-    zu_MasterPackings,
-    zu_MasterTrdUnts,
-    zu_MasterMoistTHs,
+    zu_MasterWeighttypes,
+    zu_MasterDrivers,
+    zu_MasterTransporters,
   ]);
 
   //set Checkbox
@@ -342,14 +305,13 @@ function AppSearch() {
                 //value={zu_SearchFilters[index].From}
                 value={moment(
                   searchFilters[index].From,
-                  "DD/MM/YYYY HH:mm:ss"
+                  "YYYY-MM-DD HH:mm:ss"
                 ).toDate()}
                 onChange={(e) =>
                   handleText(
                     index,
                     fromorto,
-                    //moment(e.value).startOf("day").format("DD/MM/YYYY")
-                    e.value
+                    moment(e.value).startOf("day").format("YYYY-MM-DD HH:mm:ss")
                   )
                 }
                 hourFormat="24"
@@ -371,8 +333,7 @@ function AppSearch() {
                   handleText(
                     index,
                     fromorto,
-                    //moment(e.value).startOf("day").format("DD/MM/YYYY")
-                    e.value
+                    moment(e.value).startOf("day").format("DD/MM/YYYY HH:mm:ss")
                   )
                 }
                 hourFormat="24"
@@ -393,44 +354,31 @@ function AppSearch() {
                 value={searchFilters[index].From}
                 onChange={(e) => handleText(index, fromorto, e.value)}
                 options={
-                  tablename === "tranType"
-                    ? dataTranTypes.map((data) => ({
-                        value: data.TransactionTypeCode,
-                        label:
-                          data.TransactionTypeCode +
-                          " : " +
-                          data.TransactionTypeName,
-                      }))
-                    : tablename === "company"
-                    ? dataCompanys.map((data) => ({
-                        value: data.CompanyCode,
-                        label: data.CompanyCode + " : " + data.CompanyName,
+                  tablename === "weighttype"
+                    ? dataWeighttypes.map((data) => ({
+                        value: data.WeightTypeID,
+                        label: data.WeightTypeID + " : " + data.WeightTypeName,
                       }))
                     : tablename === "customer"
                     ? dataCustomers.map((data) => ({
-                        value: data.CustomerCode,
-                        label: data.CustomerCode + " : " + data.CustomerName,
+                        value: data.CustomerID,
+                        label: data.CustomerID + " : " + data.CustomerName,
                       }))
                     : tablename === "product"
                     ? dataProducts.map((data) => ({
-                        value: data.ProductCode,
-                        label: data.ProductCode + " : " + data.ProductName,
+                        value: data.ProductID,
+                        label: data.ProductID + " : " + data.ProductName,
                       }))
-                    : tablename === "packing"
-                    ? dataPackings.map((data) => ({
-                        value: data.PackingCode,
-                        label: data.PackingCode + " : " + data.PackingName,
-                      }))
-                    : tablename === "trdUnt"
-                    ? dataTrdUnts.map((data) => ({
-                        value: data.TradingUnitCode,
+                    : tablename === "transporter"
+                    ? dataTransporters.map((data) => ({
+                        value: data.TransporterID,
                         label:
-                          data.TradingUnitCode,
+                          data.TransporterID + " : " + data.TransporterName,
                       }))
-                    : tablename === "moistTH"
-                    ? dataMoistTHs.map((data) => ({
-                        value: data.TableCode,
-                        label: data.TableCode,
+                    : tablename === "driver"
+                    ? dataDrivers.map((data) => ({
+                        value: data.DriverID,
+                        label: data.DriverID + " : " + data.DriverName,
                       }))
                     : [] // Add more cases as needed
                 }
@@ -446,44 +394,31 @@ function AppSearch() {
                 value={searchFilters[index].To}
                 onChange={(e) => handleText(index, fromorto, e.value)}
                 options={
-                  tablename === "tranType"
-                    ? dataTranTypes.map((data) => ({
-                        value: data.TransactionTypeCode,
-                        label:
-                          data.TransactionTypeCode +
-                          " : " +
-                          data.TransactionTypeName,
-                      }))
-                    : tablename === "company"
-                    ? dataCompanys.map((data) => ({
-                        value: data.CompanyCode,
-                        label: data.CompanyCode + " : " + data.CompanyName,
+                  tablename === "weighttype"
+                    ? dataWeighttypes.map((data) => ({
+                        value: data.WeightTypeID,
+                        label: data.WeightTypeID + " : " + data.WeightTypeName,
                       }))
                     : tablename === "customer"
                     ? dataCustomers.map((data) => ({
-                        value: data.CustomerCode,
-                        label: data.CustomerCode + " : " + data.CustomerName,
+                        value: data.CustomerID,
+                        label: data.CustomerID + " : " + data.CustomerName,
                       }))
                     : tablename === "product"
                     ? dataProducts.map((data) => ({
-                        value: data.ProductCode,
-                        label: data.ProductCode + " : " + data.ProductName,
+                        value: data.ProductID,
+                        label: data.ProductID + " : " + data.ProductName,
                       }))
-                    : tablename === "packing"
-                    ? dataPackings.map((data) => ({
-                        value: data.PackingCode,
-                        label: data.PackingCode + " : " + data.PackingName,
-                      }))
-                    : tablename === "trdUnt"
-                    ? dataTrdUnts.map((data) => ({
-                        value: data.TradingUnitCode,
+                    : tablename === "transporter"
+                    ? dataTransporters.map((data) => ({
+                        value: data.TransporterID,
                         label:
-                          data.TradingUnitCode,
+                          data.TransporterID + " : " + data.TransporterName,
                       }))
-                    : tablename === "moistTH"
-                    ? dataMoistTHs.map((data) => ({
-                        value: data.TableCode,
-                        label: data.TableCode,
+                    : tablename === "driver"
+                    ? dataDrivers.map((data) => ({
+                        value: data.DriverID,
+                        label: data.DriverID + " : " + data.DriverName,
                       }))
                     : [] // Add more cases as needed
                 }
@@ -499,7 +434,7 @@ function AppSearch() {
           <div className="w-[100%]">
             {fromorto === "From" && (
               <Dropdown
-                className="min-w-[7rem] max-w-10rem sm:md:ml-[47px]"
+                className="min-w-[7rem] max-w-10rem sm:md:ml-[61px]"
                 value={searchFilters[index].Filter}
                 onChange={(e) => handleCheckbox(index, fromorto, e.value)}
                 options={[
@@ -509,7 +444,7 @@ function AppSearch() {
                   value: data.value,
                   label: data.show,
                 }))}
-                //placeholder="Select a Country"
+                placeholder="Select a Country"
                 showClear
               />
             )}
@@ -555,69 +490,65 @@ function AppSearch() {
         >
           <div className="">
             <div className="flex flex-col align-items-center">
-              {searchFilters.map(
-                (e, i) =>
-                  !e.disabled && (
-                    <div key={i} className="flex flex-col md:flex-row">
-                      <div className="flex">
-                        {e.Typeinput === "Singledropdown" ? (
-                          <label
-                            onClick={() => handleCheckbox(i)}
-                            className="sm:md:ml-[37px] self-center min-w-[8rem] cursor-pointer"
-                          >
-                            {e.Title}
-                          </label>
-                        ) : (
-                          <>
-                            <input
-                              type="checkbox"
-                              className={"scale-150 cursor-pointer mr-2"}
-                              onChange={() => handleCheckbox(i)}
-                              checked={e.Filter}
-                            />
-                            <label
-                              onClick={() => handleCheckbox(i)}
-                              className="self-center min-w-[8rem] cursor-pointer"
-                            >
-                              {e.Title}
-                            </label>
-                          </>
-                        )}
-                      </div>
-
-                      {e.Typeinput === "Singledropdown" ||
-                      e.Typeinput === "" ? null : (
-                        <label className="self-start md:self-center md:ml-4 mr-2">
-                          ตั้งแต่
+              {searchFilters.map((e, i) => (
+                <div key={i} className="flex flex-col md:flex-row">
+                  <div className="flex">
+                    {e.Typeinput === "Singledropdown" ? (
+                      <label
+                        onClick={() => handleCheckbox(i)}
+                        className="sm:md:ml-[37px] self-center min-w-[8rem] cursor-pointer"
+                      >
+                        {e.Title}
+                      </label>
+                    ) : (
+                      <>
+                        <input
+                          type="checkbox"
+                          className={"scale-150 cursor-pointer mr-2"}
+                          onChange={() => handleCheckbox(i)}
+                          checked={e.Filter}
+                        />
+                        <label
+                          onClick={() => handleCheckbox(i)}
+                          className="self-center min-w-[8rem] cursor-pointer"
+                        >
+                          {e.Title}
                         </label>
-                      )}
+                      </>
+                    )}
+                  </div>
+                  {e.Typeinput === "Singledropdown" ||
+                  e.Typeinput === "" ? null : (
+                    <label className="self-start md:self-center md:ml-4 mr-2">
+                      ตั้งแต่
+                    </label>
+                  )}
 
-                      {renderSwitch(
-                        e.Typeinput,
-                        e.Filter,
-                        e.Value,
-                        i,
-                        "From",
-                        e.Tablename
-                      )}
-                      {e.Typeinput === "Singledropdown" ||
-                      e.Typeinput === "" ? null : (
-                        <label className="self-start md:self-center md:mx-2">
-                          ถึง
-                        </label>
-                      )}
+                  {renderSwitch(
+                    e.Typeinput,
+                    e.Filter,
+                    e.Value,
+                    i,
+                    "From",
+                    e.Tablename
+                  )}
+                  {e.Typeinput === "Singledropdown" ||
+                  e.Typeinput === "" ? null : (
+                    <label className="self-start md:self-center md:mx-2">
+                      ถึง
+                    </label>
+                  )}
 
-                      {renderSwitch(
-                        e.Typeinput,
-                        e.Filter,
-                        e.Value,
-                        i,
-                        "To",
-                        e.Tablename
-                      )}
-                    </div>
-                  )
-              )}
+                  {renderSwitch(
+                    e.Typeinput,
+                    e.Filter,
+                    e.Value,
+                    i,
+                    "To",
+                    e.Tablename
+                  )}
+                </div>
+              ))}
 
               <div className="flex justify-end gap-2">
                 <Button

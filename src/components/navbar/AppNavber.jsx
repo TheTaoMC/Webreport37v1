@@ -12,10 +12,9 @@ function AppNavber({ title }) {
   const menuReport = useRef(null);
   const datamenuItems = [
     {
-      label: "Weighttype",
-      //icon: "pi pi-plus",
+      label: "TranType",
       command: () => {
-        navigate("/Weighttype");
+        navigate("/TranType");
       },
     },
     {
@@ -40,18 +39,16 @@ function AppNavber({ title }) {
       },
     },
     {
-      label: "Transporter",
+      label: "Packing",
       command: () => {
-        navigate("/Transporter");
+        navigate("/Packing");
       },
-      //icon: "pi pi-times",
     },
     {
-      label: "User",
+      label: "TrdUnt",
       command: () => {
-        navigate("/User");
+        navigate("/TrdUnt");
       },
-      //icon: "pi pi-times",
     },
     {
       label: "MoistTH",
@@ -61,22 +58,11 @@ function AppNavber({ title }) {
       //icon: "pi pi-times",
     },
     {
-      label: "TrdUnt",
+      label: "User",
       command: () => {
-        navigate("/TrdUnt");
+        navigate("/User");
       },
-    },
-    {
-      label: "Packing",
-      command: () => {
-        navigate("/Packing");
-      },
-    },
-    {
-      label: "TranType",
-      command: () => {
-        navigate("/TranType");
-      },
+      //icon: "pi pi-times",
     },
     {
       label: "Transctn",

@@ -55,6 +55,7 @@ function AppTable({ sortField, minWidth, onSearchFiltersChange }) {
                 align={e.align}
                 sortable
                 style={{ minWidth: e.minWidth }}
+                
                 pt={{
                   headerCell: { className: "bg-sky-400" },
                   headerTitle: { className: " text-black" },
