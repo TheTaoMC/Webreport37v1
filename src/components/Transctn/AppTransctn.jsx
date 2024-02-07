@@ -6,6 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { Dropdown } from "primereact/dropdown";
 function AppTransctn() {
   const {
     zu_Data,
@@ -15,6 +16,13 @@ function AppTransctn() {
     zu_Title_Form_AddEdit,
     zu_SearchFilters,
     zu_ToggleSearch,
+    zu_MasterTranTypes,
+    zu_MasterCompanys,
+    zu_MasterCustomers,
+    zu_MasterProducts,
+    zu_MasterPackings,
+    zu_MasterTrdUnts,
+    zu_MasterMoistTHs,
   } = useStore();
 
   const {
@@ -36,8 +44,9 @@ function AppTransctn() {
   const initialData = {
     TransactionKey: null,
     TicketCode: null,
+    ItemNo: null,
     TransactionTypeCode: null,
-    VahicleCode: null,
+    VehicleCode: null,
     CompanyCode: null,
     CustomerCode: null,
     ProductCode: null,
@@ -70,6 +79,8 @@ function AppTransctn() {
     InboundUsername: null,
     OutboundUsername: null,
     Cancel: false,
+    OldTransactionKey: null,
+    OldTicketCode: null,
   };
 
   //แก้
@@ -89,11 +100,13 @@ function AppTransctn() {
   //แก้
   const columns = [
     {
+      //0*
       field: "TicketCode",
       header: "เลขที่ตั๋ว",
       minWidth: "10rem",
     },
     {
+      //1
       field: "InboundDate",
       header: "วันที่ชั่งเข้า",
       minWidth: "10rem",
@@ -102,6 +115,7 @@ function AppTransctn() {
       },
     },
     {
+      //2
       field: "OutboundDate",
       header: "วันที่ชั่งออก",
       minWidth: "10rem",
@@ -110,52 +124,62 @@ function AppTransctn() {
       },
     },
     {
-      field: "VahicleCode",
+      //3*
+      field: "VehicleCode",
       header: "ทะเบียนรถ",
       minWidth: "10rem",
     },
     {
+      //4
       field: "TransactionTypeCode",
       header: "รหัสประเภทชั่ง",
       minWidth: "15rem",
     },
 
     {
+      //5
       field: "CompanyCode",
       header: "รหัสบริษัท",
       minWidth: "15rem",
     },
     {
+      //6
       field: "CompanyName",
       header: "ชื่อบริษัท",
       minWidth: "15rem",
     },
     {
+      //7
       field: "CustomerCode",
       header: "รหัสคู่ค้า",
       minWidth: "15rem",
     },
     {
+      //8
       field: "CustomerName",
       header: "ชื่อคู่ค้า",
       minWidth: "15rem",
     },
     {
+      //9
       field: "CustomerAddress1",
       header: "ที่อยู่คู่ค้า 1",
       minWidth: "15rem",
     },
     {
+      //10
       field: "CustomerAddress2",
       header: "ที่อยู่คู่ค้า 2",
       minWidth: "15rem",
     },
     {
+      //11
       field: "ProductCode",
       header: "รหัสสินค้า",
       minWidth: "15rem",
     },
     {
+      //
       field: "ProductName",
       header: "ชื่อสินค้า",
       minWidth: "15rem",
@@ -166,6 +190,7 @@ function AppTransctn() {
       minWidth: "10rem",
     },
     {
+      //
       field: "InboundWeight",
       header: "น้ำหนักเข้า",
       minWidth: "15rem",
@@ -173,6 +198,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "OutboundWeight",
       header: "น้ำหนักออก",
       minWidth: "15rem",
@@ -180,6 +206,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "Moisture",
       header: "ความชื้น",
       minWidth: "15rem",
@@ -187,11 +214,13 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "MoistureTableCode",
       header: "รหัสตารางความชื้น",
       minWidth: "15rem",
     },
     {
+      //
       field: "MoistureDeduct",
       header: "หักความชื้น",
       minWidth: "15rem",
@@ -199,6 +228,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "Price",
       header: "ราคา",
       minWidth: "15rem",
@@ -206,11 +236,13 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "TradingUnit",
       header: "หน่วยซื้อขาย",
       minWidth: "15rem",
     },
     {
+      //
       field: "KgPerTradingUnit",
       header: "กก.ต่อหน่วย",
       minWidth: "15rem",
@@ -218,6 +250,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "Quantity",
       header: "จำนวน",
       minWidth: "15rem",
@@ -225,11 +258,13 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "PackingCode",
       header: "รหัสการบรรจุ",
       minWidth: "15rem",
     },
     {
+      //
       field: "SagWeight",
       header: "นน.กระสอบ",
       minWidth: "15rem",
@@ -237,6 +272,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "DeductWeight",
       header: "นน.หัก",
       minWidth: "15rem",
@@ -244,6 +280,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "VariedDeductWeight1",
       header: "หักสิ่งเจือปน",
       minWidth: "15rem",
@@ -251,6 +288,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "VariedDeductWeight2",
       header: "สิ่งเจือปนวัดได้",
       minWidth: "15rem",
@@ -258,6 +296,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "FixedDeductAmount1",
       header: "ค่าชั่งเหมา",
       minWidth: "15rem",
@@ -265,6 +304,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "VariedDeductAmount1",
       header: "ค่าชั่งต่อตัน",
       minWidth: "15rem",
@@ -272,6 +312,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "FixedDeductAmount2",
       header: "ค่าลงเหมา",
       minWidth: "15rem",
@@ -279,6 +320,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "VariedDeductAmount2",
       header: "ค่าลงต่อตัน",
       minWidth: "15rem",
@@ -286,36 +328,43 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "Remark1",
       header: "หมายเหตุ 1",
       minWidth: "15rem",
     },
     {
+      //
       field: "Remark2",
       header: "หมายเหตุ 2",
       minWidth: "15rem",
     },
     {
+      //
       field: "Remark3",
       header: "หมายเหตุ 3",
       minWidth: "15rem",
     },
     {
+      //
       field: "Remark4",
       header: "หมายเหตุ 4",
       minWidth: "15rem",
     },
     {
+      //
       field: "InboundUsername",
       header: "ผู้ชั่งเข้า",
       minWidth: "15rem",
     },
     {
+      //
       field: "OutboundUsername",
       header: "ผู้ชั่งออก",
       minWidth: "15rem",
     },
     {
+      //
       field: "NetWeight",
       header: "NetWeight",
       minWidth: "15rem",
@@ -323,6 +372,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "TradingWeight",
       header: "TradingWeight",
       minWidth: "15rem",
@@ -330,6 +380,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "Amount",
       header: "Amount",
       minWidth: "15rem",
@@ -337,6 +388,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "NetAmount",
       header: "NetAmount",
       minWidth: "15rem",
@@ -344,6 +396,7 @@ function AppTransctn() {
       alignHeader: "right",
     },
     {
+      //
       field: "Cancel",
       header: "สถานะ",
       body: (rowData) => {
@@ -355,6 +408,8 @@ function AppTransctn() {
     setTransctnData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldTransactionKey: zu_SelectedList.TransactionKey,
+      OldItemNo: zu_SelectedList.ItemNo,
     });
   };
 
@@ -401,11 +456,11 @@ function AppTransctn() {
       TransporterIDFilter: zu_SearchFilters[11].Filter,
       TransporterIDFrom: zu_SearchFilters[11].From,
       TransporterIDTo: zu_SearchFilters[11].To,
-      DriverIDFilter: zu_SearchFilters[12].Filter,
-      DriverIDFrom: zu_SearchFilters[12].From,
-      DriverIDTo: zu_SearchFilters[12].To,
-      //FlagCancelFilter: zu_SearchFilters[12].Filter ? "Y" : "N",
-      //FlagStatusFilter: bodySearch[13].Filter ? "Y" : "N",
+      DriverIDFilter: zu_SearchFilters[13].Filter,
+      DriverIDFrom: zu_SearchFilters[13].From,
+      DriverIDTo: zu_SearchFilters[13].To,
+      FlagCancelFilter: zu_SearchFilters[14].Filter,
+      FlagCancel: zu_SearchFilters[14].From,
     }),
   };
 
@@ -420,44 +475,235 @@ function AppTransctn() {
   //แก้
   const addedit = (
     <div>
-      <div>{columns[0].header} </div>
+      <div>เลขที่ตั๋ว</div>
       <div>
         <InputText
           autoFocus
           disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
-          className="w-[100%]"
-          name="TransactionKey"
-          defaultValue={transctnData.TransactionKey}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>{columns[1].header}</div>
-      <div>
-        <InputText
           className="w-[100%]"
           name="TicketCode"
           defaultValue={transctnData.TicketCode}
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[2].header}</div>
+      <div>ทะเบียนรถ</div>
       <div>
         <InputText
+          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
-          name="TransactionTypeCode"
-          defaultValue={transctnData.TransactionTypeCode}
+          name="VehicleCode"
+          defaultValue={transctnData.VehicleCode}
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[3].header}</div>
+      <div>ประเภทชั่ง</div>
+      <div>
+        <Dropdown
+          autoFocus
+          className="w-[100%]"
+          value={transctnData.TransactionTypeCode}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const newValue2 =
+              zu_MasterTranTypes.find(
+                (e) => e.TransactionTypeCode === newValue
+              ) || {};
+
+            const updatedZuSelectedList = {
+              ...transctnData,
+              //WeightTypeDataID: newValue,
+              TransactionTypeCode: newValue2.TransactionTypeCode,
+              //WeightTypeName: newValue2.WeightTypeName,
+            };
+            setTransctnData(updatedZuSelectedList);
+          }}
+          options={zu_MasterTranTypes.map((data) => ({
+            value: data.TransactionTypeCode,
+            label: data.TransactionTypeCode + " : " + data.TransactionTypeName,
+          }))}
+          placeholder="เลือกข้อมูล"
+          filter
+          showClear
+        />
+      </div>
+
+      <div>บริษัท</div>
+      <div>
+        <Dropdown
+          autoFocus
+          className="w-[100%]"
+          value={transctnData.CompanyCode}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const newValue2 =
+              zu_MasterCompanys.find((e) => e.CompanyCode === newValue) || {};
+
+            const updatedZuSelectedList = {
+              ...transctnData,
+              //WeightTypeDataID: newValue,
+              CompanyCode: newValue2.CompanyCode,
+              CompanyName: newValue2.CompanyName,
+            };
+            setTransctnData(updatedZuSelectedList);
+          }}
+          options={zu_MasterCompanys.map((data) => ({
+            value: data.CompanyCode,
+            label: data.CompanyCode + " : " + data.CompanyName,
+          }))}
+          placeholder="เลือกข้อมูล"
+          filter
+          showClear
+        />
+      </div>
+
+      <div>คู่ค้า</div>
+      <div>
+        <Dropdown
+          autoFocus
+          className="w-[100%]"
+          value={transctnData.CustomerCode}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const newValue2 =
+              zu_MasterCustomers.find((e) => e.CustomerCode === newValue) || {};
+
+            const updatedZuSelectedList = {
+              ...transctnData,
+              //WeightTypeDataID: newValue,
+              CustomerCode: newValue2.CustomerCode,
+              CustomerName: newValue2.CustomerName,
+            };
+            setTransctnData(updatedZuSelectedList);
+          }}
+          options={zu_MasterCustomers.map((data) => ({
+            value: data.CustomerCode,
+            label: data.CustomerCode + " : " + data.CustomerName,
+          }))}
+          placeholder="เลือกข้อมูล"
+          filter
+          showClear
+        />
+      </div>
+
+      <div>สินค้า</div>
+      <div>
+        <Dropdown
+          autoFocus
+          className="w-[100%]"
+          value={transctnData.ProductCode}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const newValue2 =
+              zu_MasterProducts.find((e) => e.ProductCode === newValue) || {};
+
+            const updatedZuSelectedList = {
+              ...transctnData,
+              //WeightTypeDataID: newValue,
+              ProductCode: newValue2.ProductCode,
+              ProductName: newValue2.ProductName,
+            };
+            setTransctnData(updatedZuSelectedList);
+          }}
+          options={zu_MasterProducts.map((data) => ({
+            value: data.ProductCode,
+            label: data.ProductCode + " : " + data.ProductName,
+          }))}
+          placeholder="เลือกข้อมูล"
+          filter
+          showClear
+        />
+      </div>
+
+      <div>หมายเหตุ 1</div>
       <div>
         <InputText
           className="w-[100%]"
-          name="TransactionTypeCode"
-          defaultValue={transctnData.TransactionTypeCode}
+          name="Remark1"
+          defaultValue={transctnData.Remark1}
           onBlur={handleInputChange}
         />
       </div>
+      <div>หมายเหตุ 2</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="Remark2"
+          defaultValue={transctnData.Remark2}
+          onBlur={handleInputChange}
+        />
+      </div>
+      <div>หมายเหตุ 3</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="Remark3"
+          defaultValue={transctnData.Remark3}
+          onBlur={handleInputChange}
+        />
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-[100%] table-auto mt-2">
+          <thead className="border border-gray-950">
+            <tr className="bg-sky-300">
+              <th className="w-219 p-2">รายการ</th>
+              <th className="min-w-[120px] p-2">เลขที่</th>
+              <th className="min-w-[120px] p-2">วันที่</th>
+              <th className="min-w-[120px]  p-2">{"น้ำหนัก(กก.)"}</th>
+              <th className="min-w-[120px] p-2">ผู้ชั่ง</th>
+            </tr>
+          </thead>
+          <tbody className="border border-gray-950">
+            <tr>
+              <td className="bg-green-500 font-semibold border border-gray-950 p-2 text-center">
+                เข้า
+              </td>
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
+                {zu_SelectedList.TicketCode}
+              </td>
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
+                {moment(zu_SelectedList.InboundDate).format("DD-MM-YYYY")}
+              </td>
+
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-right">
+                {zu_SelectedList.InboundWeight || "0"}
+              </td>
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
+                {zu_SelectedList.InboundUsername}
+              </td>
+            </tr>
+            <tr>
+              <td className="bg-green-500 font-semibold border border-gray-950 p-2 text-center">
+                ออก
+              </td>
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
+                {zu_SelectedList.TicketCode}
+              </td>
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
+                {moment(zu_SelectedList.OutboundDate).format("DD-MM-YYYY")}
+              </td>
+
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-right">
+                {zu_SelectedList.OutboundWeight || "0"}
+              </td>
+              <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
+                {zu_SelectedList.OutboundUsername}
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td className="text-red-500 font-bold border border-gray-950 text-right p-2">
+                {Math.abs(
+                  zu_SelectedList.InboundWeight - zu_SelectedList.OutboundWeight
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div>
         <div className="flex gap-2  justify-between">
           <div className="flex gap-2 items-center">
@@ -490,7 +736,6 @@ function AppTransctn() {
   useEffect(() => {
     memoizedZuFetchMaster();
   }, [memoizedZuFetchMaster]);
-
 
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
@@ -534,6 +779,7 @@ function AppTransctn() {
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);
     }
+
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
       const urledit = urlapimain + "/update.php";

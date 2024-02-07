@@ -13,7 +13,6 @@ import Area from "./Area";
 function AppDashboard() {
   const {
     zu_Data,
-    zu_DataDashboard,
     zu_SelectedList,
     zu_ToggleResetState,
     zu_ToggleEdit,
@@ -36,7 +35,9 @@ function AppDashboard() {
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
-  console.log(zu_DataDashboard);
+
+  console.log("data ", data);
+
   //Load Data รอบแรก
   const urlapimain = "weightdashboard";
   useEffect(() => {
@@ -51,10 +52,11 @@ function AppDashboard() {
     zuSetFetch(urlread, optionread);
     zuSetTitle("dashboard");
     zuFetch();
-    setData(zu_DataDashboard.SumByProduct);
-  }, [zu_DataDashboard]);
+  }, []);
 
-  //useEffect(() => {}, [zu_Data]);
+  useEffect(() => {
+    setData(zu_Data.SumByProduct);
+  }, [zu_Data]);
 
   return (
     <>
@@ -84,6 +86,7 @@ function AppDashboard() {
           </div>
           <div className="md:col-span-3  ">
             <Bar datas={data} />
+            {/* <Area /> */}
           </div>
         </Card>
       </div>

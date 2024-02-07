@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useStore } from "../../zustand/Store";
 import AppNavber from "../navbar/AppNavber";
 import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from "primereact/dropdown";
 function AppProduct() {
   const {
     zu_Data,
@@ -12,6 +13,9 @@ function AppProduct() {
     zu_ToggleResetState,
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
+    zu_MasterTrdUnts,
+    zu_MasterPackings,
+    zu_MasterMoistTHs,
   } = useStore();
 
   const {
@@ -26,6 +30,7 @@ function AppProduct() {
     zuSetColumns,
     zuSetTitle,
     zuCheckUser,
+    zuFetchMaster,
   } = useStore();
   const navigate = useNavigate();
 
@@ -37,6 +42,7 @@ function AppProduct() {
     PackingCode: null,
     MoistureTableCode: null,
     Cancel: false,
+    OldPk: null,
   };
 
   const [productData, setProductData] = useState(initialData);
@@ -64,6 +70,8 @@ function AppProduct() {
     {
       field: "Price",
       header: "ราคา",
+      align: "right",
+      alignHeader: "right",
     },
     {
       field: "TradingUnit",
@@ -89,9 +97,10 @@ function AppProduct() {
     setProductData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldPk: zu_SelectedList.ProductCode,
     });
   };
-  console.log(productData);
+  //console.log(productData);
   const resetState = () => {
     setProductData(initialData);
   };
@@ -102,18 +111,18 @@ function AppProduct() {
 
   const addedit = (
     <div>
-      <div>{columns[0].header}</div>
+      <div>รหัส</div>
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="ProductCode"
           defaultValue={productData.ProductCode}
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[1].header}</div>
+      <div>ชื่อ</div>
       <div>
         <InputText
           className="w-[100%]"
@@ -122,40 +131,101 @@ function AppProduct() {
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[2].header}</div>
+      <div>ราคา</div>
       <div>
         <InputText
-          className="w-[100%]"
+          className="max-w-[20%] min-w-[5rem]  text-end"
           name="Price"
           defaultValue={productData.Price}
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[3].header}</div>
+
+      <div>หน่วยซื้อขาย</div>
       <div>
-        <InputText
+        <Dropdown
+          autoFocus
           className="w-[100%]"
-          name="TradingUnit"
-          defaultValue={productData.TradingUnit}
-          onBlur={handleInputChange}
+          value={productData.TradingUnit}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const newValue2 =
+              zu_MasterTrdUnts.find((e) => e.TradingUnitCode === newValue) ||
+              {};
+
+            const updatedZuSelectedList = {
+              ...productData,
+              //WeightTypeDataID: newValue,
+              TradingUnit: newValue2.TradingUnitCode,
+              //ProductName: newValue2.ProductName,
+            };
+            setProductData(updatedZuSelectedList);
+          }}
+          options={zu_MasterTrdUnts.map((data) => ({
+            value: data.TradingUnitCode,
+            label: data.TradingUnitCode,
+          }))}
+          placeholder="เลือกข้อมูล"
+          filter
+          showClear
         />
       </div>
-      <div>{columns[4].header}</div>
+
+      <div>การบรรจุ</div>
       <div>
-        <InputText
+        <Dropdown
+          autoFocus
           className="w-[100%]"
-          name="PackingCode"
-          defaultValue={productData.PackingCode}
-          onBlur={handleInputChange}
+          value={productData.PackingCode}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const newValue2 =
+              zu_MasterPackings.find((e) => e.PackingCode === newValue) || {};
+
+            const updatedZuSelectedList = {
+              ...productData,
+              //WeightTypeDataID: newValue,
+              PackingCode: newValue2.PackingCode,
+              //ProductName: newValue2.ProductName,
+            };
+            setProductData(updatedZuSelectedList);
+          }}
+          options={zu_MasterPackings.map((data) => ({
+            value: data.PackingCode,
+            label: data.PackingCode + " : " + data.PackingWeight + " กิโลกรัม",
+          }))}
+          placeholder="เลือกข้อมูล"
+          filter
+          showClear
         />
       </div>
-      <div>{columns[5].header}</div>
+
+      <div>ตารางความชื้น</div>
       <div>
-        <InputText
+        <Dropdown
+          autoFocus
           className="w-[100%]"
-          name="MoistureTableCode"
-          defaultValue={productData.MoistureTableCode}
-          onBlur={handleInputChange}
+          value={productData.MoistureTableCode}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            const newValue2 =
+              zu_MasterMoistTHs.find((e) => e.TableCode === newValue) || {};
+
+            const updatedZuSelectedList = {
+              ...productData,
+              //WeightTypeDataID: newValue,
+              MoistureTableCode: newValue2.TableCode,
+              //ProductName: newValue2.ProductName,
+            };
+            setProductData(updatedZuSelectedList);
+          }}
+          options={zu_MasterMoistTHs.map((data) => ({
+            value: data.TableCode,
+            label: data.TableCode,
+          }))}
+          placeholder="เลือกข้อมูล"
+          filter
+          showClear
         />
       </div>
       <div>
@@ -178,6 +248,19 @@ function AppProduct() {
 
   const urlapimain = "Product";
   //Load Data รอบแรก
+
+  const memoizedZuFetchMaster = useMemo(() => {
+    return async () => {
+      const result = await zuFetchMaster();
+      //console.log(result);
+      //setBlocked(result === "success" ? false : true);
+    };
+  }, [zuFetchMaster]); // Dependencies ใน useMemo
+
+  useEffect(() => {
+    memoizedZuFetchMaster();
+  }, [memoizedZuFetchMaster]);
+
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();

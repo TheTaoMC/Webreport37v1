@@ -8,7 +8,6 @@ import {
   Routes,
   HashRouter,
 } from "react-router-dom";
-import AppWeight, { BigAppWeightMemo } from "./components/weight/AppWeight.jsx";
 import AppProduct from "./components/product/AppProduct";
 import AppCustomer from "./components/customer/AppCustomer.jsx";
 import AppWeighttype from "./components/weighttype/AppWeighttype.jsx";
@@ -35,10 +34,6 @@ const router = createBrowserRouter(
     {
       path: "main",
       element: <AppMain />,
-    },
-    {
-      path: "weight",
-      element: <AppWeight />,
     },
     {
       path: "weightreport",
@@ -95,10 +90,6 @@ const router = createBrowserRouter(
     {
       path: "login",
       element: <AppLogin />,
-    },
-    {
-      path: "BigAppWeightMemo",
-      element: <BigAppWeightMemo />,
     },
   ],
   {

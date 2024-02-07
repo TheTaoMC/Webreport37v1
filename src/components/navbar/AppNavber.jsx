@@ -4,127 +4,78 @@ import { Menu } from "primereact/menu";
 import { Button } from "primereact/button";
 import Cookies from "js-cookie";
 import { useStore } from "../../zustand/Store";
-
+import { Menubar } from "primereact/menubar";
 function AppNavber({ title }) {
   const { zuCheckUser, zuSetTitleFromAddEdit } = useStore();
   const navigate = useNavigate();
   const menuData = useRef(null);
-  const menuReport = useRef(null);
+
   const datamenuItems = [
     {
-      label: "TranType",
+      label: "ประเภทชั่ง",
       command: () => {
         navigate("/TranType");
       },
     },
     {
-      label: "Company",
+      label: "โกดัง",
       //icon: "pi pi-fw pi-pencil",
       command: () => {
         navigate("/Company");
       },
     },
     {
-      label: "Customer",
+      label: "คู่ค้า",
       //icon: "pi pi-fw pi-pencil",
       command: () => {
         navigate("/Customer");
       },
     },
     {
-      label: "Product",
+      label: "สินค้า",
       //icon: "pi pi-times",
       command: () => {
         navigate("/Product");
       },
     },
     {
-      label: "Packing",
+      label: "บรรจุภัณฑ์",
       command: () => {
         navigate("/Packing");
       },
     },
     {
-      label: "TrdUnt",
+      label: "หน่วย",
       command: () => {
         navigate("/TrdUnt");
       },
     },
     {
-      label: "MoistTH",
+      label: "ความชื้น",
       command: () => {
         navigate("/MoistTH");
       },
       //icon: "pi pi-times",
     },
     {
-      label: "User",
+      label: "ผู้ใช้งาน",
       command: () => {
         navigate("/User");
       },
       //icon: "pi pi-times",
     },
     {
-      label: "Transctn",
+      label: "ข้อมูลชั่งน้ำหนัก",
       command: () => {
         navigate("/Transctn");
       },
     },
-    {
-      label: "Weight",
-      command: () => {
-        zuSetTitleFromAddEdit("weight");
-        navigate("/Weight");
-      },
-      //icon: "pi pi-times",
-    },
   ];
-  const reportmenuItems = [
-    {
-      label: "Weighttype",
-      //icon: "pi pi-plus",
-      command: () => {
-        navigate("/Weighttype");
-      },
-    },
-    {
-      label: "Customer",
-      //icon: "pi pi-fw pi-pencil",
-      command: () => {
-        navigate("/Customer");
-      },
-    },
-    {
-      label: "Product",
-      //icon: "pi pi-times",
-      command: () => {
-        navigate("/Product");
-      },
-    },
-    {
-      label: "Driver",
-      //icon: "pi pi-times",
-      command: () => {
-        navigate("/Driver");
-      },
-    },
-    {
-      label: "Transporter",
-      command: () => {
-        navigate("/Transporter");
-      },
-      //icon: "pi pi-times",
-    },
-    {
-      label: "WeightReport",
-      command: () => {
-        navigate("/WeightReport");
-      },
-      //icon: "pi pi-times",
-    },
-  ];
+
   return (
     <>
+      <Menu model={datamenuItems} popup ref={menuData} id="popup_menu_left" />
+
       {title !== "login" && (
         //<div className="flex flex-wrap gap-2 justify-center p-2 bg-blue-100 text-gray-200 text-lg">
         <div className="flex gap-2 justify-between p-2 bg-blue-100 text-gray-500 text-lg">
@@ -142,53 +93,29 @@ function AppNavber({ title }) {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-2">
             <Button
-              label="Main"
+              label="Dashboard"
               icon="pi pi-home"
-              className="p-2 w-24 h-10"
+              className="p-2 w-26 h-10"
               onClick={() => {
-                zuCheckUser(() => navigate("/"));
                 navigate("/main");
               }}
               aria-controls="popup_menu_left"
               aria-haspopup
             />
-            <Menu
-              model={datamenuItems}
-              popup
-              ref={menuData}
-              id="popup_menu_left"
-            />
-
             <Button
-              label="Data"
+              label="ข้อมูล"
               icon="pi pi-server"
-              className="p-2 w-24 h-10 "
+              className="p-2 w-26 h-10 "
               onClick={(event) => menuData.current.toggle(event)}
               aria-controls="popup_menu_left"
               aria-haspopup
             />
-
-            <Menu
-              model={reportmenuItems}
-              popup
-              ref={menuReport}
-              id="popup_menu_left"
-            />
-            {/*             <Button
-              label="Report"
-              icon="pi pi-tablet"
-              className="p-2 w-24 h-10"
-              //onClick={(event) => menuReport.current.toggle(event)}
-              onClick={() => navigate("/WeightReport")}
-              aria-controls="popup_menu_left"
-              aria-haspopup
-            /> */}
             <Button
-              label="Logout"
+              label="ออกจากระบบ"
               icon="pi pi-home"
-              className="p-2 w-24 h-10 col-start-2 md:col-start-3 "
+              className="p-2 w-26 h-10 col-start-2 md:col-start-3 "
               onClick={() => {
                 Cookies.remove("user");
                 navigate("/");

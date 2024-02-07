@@ -88,6 +88,7 @@ function AppSearch() {
 
   const [searchFilters, setSearchFilters] = useState([
     {
+      //0
       Title: "เครื่องชั่งขาเข้า",
       Filter: false,
       Typeinput: "text",
@@ -96,6 +97,7 @@ function AppSearch() {
       disabled: true,
     },
     {
+      //1
       Title: "เครื่องชั่งขาออก",
       Filter: false,
       Typeinput: "text",
@@ -104,6 +106,7 @@ function AppSearch() {
       disabled: true,
     },
     {
+      //2
       Title: "วันที่ชั่งเข้า",
       Filter: false,
       Typeinput: "calendar",
@@ -112,6 +115,7 @@ function AppSearch() {
       disabled: true,
     },
     {
+      //3
       Title: "วันที่ชั่ง",
       Filter: true,
       Typeinput: "calendar",
@@ -119,6 +123,7 @@ function AppSearch() {
       To: moment(new Date()).startOf("day"),
     },
     {
+      //4
       Title: "เลขที่เข้า",
       Filter: false,
       Typeinput: "text",
@@ -126,6 +131,7 @@ function AppSearch() {
       To: "",
     },
     {
+      //5
       Title: "เลขที่ออก",
       Filter: false,
       Typeinput: "text",
@@ -133,6 +139,7 @@ function AppSearch() {
       To: "",
     },
     {
+      //6
       Title: "ทะเบียนรถ",
       Filter: false,
       Typeinput: "text",
@@ -140,6 +147,7 @@ function AppSearch() {
       To: "80-0004",
     },
     {
+      //7
       Tablename: "tranType",
       Title: "ประเภทชั่ง",
       Filter: false,
@@ -148,6 +156,7 @@ function AppSearch() {
       To: "",
     },
     {
+      //8
       Tablename: "company",
       Title: "บริษัท",
       Filter: false,
@@ -156,6 +165,7 @@ function AppSearch() {
       To: "",
     },
     {
+      //9
       Tablename: "customer",
       Title: "คู่ค้า",
       Filter: false,
@@ -164,6 +174,7 @@ function AppSearch() {
       To: "",
     },
     {
+      //10
       Tablename: "product",
       Title: "สินค้า",
       Filter: false,
@@ -172,6 +183,7 @@ function AppSearch() {
       To: "",
     },
     {
+      //11
       Tablename: "packing",
       Title: "บรรจุภัณฑ์",
       Filter: false,
@@ -180,14 +192,17 @@ function AppSearch() {
       To: "",
     },
     {
+      //12
       Tablename: "trdUnt",
       Title: "หน่วย",
       Filter: false,
       Typeinput: "dropdown",
       From: "",
       To: "",
+      disabled: true,
     },
     {
+      //13
       Tablename: "moistTH",
       Title: "ตารางความชึ้น",
       Filter: false,
@@ -196,25 +211,31 @@ function AppSearch() {
       To: "",
     },
     {
-      Title: "สถานะการยกเลิก",
+      //14
+      Title: "สถานะ",
       Filter: false,
+      FlagCancel: true,
       Typeinput: "Singledropdown",
       From: "",
       To: "",
     },
     {
+      //15
       Title: "แสดงรถชั่งเสร็จ",
       Filter: false,
       Typeinput: "",
       From: "",
       To: "",
+      disabled: true,
     },
     {
+      //16
       Title: "แสดงงรถค้างชั่ง",
       Filter: false,
       Typeinput: "",
       From: "",
       To: "",
+      disabled: true,
     },
   ]);
 
@@ -424,8 +445,7 @@ function AppSearch() {
                     : tablename === "trdUnt"
                     ? dataTrdUnts.map((data) => ({
                         value: data.TradingUnitCode,
-                        label:
-                          data.TradingUnitCode,
+                        label: data.TradingUnitCode,
                       }))
                     : tablename === "moistTH"
                     ? dataMoistTHs.map((data) => ({
@@ -477,8 +497,7 @@ function AppSearch() {
                     : tablename === "trdUnt"
                     ? dataTrdUnts.map((data) => ({
                         value: data.TradingUnitCode,
-                        label:
-                          data.TradingUnitCode,
+                        label: data.TradingUnitCode,
                       }))
                     : tablename === "moistTH"
                     ? dataMoistTHs.map((data) => ({
@@ -499,12 +518,13 @@ function AppSearch() {
           <div className="w-[100%]">
             {fromorto === "From" && (
               <Dropdown
-                className="min-w-[7rem] max-w-10rem sm:md:ml-[47px]"
-                value={searchFilters[index].Filter}
-                onChange={(e) => handleCheckbox(index, fromorto, e.value)}
+                disabled={filter ? false : true}
+                className="min-w-[7rem] max-w-10rem sm:md:ml-[62px]"
+                value={searchFilters[index].From}
+                onChange={(e) => handleText(index, fromorto, e.value)}
                 options={[
-                  { show: "ใช่", value: true },
-                  { show: "ไม่", value: false },
+                  { show: "ไม่ยกเลิก", value: true },
+                  { show: "ยกเลิก", value: false },
                 ].map((data) => ({
                   value: data.value,
                   label: data.show,
@@ -561,12 +581,20 @@ function AppSearch() {
                     <div key={i} className="flex flex-col md:flex-row">
                       <div className="flex">
                         {e.Typeinput === "Singledropdown" ? (
-                          <label
-                            onClick={() => handleCheckbox(i)}
-                            className="sm:md:ml-[37px] self-center min-w-[8rem] cursor-pointer"
-                          >
-                            {e.Title}
-                          </label>
+                          <>
+                            <input
+                              type="checkbox"
+                              className={"scale-150 cursor-pointer mr-2"}
+                              onChange={() => handleCheckbox(i)}
+                              checked={e.Filter}
+                            />
+                            <label
+                              onClick={() => handleCheckbox(i)}
+                              className="sm:md:ml-[0px] self-center min-w-[8rem] cursor-pointer"
+                            >
+                              {e.Title}
+                            </label>
+                          </>
                         ) : (
                           <>
                             <input

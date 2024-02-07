@@ -5,6 +5,7 @@ import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
+import { InputNumber } from "primereact/inputnumber";
 function AppPacking() {
   const {
     zu_Data,
@@ -32,8 +33,9 @@ function AppPacking() {
   const initialData = {
     PackingCode: null,
     PackingName: null,
-    PackingWeight: null,
+    PackingWeight: 0.0,
     Cancel: false,
+    OldPk: null,
   };
 
   //แก้
@@ -56,10 +58,7 @@ function AppPacking() {
       field: "PackingCode",
       header: "รหัส",
     },
-    {
-      field: "PackingName",
-      header: "ชื่อ",
-    },
+
     {
       field: "PackingWeight",
       header: "น้ำหนัก",
@@ -76,6 +75,7 @@ function AppPacking() {
     setPackingData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldPk: zu_SelectedList.PackingCode,
     });
   };
 
@@ -94,29 +94,24 @@ function AppPacking() {
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="PackingCode"
           defaultValue={packingData.PackingCode}
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[1].header}</div>
+
+      <div>น้ำหนัก</div>
       <div>
-        <InputText
-          className="w-[100%]"
-          name="PackingName"
-          defaultValue={packingData.PackingName}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>{columns[2].header}</div>
-      <div>
-        <InputText
-          className="w-[100%]"
+        <InputNumber
+          className="max-w-[20%] min-w-[5rem]  text-end"
           name="PackingWeight"
-          defaultValue={packingData.PackingWeight}
-          onBlur={handleInputChange}
+          value={packingData.PackingWeight}
+          //onBlur={handleInputChange}
+          onValueChange={handleInputChange}
+          minFractionDigits={2}
+          maxFractionDigits={5}
         />
       </div>
       <div>

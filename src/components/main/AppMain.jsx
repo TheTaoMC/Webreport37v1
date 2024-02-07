@@ -10,14 +10,6 @@ function AppMain() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //const storedUser = Cookies.get("user");
-    //const userData = JSON.parse(storedUser);
-    //const res = zuLogin(userData.username, userData.password);
-    //console.log(userData);
-
-    /*     if (!storedUser) {
-      return;
-    } */
     zuCheckUser(() => navigate("/"));
   }, []);
 
@@ -25,9 +17,7 @@ function AppMain() {
     <>
       <div>
         <AppNavber />
-        <div>
-          <AppDashboard />
-        </div>
+        <AppDashboard />
       </div>
     </>
   );
