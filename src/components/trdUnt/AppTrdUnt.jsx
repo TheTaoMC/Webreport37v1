@@ -33,6 +33,7 @@ function AppTrdUnt() {
     TradingUnitName: null,
     TradingUnitFactor: null,
     Cancel: false,
+    OldPk: null,
   };
 
   const [trdUntData, setTrdUntData] = useState(initialData);
@@ -56,6 +57,7 @@ function AppTrdUnt() {
     {
       field: "TradingUnitName",
       header: "ชื่อ",
+      disabled: false,
     },
     {
       field: "TradingUnitFactor",
@@ -73,6 +75,7 @@ function AppTrdUnt() {
     setTrdUntData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldPk: zu_SelectedList.TradingUnitCode,
     });
   };
   console.log(trdUntData);
@@ -90,7 +93,7 @@ function AppTrdUnt() {
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="TradingUnitCode"
           defaultValue={trdUntData.TradingUnitCode}

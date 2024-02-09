@@ -1,29 +1,42 @@
 import React from "react";
 import { Card } from "@tremor/react";
+import { useStore } from "../../../zustand/Store";
 
 function AppCard({ title, CountTransaction, SumWeightNet, SumAmountNet }) {
-  const formattedSumAmountNet = new Intl.NumberFormat("th-TH", {
-    minimumFractionDigits: 2,
-  }).format(SumAmountNet);
-  const formattedSumWeightNet = new Intl.NumberFormat("th-TH", {}).format(
-    SumWeightNet
-  );
+  const { zu_DataDashboard } = useStore();
 
+  const formattedSumAmountNet = (e) =>
+    new Intl.NumberFormat("th-TH", {
+      minimumFractionDigits: 2,
+    }).format(e);
+
+  const formattedSumWeightNet = (e) =>
+    new Intl.NumberFormat("th-TH", {}).format(e);
+
+  console.log(zu_DataDashboard.SumByProduct);
   return (
     <>
       {/* p-4 border rounded-2xl drop-shadow-md bg-blue-300 hover:bg-blue-200 cursor-pointer   */}
-      <Card
-        className="min-w-[250px] max-w-xs mx-auto "
-        decoration="top"
-        decorationColor="blue"
-      >
-        <div className="antialiased font-semibold text-xl">{title}</div>
-        <div>
-          <div>จำนวน: {CountTransaction} คัน</div>
-          <div>น้ำหนักรวม: {formattedSumWeightNet} กก.</div>
-          <div>SumAmountNet: {formattedSumAmountNet} บาท.</div>
-        </div>
-      </Card>
+      {zu_DataDashboard.SumByProduct &&
+        zu_DataDashboard.SumByProduct.map((e, i) => (
+          <Card
+            key={i}
+            className="min-w-[250px] max-w-xs mx-auto "
+            decoration="top"
+            decorationColor="blue"
+          >
+            <div className="antialiased font-semibold text-xl">
+              {e.ProductID}
+            </div>
+            <div>
+              <div>จำนวน: {e.CountTransaction} คัน</div>
+              <div>น้ำหนักรวม: {formattedSumWeightNet(e.SumWeightNet)} กก.</div>
+              <div>
+                SumAmountNet: {formattedSumAmountNet(e.SumAmountNet)} บาท.
+              </div>
+            </div>
+          </Card>
+        ))}
     </>
   );
 }

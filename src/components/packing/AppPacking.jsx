@@ -32,7 +32,6 @@ function AppPacking() {
 
   const initialData = {
     PackingCode: null,
-    PackingName: null,
     PackingWeight: 0.0,
     Cancel: false,
     OldPk: null,
@@ -62,6 +61,8 @@ function AppPacking() {
     {
       field: "PackingWeight",
       header: "น้ำหนัก",
+      align: "right",
+      alignHeader: "right",
     },
     {
       field: "Cancel",
@@ -105,12 +106,14 @@ function AppPacking() {
       <div>น้ำหนัก</div>
       <div>
         <InputNumber
-          className="max-w-[20%] min-w-[5rem]  text-end"
+          style={{ textAlign: "right" }}
+          inputClassName="text-right"
+          className="max-w-[20%] min-w-[5rem]"
           name="PackingWeight"
           value={packingData.PackingWeight}
           //onBlur={handleInputChange}
           onValueChange={handleInputChange}
-          minFractionDigits={2}
+          minFractionDigits={0}
           maxFractionDigits={5}
         />
       </div>
@@ -163,10 +166,10 @@ function AppPacking() {
         },
         body: JSON.stringify(packingData),
       };
-      zuSetDataID(packingData.TradingUnitCode);
+      zuSetDataID(packingData.PackingCode);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
-      console.log(urladd, optionadd);
+      console.log("add : ", urladd, optionadd);
     }
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
@@ -178,7 +181,7 @@ function AppPacking() {
         },
         body: JSON.stringify(packingData),
       };
-      zuSetDataID(packingData.ProductCode);
+      zuSetDataID(packingData.PackingCode);
       zuSetFromAddEdit(addedit);
       zuSetEdit(urledit, optionedit);
       console.log(urledit, optionedit);

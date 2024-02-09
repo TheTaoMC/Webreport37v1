@@ -9,17 +9,17 @@ import Cookies from "js-cookie";
 import { useStore } from "../../zustand/Store";
 
 function AppLogin() {
-  const { zuLogin, zuCheckUser } = useStore();
+  const { zuLogin, zuCheckUser, zuSetFetch, zuSetTitle } = useStore();
 
   const navigate = useNavigate();
   const toast = useRef(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [formData, setFormData] = useState({
     LogInName: "",
     LogInPassword: "",
   });
+
   console.log("formData ", formData);
+
   useEffect(() => {
     //ถ้ามีuser เก็บใน cookie ให้ไปหน้า main
     if (Cookies.get("user")) {
@@ -28,8 +28,18 @@ function AppLogin() {
     //zuCheckUser(() => navigate("/main"));
   }, []);
   const handleLogin = async () => {
-    const res = await zuLogin(username, password, formData);
+    console.log("handleLogin ", formData);
+    const url = "Users/login.php";
+    const option = {
+      method: "POST",
+      headers: {
+        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+      },
+      body: JSON.stringify(formData),
+    };
+    const res = await zuLogin(url, option);
 
+    //console.log("res ", res);
     if (res === "success") {
       /*       const authenticatedUser = { username, password };
       Cookies.set("user", JSON.stringify(authenticatedUser), {
@@ -86,7 +96,7 @@ function AppLogin() {
             />
           </div>
           <div className="p-2 flex flex-col">
-            <label htmlFor="username">password</label>
+            <label htmlFor="username">รหัสผ่าน</label>
             <Password
               id="password"
               aria-describedby="password-help"

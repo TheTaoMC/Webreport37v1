@@ -35,6 +35,7 @@ function AppUser() {
     Pwd: null,
     CanEditUser: "admin",
     Cancel: false,
+    OldPk: null,
   };
 
   //แก้

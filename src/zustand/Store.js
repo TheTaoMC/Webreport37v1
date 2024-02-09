@@ -162,6 +162,8 @@ export const useStore = create((set, get) => ({
 
     zu_Url_Base: "https://theothai.com/tww37_webreport/API/api/",
 
+    //zu_Url_Base: "http://192.168.1.208/tww37_webreport/API/api/",
+
     zu_Url_Fetch: "",
     zu_Option_Fetch: {},
 
@@ -277,17 +279,21 @@ export const useStore = create((set, get) => ({
     },
     zuFetch: async () => {
         try {
-            console.log('get() ', get().zu_Url_Base + get().zu_Url_Fetch, get().zu_Option_Fetch);
+            //console.log("testAPI");
+            //console.log('get() ', get().zu_Url_Base + get().zu_Url_Fetch, get().zu_Option_Fetch);
             const response = await fetch(
                 get().zu_Url_Base + get().zu_Url_Fetch,
                 get().zu_Option_Fetch
             );
+
             if (!response.ok) {
+
                 set({ zu_Data: [] });
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             if (response.ok) {
+
                 const data = await response.json();
                 //console.log(data);
                 set({ zu_DataDashboard: data });
@@ -297,6 +303,7 @@ export const useStore = create((set, get) => ({
                     set({ zu_Data: data });
                 }
                 //return data;
+                //return response.ok;
             }
 
         } catch (error) {
@@ -306,7 +313,7 @@ export const useStore = create((set, get) => ({
     },
     zuAddData: async () => {
         try {
-            console.log(get().zu_ID);
+            console.log('zuAddData : ', get().zu_ID);
             if (get().zu_ID === "") {
                 return false;
             }
@@ -398,22 +405,13 @@ export const useStore = create((set, get) => ({
             console.error("Error deleting data:", error);
         }
     },
-    zuLogin: async (username, password, formData) => {
-        const url = get().zu_Url_Base + "userlogin/login.php";
+    zuLogin: async (url, option) => {
+
         try {
-            //console.log(get().zu_Url_Fetch, get().zu_Option_Fetch);
+            console.log(get().zu_Url_Base + url, option);
             const response = await fetch(
-                "https://theothai.com/ttw_webreport/API/api/userlogin/login.php",
-                {
-                    method: "POST",
-                    body: JSON.stringify(
-                        /* {
-                                "LogInName": username,
-                                "LogInPassword": password
-                            } */
-                        formData
-                    ),
-                }
+                get().zu_Url_Base + url, option,
+
             );
             if (!response.ok) {
                 console.log(response.message);

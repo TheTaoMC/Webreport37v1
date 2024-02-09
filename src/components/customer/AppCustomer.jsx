@@ -35,6 +35,7 @@ function AppCustomer() {
     Address1: null,
     Address2: null,
     Cancel: false,
+    OldPk: null,
   };
 
   const [customerData, setCustomerData] = useState(initialData);
@@ -79,6 +80,7 @@ function AppCustomer() {
     setCustomerData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldPk: zu_SelectedList.CustomerCode,
     });
   };
 
@@ -96,7 +98,7 @@ function AppCustomer() {
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="CustomerCode"
           defaultValue={customerData.CustomerCode}
@@ -153,7 +155,7 @@ function AppCustomer() {
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread = urlapimain+"/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
@@ -171,7 +173,7 @@ function AppCustomer() {
   useEffect(() => {
     if (zu_Title_Form_AddEdit === "add") {
       console.log("Add...");
-      const urladd = urlapimain+"/create.php";
+      const urladd = urlapimain + "/create.php";
       const optionadd = {
         method: "POST",
         headers: {
@@ -179,14 +181,14 @@ function AppCustomer() {
         },
         body: JSON.stringify(customerData),
       };
-      //zuSetDataID(columnsData.CustomerCode);
+      zuSetDataID(customerData.CustomerCode);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);
     }
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
-      const urledit = urlapimain+"/update.php";
+      const urledit = urlapimain + "/update.php";
       const optionedit = {
         method: "POST",
         headers: {
@@ -206,7 +208,7 @@ function AppCustomer() {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel = urlapimain+"/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
       headers: {

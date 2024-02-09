@@ -134,7 +134,7 @@ function AppProduct() {
       <div>ราคา</div>
       <div>
         <InputText
-          className="max-w-[20%] min-w-[5rem]  text-end"
+          className="max-w-[20%] min-w-[5rem] text-end"
           name="Price"
           defaultValue={productData.Price}
           onBlur={handleInputChange}
@@ -290,7 +290,7 @@ function AppProduct() {
         },
         body: JSON.stringify(productData),
       };
-      zuSetDataID(productData.TradingUnitCode);
+      zuSetDataID(productData.ProductCode);
       zuSetFromAddEdit(addedit);
       zuSetAdd(urladd, optionadd);
       console.log(urladd, optionadd);

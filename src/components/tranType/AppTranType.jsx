@@ -39,6 +39,7 @@ function AppTranType() {
     StockFactor: null,
     LastTicketCode: null,
     Cancel: false,
+    OldPk: null,
   };
 
   //แก้
@@ -108,6 +109,7 @@ function AppTranType() {
     setTranTypeData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldPk: zu_SelectedList.TransactionTypeCode,
     });
   };
 
@@ -126,7 +128,7 @@ function AppTranType() {
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="TransactionTypeCode"
           defaultValue={tranTypeData.TransactionTypeCode}

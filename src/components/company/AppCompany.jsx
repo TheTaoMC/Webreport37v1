@@ -35,6 +35,7 @@ function AppCompany() {
     Address1: null,
     Address2: null,
     Cancel: false,
+    OldPk: null,
   };
 
   //แก้
@@ -81,6 +82,7 @@ function AppCompany() {
     setCompanyData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldPk: zu_SelectedList.CompanyCode,
     });
   };
 
@@ -99,7 +101,7 @@ function AppCompany() {
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="CompanyCode"
           defaultValue={companyData.CompanyCode}

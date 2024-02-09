@@ -31,6 +31,7 @@ function AppMoistTH() {
   const initialData = {
     TableCode: null,
     Cancel: false,
+    OldPk: null,
   };
   const [moistTHData, setMoistTHData] = useState(initialData);
 
@@ -62,6 +63,7 @@ function AppMoistTH() {
     setMoistTHData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel === 0 ? false : true,
+      OldPk: zu_SelectedList.TableCode,
     });
   };
   console.log(moistTHData);
@@ -79,7 +81,7 @@ function AppMoistTH() {
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="TableCode"
           defaultValue={moistTHData.TableCode}
@@ -104,11 +106,12 @@ function AppMoistTH() {
     </div>
   );
 
+  const urlapimain = "MoistTH";
   //Load Data รอบแรก
   useEffect(() => {
     zuCheckUser(() => navigate("/"));
     zuResetData();
-    const urlread = "MoistTH/read.php";
+    const urlread = urlapimain + "/read.php";
     const optionread = {
       method: "GET",
       headers: {
@@ -126,7 +129,7 @@ function AppMoistTH() {
   useEffect(() => {
     if (zu_Title_Form_AddEdit === "add") {
       console.log("Add...");
-      const urladd = "MoistTH/create.php";
+      const urladd = urlapimain + "/create.php";
       const optionadd = {
         method: "POST",
         headers: {
@@ -141,7 +144,7 @@ function AppMoistTH() {
     }
     if (zu_Title_Form_AddEdit === "edit") {
       console.log("Edit...");
-      const urledit = "MoistTH/update.php";
+      const urledit = urlapimain + "/update.php";
       const optionedit = {
         method: "POST",
         headers: {
@@ -161,7 +164,7 @@ function AppMoistTH() {
     if (zu_SelectedList.length === 0) {
       return;
     }
-    const urldel = "MoistTH/delete.php";
+    const urldel = urlapimain + "/delete.php";
     const optiondel = {
       method: "POST",
       headers: {

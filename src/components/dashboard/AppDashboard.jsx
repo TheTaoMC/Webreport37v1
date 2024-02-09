@@ -36,7 +36,11 @@ function AppDashboard() {
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
-  console.log(zu_DataDashboard);
+
+  /*   console.log("zu_DataDashboard ", zu_DataDashboard);
+  console.log("zu_Data ", zu_Data);
+  console.log("data ", data); */
+
   //Load Data รอบแรก
   const urlapimain = "weightdashboard";
   useEffect(() => {
@@ -52,9 +56,7 @@ function AppDashboard() {
     zuSetTitle("dashboard");
     zuFetch();
     setData(zu_DataDashboard.SumByProduct);
-  }, [zu_DataDashboard]);
-
-  //useEffect(() => {}, [zu_Data]);
+  }, []);
 
   return (
     <>
@@ -62,16 +64,7 @@ function AppDashboard() {
         <div className="flex justify-center py-4 text-4xl">Dashboard</div>
         {/* <div className="m-auto w-[90%] flex md:justify-between justify-center flex-wrap gap-2 mt-2"> */}
         <div className="m-auto w-[95%] mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-1">
-          {data &&
-            data.map((e, i) => (
-              <AppCard
-                key={e.ProductDataID}
-                title={e.ProductID}
-                CountTransaction={e.CountTransaction}
-                SumWeightNet={e.SumWeightNet}
-                SumAmountNet={e.SumAmountNet}
-              />
-            ))}
+          <AppCard />
         </div>
 
         <Card
