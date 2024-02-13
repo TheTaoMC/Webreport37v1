@@ -6,6 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
+import { InputNumber } from "primereact/inputnumber";
 function AppProduct() {
   const {
     zu_Data,
@@ -37,7 +38,7 @@ function AppProduct() {
   const initialData = {
     ProductCode: null,
     ProductName: null,
-    Price: null,
+    Price: "0.00",
     TradingUnit: null,
     PackingCode: null,
     MoistureTableCode: null,
@@ -58,6 +59,9 @@ function AppProduct() {
     }));
   };
 
+  function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   const columns = [
     {
       field: "ProductCode",
@@ -133,12 +137,17 @@ function AppProduct() {
       </div>
       <div>ราคา</div>
       <div>
-        <InputText
-          className="max-w-[20%] min-w-[5rem] text-end"
+        <InputNumber
+          //className=" max-w-[2rem]"
+          value={productData.Price}
+          inputClassName="text-right max-w-[10rem]"
           name="Price"
-          defaultValue={productData.Price}
-          onBlur={handleInputChange}
-        />
+          //defaultValue={productData.Price}
+          onValueChange={handleInputChange}
+          minFractionDigits={2}
+          maxFractionDigits={5}
+        />{" "}
+        บาท
       </div>
 
       <div>หน่วยซื้อขาย</div>
@@ -174,7 +183,6 @@ function AppProduct() {
       <div>การบรรจุ</div>
       <div>
         <Dropdown
-          autoFocus
           className="w-[100%]"
           value={productData.PackingCode}
           onChange={(e) => {
@@ -274,7 +282,7 @@ function AppProduct() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("ความชื้น");
+    zuSetTitle("สินค้า");
     zuFetch();
   }, []);
 

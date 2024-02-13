@@ -6,6 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
+import { Password } from "primereact/password";
 function AppUser() {
   const {
     zu_Data,
@@ -33,7 +34,7 @@ function AppUser() {
     Username: null,
     FullName: null,
     Pwd: null,
-    CanEditUser: "admin",
+    CanEditUser: false,
     Cancel: false,
     OldPk: null,
   };
@@ -81,6 +82,7 @@ function AppUser() {
     setUsersData({
       ...zu_SelectedList,
       Cancel: zu_SelectedList.Cancel ? true : false,
+      OldPk: zu_SelectedList.Username,
     });
   };
 
@@ -99,7 +101,7 @@ function AppUser() {
       <div>
         <InputText
           autoFocus
-          disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
+          //disabled={zu_Title_Form_AddEdit === "edit" ? true : false}
           className="w-[100%]"
           name="Username"
           defaultValue={usersData.Username}
@@ -117,11 +119,13 @@ function AppUser() {
       </div>
       <div>รหัสผ่าน</div>
       <div>
-        <InputText
+        <Password
           className="w-[100%]"
           name="Pwd"
           defaultValue={usersData.Pwd}
           onBlur={handleInputChange}
+          feedback={false}
+          tabIndex={1}
         />
       </div>
       <div>{columns[2].header}</div>

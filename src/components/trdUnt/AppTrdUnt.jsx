@@ -5,6 +5,7 @@ import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
+import { InputNumber } from "primereact/inputnumber";
 function AppTrdUnt() {
   const {
     zu_Data,
@@ -30,8 +31,8 @@ function AppTrdUnt() {
 
   const initialData = {
     TradingUnitCode: null,
-    TradingUnitName: null,
-    TradingUnitFactor: null,
+    //TradingUnitName: null,
+    TradingUnitFactor: "0",
     Cancel: false,
     OldPk: null,
   };
@@ -55,13 +56,10 @@ function AppTrdUnt() {
       header: "รหัส",
     },
     {
-      field: "TradingUnitName",
-      header: "ชื่อ",
-      disabled: false,
-    },
-    {
       field: "TradingUnitFactor",
-      header: "TradingUnitFactor",
+      header: "น้ำหนักต่อ 1 หน่วย",
+      align: "right",
+      alignHeader: "right",
     },
     {
       field: "Cancel",
@@ -100,22 +98,15 @@ function AppTrdUnt() {
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[1].header}</div>
+
+      <div>น้ำหนักต่อ 1 หน่วย</div>
       <div>
-        <InputText
-          className="w-[100%]"
-          name="TradingUnitName"
-          defaultValue={trdUntData.TradingUnitName}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>{columns[2].header}</div>
-      <div>
-        <InputText
-          className="w-[100%]"
+        <InputNumber
+          inputId="integeronly"
+          inputClassName="text-right max-w-[10rem]"
           name="TradingUnitFactor"
-          defaultValue={trdUntData.TradingUnitFactor}
-          onBlur={handleInputChange}
+          value={trdUntData.TradingUnitFactor}
+          onValueChange={handleInputChange}
         />
       </div>
       <div>
@@ -150,7 +141,7 @@ function AppTrdUnt() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("ความชื้น");
+    zuSetTitle("หน่วย");
     zuFetch();
   }, []);
 

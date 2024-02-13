@@ -106,16 +106,15 @@ function AppPacking() {
       <div>น้ำหนัก</div>
       <div>
         <InputNumber
-          style={{ textAlign: "right" }}
-          inputClassName="text-right"
-          className="max-w-[20%] min-w-[5rem]"
+          inputClassName="text-right max-w-[10rem]"
           name="PackingWeight"
           value={packingData.PackingWeight}
-          //onBlur={handleInputChange}
           onValueChange={handleInputChange}
-          minFractionDigits={0}
+          //onValueChange={handleInputChange}
+          minFractionDigits={2}
           maxFractionDigits={5}
-        />
+        />{" "}
+        กก.
       </div>
       <div>
         <div className="flex gap-2  justify-between">

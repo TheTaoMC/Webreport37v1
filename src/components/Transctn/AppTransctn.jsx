@@ -7,6 +7,7 @@ import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Dropdown } from "primereact/dropdown";
+import { InputNumber } from "primereact/inputnumber";
 function AppTransctn() {
   const {
     zu_Data,
@@ -614,34 +615,6 @@ function AppTransctn() {
         />
       </div>
 
-      <div>หมายเหตุ 1</div>
-      <div>
-        <InputText
-          className="w-[100%]"
-          name="Remark1"
-          defaultValue={transctnData.Remark1}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>หมายเหตุ 2</div>
-      <div>
-        <InputText
-          className="w-[100%]"
-          name="Remark2"
-          defaultValue={transctnData.Remark2}
-          onBlur={handleInputChange}
-        />
-      </div>
-      <div>หมายเหตุ 3</div>
-      <div>
-        <InputText
-          className="w-[100%]"
-          name="Remark3"
-          defaultValue={transctnData.Remark3}
-          onBlur={handleInputChange}
-        />
-      </div>
-
       <div className="overflow-x-auto">
         <table className="w-[100%] table-auto mt-2">
           <thead className="border border-gray-950">
@@ -704,6 +677,303 @@ function AppTransctn() {
         </table>
       </div>
 
+      <div className="mt-4 grid grid-cols-1 md:grid-rows-7  gap-2">
+        {/* row1 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div>
+            {" "}
+            <div>จำนวน</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="Quantity"
+              //defaultValue={transctnData.Quantity}
+              value={transctnData.Quantity}
+              onBlur={handleInputChange}
+            />
+          </div>
+          <div>
+            {" "}
+            <div>การบรรจุ</div>
+            <Dropdown
+              autoFocus
+              className="min-w-[10rem] max-w-[10rem]"
+              value={transctnData.PackingCode}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                const newValue2 =
+                  zu_MasterPackings.find((e) => e.PackingCode === newValue) ||
+                  {};
+
+                const updatedZuSelectedList = {
+                  ...transctnData,
+                  //WeightTypeDataID: newValue,
+                  PackingCode: newValue2.PackingCode,
+                  //ProductName: newValue2.ProductName,
+                };
+                setTransctnData(updatedZuSelectedList);
+              }}
+              options={zu_MasterPackings.map((data) => ({
+                value: data.PackingCode,
+                label: data.PackingCode,
+              }))}
+              placeholder="เลือกข้อมูล"
+              filter
+              showClear
+            />
+          </div>
+          <div>
+            {" "}
+            <div>น้ำหนัก</div>
+            <InputNumber
+              disabled={true}
+              inputClassName="text-right max-w-[7rem]"
+              name="SagWeight"
+              value={transctnData.SagWeight}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            กก.
+          </div>
+        </div>
+        {/* row2 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div>
+            {" "}
+            <div>สิ่งเจือปน</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="VariedDeductWeight2"
+              value={transctnData.VariedDeductWeight2}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            %
+          </div>
+          <div>
+            {" "}
+            <div>หัก</div>
+            <InputNumber
+              disabled
+              inputClassName="text-right max-w-[5rem]"
+              name="VariedDeductWeight1"
+              value={transctnData.VariedDeductWeight1}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            %
+          </div>
+          <div></div>
+        </div>
+        {/* row3 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div>
+            {" "}
+            <div>ความชื้น</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="Moisture"
+              value={transctnData.Moisture}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            %
+          </div>
+          <div>
+            <div>ตารางความชื้น</div>
+            <Dropdown
+              autoFocus
+              className="min-w-[10rem] max-w-[10rem]"
+              value={transctnData.MoistureTableCode}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                const newValue2 =
+                  zu_MasterMoistTHs.find((e) => e.TableCode === newValue) || {};
+
+                const updatedZuSelectedList = {
+                  ...transctnData,
+                  //WeightTypeDataID: newValue,
+                  MoistureTableCode: newValue2.TableCode,
+                  //ProductName: newValue2.ProductName,
+                };
+                setTransctnData(updatedZuSelectedList);
+              }}
+              options={zu_MasterMoistTHs.map((data) => ({
+                value: data.TableCode,
+                label: data.TableCode,
+              }))}
+              placeholder="เลือกข้อมูล"
+              filter
+              showClear
+            />
+          </div>
+          <div>
+            {" "}
+            <div>หัก</div>
+            <InputNumber
+              disabled
+              inputClassName="text-right max-w-[5rem]"
+              name="MoistureDeduct"
+              value={transctnData.MoistureDeduct}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            %
+          </div>
+        </div>
+        {/* row4 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div>
+            {" "}
+            <div>น้ำหนักหัก</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="DeductWeight"
+              value={transctnData.DeductWeight}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            กก.
+          </div>
+          <div></div>
+          <div></div>
+        </div>
+        {/* row5 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div>
+            {" "}
+            <div>ราคา/หน่วย</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="Price"
+              value={transctnData.Price}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            บาท
+          </div>
+          <div>
+            {" "}
+            <div>{"("}หน่วยซื้อขาย</div>
+            <Dropdown
+              inputId="TradingUnit"
+              className="min-w-[10rem] max-w-[10rem]"
+              value={transctnData.TradingUnit}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                const newValue2 =
+                  zu_MasterTrdUnts.find(
+                    (e) => e.TradingUnitCode === newValue
+                  ) || {};
+
+                const updatedZuSelectedList = {
+                  ...transctnData,
+                  TradingUnit: newValue2.TradingUnitCode,
+                  KgPerTradingUnit: newValue2.TradingUnitFactor,
+                };
+                setTransctnData(updatedZuSelectedList);
+              }}
+              options={zu_MasterTrdUnts.map((data) => ({
+                value: data.TradingUnitCode,
+                label: data.TradingUnitCode,
+              }))}
+              placeholder="เลือกข้อมูล"
+              filter
+              showClear
+            />
+          </div>
+          <div>
+            {" "}
+            <div>เท่ากับ{")"}</div>
+            <InputNumber
+              disabled
+              htmlFor="TradingUnit"
+              inputClassName="text-right max-w-[5rem]"
+              name="KgPerTradingUnit"
+              value={transctnData.KgPerTradingUnit}
+              onValueChange={handleInputChange}
+            />{" "}
+            กก.
+          </div>
+        </div>
+        {/* row6 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div>
+            {" "}
+            <div>ค่าชั่ง</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="VariedDeductAmount1"
+              value={transctnData.VariedDeductAmount1}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            บาท/ตัน
+          </div>
+          <div>
+            {" "}
+            <div>ค่าชั่งเหมา</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="FixedDeductAmount1"
+              value={transctnData.FixedDeductAmount1}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            บาท
+          </div>
+          <div></div>
+        </div>
+        {/* row7 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div>
+            {" "}
+            <div>ค่าลง</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="VariedDeductAmount2"
+              value={transctnData.VariedDeductAmount2}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            บาท/ตัน
+          </div>
+          <div>
+            {" "}
+            <div>ค่าลงเหมา</div>
+            <InputNumber
+              inputClassName="text-right max-w-[5rem]"
+              name="FixedDeductAmount2"
+              value={transctnData.FixedDeductAmount2}
+              onBlur={handleInputChange}
+              minFractionDigits={2}
+              maxFractionDigits={5}
+            />{" "}
+            บาท
+          </div>
+          <div></div>
+        </div>
+      </div>
+
+      {/* หมายเหตุ */}
+      <div>หมายเหตุ</div>
+      <div>
+        <InputText
+          className="w-[100%]"
+          name="Remark1"
+          defaultValue={transctnData.Remark1}
+          onBlur={handleInputChange}
+        />
+      </div>
       <div>
         <div className="flex gap-2  justify-between">
           <div className="flex gap-2 items-center">

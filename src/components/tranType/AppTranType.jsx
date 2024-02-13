@@ -5,6 +5,8 @@ import AppTable from "../table/AppTable";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from "primereact/dropdown";
+import { InputNumber } from "primereact/inputnumber";
 function AppTranType() {
   const {
     zu_Data,
@@ -36,7 +38,7 @@ function AppTranType() {
     InboundTicketFormat: null,
     InboundAfterOutTicketFormat: null,
     OutboundTicketFormat: null,
-    StockFactor: null,
+    StockFactor: "1",
     LastTicketCode: null,
     Cancel: false,
     OldPk: null,
@@ -90,7 +92,9 @@ function AppTranType() {
     {
       field: "StockFactor",
       header: "สัมประสิทธิ Stock",
-      minWidth: "15rem",
+      minWidth: "12rem",
+      align: "right",
+      alignHeader: "right",
     },
     {
       field: "LastTicketCode",
@@ -144,13 +148,21 @@ function AppTranType() {
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[2].header}</div>
+      <div>วิธีการชั่ง</div>
       <div>
-        <InputText
+        <Dropdown
           className="w-[100%]"
           name="WeighingType"
-          defaultValue={tranTypeData.WeighingType}
-          onBlur={handleInputChange}
+          value={tranTypeData.WeighingType}
+          options={[
+            {
+              name: "ชั่งน้ำหนักทั้งรถหนักและรถเบา",
+              value: "ชั่งน้ำหนักทั้งรถหนักและรถเบา",
+            },
+            { name: "ชั่งน้ำหนักครั้งเดียว", value: "ชั่งน้ำหนักครั้งเดียว" },
+          ]}
+          optionLabel="name"
+          onChange={handleInputChange}
         />
       </div>
       <div>{columns[3].header}</div>
@@ -180,19 +192,21 @@ function AppTranType() {
           onBlur={handleInputChange}
         />
       </div>
-      <div>{columns[6].header}</div>
+      <div>สัมประสิทธิ Stock</div>
       <div>
-        <InputText
-          className="w-[100%]"
+        <InputNumber
+          inputClassName="text-right max-w-[10rem]"
           name="StockFactor"
+          value={tranTypeData.StockFactor}
           defaultValue={tranTypeData.StockFactor}
           onBlur={handleInputChange}
         />
       </div>
+
       <div>{columns[7].header}</div>
       <div>
         <InputText
-          className="w-[100%]"
+          className="max-w-[10rem]"
           name="LastTicketCode"
           defaultValue={tranTypeData.LastTicketCode}
           onBlur={handleInputChange}
