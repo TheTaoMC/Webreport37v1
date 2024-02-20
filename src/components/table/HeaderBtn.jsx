@@ -7,7 +7,24 @@ import "primeicons/primeicons.css";
 import AddData from "../AddData";
 import AppSearch from "../search/AppSearch";
 
+//import { jsPDF } from "jspdf";
+//import "jspdf-autotable";
+import THSarabun from "./THSarabun.ttf";
+//import myFont from "./";
+//import myFontjson from "./Kanit-Regular-normal";
+
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  PDFDownloadLink,
+  PDFViewer,
+} from "@react-pdf/renderer";
+
 import { useStore } from "../../zustand/Store";
+import ExportPDF from "./ExportPDF";
 
 const header = (dt, onSearchFiltersChange) => {
   const {
@@ -99,15 +116,51 @@ const header = (dt, onSearchFiltersChange) => {
     dt.current.exportCSV({ selectionOnly });
   };
 
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: "row",
+      backgroundColor: "#E4E4E4",
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+  });
+
+  const MyDocument = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text>Section #1</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Section #2</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+
   const exportPdf = () => {
-    import("jspdf").then((jsPDF) => {
+    /*     import("jspdf").then((jsPDF) => {
       import("jspdf-autotable").then(() => {
         const doc = new jsPDF.default(0, 0);
 
+        doc.addFileToVFS("THSarabun.ttf", THSarabun);
+        doc.addFont("THSarabun.ttf", "thaiFont", "normal");
         doc.autoTable(exportColumns, zu_Data);
         doc.save("weightDatas.pdf");
       });
-    });
+    }); */
+  };
+
+  const DownloadPDFButton = () => {
+    return (
+      <PDFDownloadLink
+        document={MyDocument}
+        fileName={"weightDatas.pdf"}
+      ></PDFDownloadLink>
+    );
   };
 
   const exportColumns = zu_Columns.map((col) => ({
@@ -230,6 +283,7 @@ const header = (dt, onSearchFiltersChange) => {
   useEffect(() => {
     zuCheckUser();
   }, []);
+
   return (
     <>
       <div className="flex sm:flex-row flex-col  sm:align-items-center items-center justify-between gap-2">
@@ -303,16 +357,12 @@ const header = (dt, onSearchFiltersChange) => {
         )}
 
         <div className="sm:flex hidden sm:flex-row flex-col gap-2 w-screen justify-end">
-          <Button
-            className=" p-2 w-24 h-10 rounded-md"
-            type="button"
-            label="PDF"
-            icon="pi pi-file-pdf"
-            //severity="warning"
-            rounded
-            onClick={exportPdf}
-            data-pr-tooltip="PDF"
-          />
+
+
+          <div className="hidden">
+            <ExportPDF datas={zu_Data} />
+          </div>
+
           <Button
             className=" p-2 w-24 h-10 rounded-md"
             type="button"

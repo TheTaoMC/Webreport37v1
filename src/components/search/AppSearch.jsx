@@ -190,6 +190,7 @@ function AppSearch() {
       Typeinput: "dropdown",
       From: "",
       To: "",
+      disabled: true,
     },
     {
       //12
@@ -209,14 +210,15 @@ function AppSearch() {
       Typeinput: "dropdown",
       From: "",
       To: "",
+      disabled: true,
     },
     {
       //14
       Title: "สถานะ",
       Filter: false,
-      FlagCancel: true,
+      FlagCancel: false,
       Typeinput: "Singledropdown",
-      From: "",
+      From: false,
       To: "",
     },
     {
@@ -523,8 +525,8 @@ function AppSearch() {
                 value={searchFilters[index].From}
                 onChange={(e) => handleText(index, fromorto, e.value)}
                 options={[
-                  { show: "ไม่ยกเลิก", value: true },
-                  { show: "ยกเลิก", value: false },
+                  { show: "ไม่ยกเลิก", value: false },
+                  { show: "ยกเลิก", value: true },
                 ].map((data) => ({
                   value: data.value,
                   label: data.show,
