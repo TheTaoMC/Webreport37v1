@@ -57,10 +57,16 @@ function AppCompany() {
     {
       field: "CompanyCode",
       header: "รหัส",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
     {
       field: "CompanyName",
       header: "ชื่อ",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
     },
     {
       field: "Address1",

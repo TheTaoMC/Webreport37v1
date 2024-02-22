@@ -50,10 +50,16 @@ function AppMoistTH() {
     {
       field: "TableCode",
       header: "รหัส",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
     {
       field: "Cancel",
       header: "สถานะ",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
       body: (rowData) => {
         return rowData.Cancel === 0 ? "ใช้งาน" : "ยกเลิก";
       },

@@ -12,6 +12,7 @@ function AppCustomer() {
     zu_ToggleResetState,
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
+    zu_Api_Key,
   } = useStore();
 
   const {
@@ -55,10 +56,16 @@ function AppCustomer() {
     {
       field: "CustomerCode",
       header: "รหัส",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
     {
       field: "CustomerName",
       header: "ชื่อ",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
     },
     {
       field: "Address1",
@@ -159,7 +166,7 @@ function AppCustomer() {
     const optionread = {
       method: "GET",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
     };
     zuSetFromAddEdit(addedit);
@@ -177,7 +184,7 @@ function AppCustomer() {
       const optionadd = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(customerData),
       };
@@ -192,7 +199,7 @@ function AppCustomer() {
       const optionedit = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(customerData),
       };
@@ -212,7 +219,7 @@ function AppCustomer() {
     const optiondel = {
       method: "POST",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
       body: JSON.stringify({
         CustomerCode: customerData.CustomerCode,

@@ -93,7 +93,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    //basename: "/webreport",
+    //basename: config.basename,
   }
 );
 function App() {

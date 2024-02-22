@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Chart } from "primereact/chart";
 import { useStore } from "../../zustand/Store";
-import Bar from "./Bar";
-import Pie from "./Pie";
+import Barr from "./Bar";
+import Piee from "./Pie";
 import Doughnut from "./Doughnut";
 import AppCard from "./Cards/AppCard";
 import { Card, DonutChart, Title } from "@tremor/react";
 import { useNavigate } from "react-router-dom";
+
 import Area from "./Area";
+//import moment from "moment";
+import moment from "moment/min/moment-with-locales";
+import Pure from "./Pure";
 //import { data } from "../data/data.jsx";
 
 function AppDashboard() {
@@ -61,22 +65,28 @@ function AppDashboard() {
   return (
     <>
       <div className="">
-        <div className="flex justify-center py-4 text-4xl">Dashboard</div>
+        <div className="flex flex-col justify-center items-center py-4 text-4xl">
+          <div>Dashboard</div>
+          <div className="text-2xl">
+            {"วันที่ " + zu_DataDashboard.DataDate}
+          </div>
+        </div>
         {/* <div className="m-auto w-[90%] flex md:justify-between justify-center flex-wrap gap-2 mt-2"> */}
         <div className="m-auto w-[95%] mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-1">
           <AppCard />
         </div>
 
         <Card
-          className="m-auto w-[95%] mt-2 grid grid-cols-1 md:grid-cols-4 gap-1 "
+          className="m-auto w-[95%] h-[70vh] mt-2 grid grid-cols-1 md:grid-cols-4 gap-1 "
           decoration="top"
           decorationColor="blue"
         >
           <div className="md:col-span-1 ">
-            <Doughnut datas={data} />
+            {/* <Doughnut datas={data} /> */}
+            <Piee />
           </div>
           <div className="md:col-span-3  ">
-            <Bar datas={data} />
+            <Barr />
           </div>
         </Card>
       </div>

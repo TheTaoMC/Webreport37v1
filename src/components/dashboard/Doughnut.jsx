@@ -6,10 +6,10 @@ function Doughnut({ datas }) {
   const valueFormatter = (number) =>
     `THB ${new Intl.NumberFormat("us").format(number).toString()}`;
 
-  console.log(zu_DataDashboard.SumByProduct);
+  //console.log(zu_DataDashboard.SumByProduct);
   return (
     <Card className="">
-      <Title>Doughnut</Title>
+      <Title></Title>
       <DonutChart
         className="mt-6  "
         data={zu_DataDashboard.SumByProduct}

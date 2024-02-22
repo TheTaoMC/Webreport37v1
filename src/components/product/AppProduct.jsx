@@ -66,10 +66,16 @@ function AppProduct() {
     {
       field: "ProductCode",
       header: "รหัส",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
     {
       field: "ProductName",
       header: "ชื่อ",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
     },
     {
       field: "Price",

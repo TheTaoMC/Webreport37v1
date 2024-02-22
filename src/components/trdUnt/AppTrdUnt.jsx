@@ -54,12 +54,18 @@ function AppTrdUnt() {
     {
       field: "TradingUnitCode",
       header: "รหัส",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
     {
       field: "TradingUnitFactor",
       header: "น้ำหนักต่อ 1 หน่วย",
       align: "right",
       alignHeader: "right",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
     },
     {
       field: "Cancel",

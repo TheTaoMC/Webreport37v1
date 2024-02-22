@@ -19,7 +19,7 @@ ChartJS.register(
   Legend
 );
 
-function Barr() {
+function Pure() {
   const { zu_DataDashboard } = useStore();
   const [labels, setLabels] = useState([]);
   const [datas, setdatas] = useState([]);
@@ -47,8 +47,8 @@ function Barr() {
         position: "top",
       },
       title: {
-        display: false,
-        text: "sdsdd",
+        display: true,
+        text: "",
       },
     },
   };
@@ -57,7 +57,7 @@ function Barr() {
     labels,
     datasets: [
       {
-        label: "????",
+        label: "ขาย",
         data: datas,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
@@ -67,4 +67,4 @@ function Barr() {
   return <Bar options={options} data={data} />;
 }
 
-export default Barr;
+export default Pure;

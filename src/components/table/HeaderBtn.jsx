@@ -13,7 +13,7 @@ import THSarabun from "./THSarabun.ttf";
 //import myFont from "./";
 //import myFontjson from "./Kanit-Regular-normal";
 
-import {
+/* import {
   Page,
   Text,
   View,
@@ -21,10 +21,10 @@ import {
   StyleSheet,
   PDFDownloadLink,
   PDFViewer,
-} from "@react-pdf/renderer";
+} from "@react-pdf/renderer"; */
 
 import { useStore } from "../../zustand/Store";
-import ExportPDF from "./ExportPDF";
+//import ExportPDF from "./ExportPDF";
 
 const header = (dt, onSearchFiltersChange) => {
   const {
@@ -116,7 +116,7 @@ const header = (dt, onSearchFiltersChange) => {
     dt.current.exportCSV({ selectionOnly });
   };
 
-  const styles = StyleSheet.create({
+/*   const styles = StyleSheet.create({
     page: {
       flexDirection: "row",
       backgroundColor: "#E4E4E4",
@@ -126,9 +126,9 @@ const header = (dt, onSearchFiltersChange) => {
       padding: 10,
       flexGrow: 1,
     },
-  });
+  }); */
 
-  const MyDocument = () => (
+/*   const MyDocument = () => (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
@@ -139,7 +139,7 @@ const header = (dt, onSearchFiltersChange) => {
         </View>
       </Page>
     </Document>
-  );
+  ); */
 
   const exportPdf = () => {
     /*     import("jspdf").then((jsPDF) => {
@@ -154,14 +154,7 @@ const header = (dt, onSearchFiltersChange) => {
     }); */
   };
 
-  const DownloadPDFButton = () => {
-    return (
-      <PDFDownloadLink
-        document={MyDocument}
-        fileName={"weightDatas.pdf"}
-      ></PDFDownloadLink>
-    );
-  };
+
 
   const exportColumns = zu_Columns.map((col) => ({
     title: col.header,
@@ -360,7 +353,7 @@ const header = (dt, onSearchFiltersChange) => {
 
 
           <div className="hidden">
-            <ExportPDF datas={zu_Data} />
+            {/* <ExportPDF datas={zu_Data} /> */}
           </div>
 
           <Button

@@ -18,7 +18,7 @@ function AppLogin() {
     LogInPassword: "",
   });
 
-  console.log("formData ", formData);
+  //console.log("formData ", formData);
 
   useEffect(() => {
     //ถ้ามีuser เก็บใน cookie ให้ไปหน้า main
@@ -28,7 +28,7 @@ function AppLogin() {
     //zuCheckUser(() => navigate("/main"));
   }, []);
   const handleLogin = async () => {
-    console.log("handleLogin ", formData);
+    //console.log("handleLogin ", formData);
     const url = "Users/login.php";
     const option = {
       method: "POST",
@@ -61,7 +61,7 @@ function AppLogin() {
     //Enter
     if (event.key === "Enter") {
       handleLogin();
-      console.log("Enter key pressed");
+      //console.log("Enter key pressed");
     }
   };
 

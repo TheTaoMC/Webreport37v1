@@ -13,7 +13,7 @@ function AppCard({ title, CountTransaction, SumWeightNet, SumAmountNet }) {
   const formattedSumWeightNet = (e) =>
     new Intl.NumberFormat("th-TH", {}).format(e);
 
-  console.log(zu_DataDashboard.SumByProduct);
+  //console.log(zu_DataDashboard.SumByProduct);
   return (
     <>
       {/* p-4 border rounded-2xl drop-shadow-md bg-blue-300 hover:bg-blue-200 cursor-pointer   */}

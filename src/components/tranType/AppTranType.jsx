@@ -63,11 +63,17 @@ function AppTranType() {
     {
       field: "TransactionTypeCode",
       header: "รหัส",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
     {
       field: "TransactionTypeName",
       header: "ชื่อ",
       minWidth: "10rem",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
     },
     {
       field: "WeighingType",

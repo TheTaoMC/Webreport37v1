@@ -56,6 +56,9 @@ function AppPacking() {
     {
       field: "PackingCode",
       header: "รหัส",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
 
     {
@@ -63,6 +66,9 @@ function AppPacking() {
       header: "น้ำหนัก",
       align: "right",
       alignHeader: "right",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
     },
     {
       field: "Cancel",

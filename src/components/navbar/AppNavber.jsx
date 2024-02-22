@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { useStore } from "../../zustand/Store";
 import { Menubar } from "primereact/menubar";
 function AppNavber({ title }) {
-  const { zuCheckUser, zuSetTitleFromAddEdit } = useStore();
+  const { zuCheckUser, zuSetTitleFromAddEdit, zu_permission } = useStore();
   const navigate = useNavigate();
   const menuData = useRef(null);
 
@@ -63,6 +63,7 @@ function AppNavber({ title }) {
         navigate("/User");
       },
       //icon: "pi pi-times",
+      visible: zu_permission ? true : false,
     },
     {
       label: "ข้อมูลชั่งน้ำหนัก",

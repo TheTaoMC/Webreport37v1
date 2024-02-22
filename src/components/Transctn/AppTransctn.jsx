@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
+import { Toast } from "primereact/toast";
 function AppTransctn() {
   const {
     zu_Data,
@@ -105,12 +106,18 @@ function AppTransctn() {
       field: "TicketCode",
       header: "เลขที่ตั๋ว",
       minWidth: "10rem",
+      footer: (rowData) => {
+        return "รวม ";
+      },
     },
     {
       //1
       field: "InboundDate",
       header: "วันที่ชั่งเข้า",
       minWidth: "10rem",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
       body: (rowData) => {
         return moment(rowData.InboundDate).format("DD/MM/YYYY");
       },
@@ -180,31 +187,48 @@ function AppTransctn() {
       minWidth: "15rem",
     },
     {
-      //
+      //12
       field: "ProductName",
       header: "ชื่อสินค้า",
       minWidth: "15rem",
     },
     {
+      //13
       field: "StoreCode",
       header: "StoreCode",
       minWidth: "10rem",
     },
     {
-      //
+      //14
       field: "InboundWeight",
       header: "น้ำหนักเข้า",
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        return rowData.InboundWeight.toLocaleString();
+      },
+      footer: (rowData) => {
+        return rowData.props.value
+          .reduce((total, item) => total + item.InboundWeight, 0)
+          .toLocaleString();
+      },
     },
     {
-      //
+      //15
       field: "OutboundWeight",
       header: "น้ำหนักออก",
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        return rowData.OutboundWeight.toLocaleString();
+      },
+      footer: (rowData) => {
+        return rowData.props.value
+          .reduce((total, item) => total + item.OutboundWeight, 0)
+          .toLocaleString();
+      },
     },
     {
       //
@@ -235,6 +259,23 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      footer: (rowData) => {
+        const totalNetAmount = rowData.props.value.reduce(
+          (total, item) => total + item.NetAmount,
+          0
+        );
+        const sumAmount = rowData.props.value.reduce(
+          (total, item) => total + item.Amount,
+          0
+        );
+        const sumTradingWeight = rowData.props.value.reduce(
+          (total, item) => total + item.TradingWeight,
+          0
+        );
+
+        const sumPrice = sumAmount / sumTradingWeight;
+        return isNaN(sumPrice) ? "0.00" : sumPrice.toFixed(2);
+      },
     },
     {
       //
@@ -367,34 +408,75 @@ function AppTransctn() {
     {
       //
       field: "NetWeight",
-      header: "NetWeight",
+      header: "น้ำหนักชั่ง",
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        return rowData.NetWeight.toLocaleString();
+      },
+      footer: (rowData) => {
+        return rowData.props.value
+          .reduce((total, item) => total + item.NetWeight, 0)
+          .toLocaleString();
+      },
     },
     {
       //
       field: "TradingWeight",
-      header: "TradingWeight",
+      header: "น้ำหนักสุทธิ",
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        return rowData.TradingWeight.toLocaleString();
+      },
+      footer: (rowData) => {
+        return rowData.props.value
+          .reduce((total, item) => total + item.TradingWeight, 0)
+          .toLocaleString();
+      },
     },
     {
       //
       field: "Amount",
-      header: "Amount",
+      header: "เป็นเงิน",
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        return rowData.Amount.toLocaleString();
+      },
+      footer: (rowData) => {
+        const totalAmount = rowData.props.value.reduce(
+          (total, item) => total + item.Amount,
+          0
+        );
+
+        return totalAmount.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       //
       field: "NetAmount",
-      header: "NetAmount",
+      header: "เป็นเงินสุทธิ",
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        return rowData.NetAmount.toLocaleString();
+      },
+      footer: (rowData) => {
+        const totalNetAmount = rowData.props.value.reduce(
+          (total, item) => total + item.NetAmount,
+          0
+        );
+        return totalNetAmount.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       //

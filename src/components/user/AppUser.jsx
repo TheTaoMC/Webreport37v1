@@ -58,10 +58,16 @@ function AppUser() {
     {
       field: "Username",
       header: "ชื่อ",
+      footer: (rowData) => {
+        return "จำนวน ";
+      },
     },
     {
       field: "FullName",
       header: "ชื่อเต็ม",
+      footer: (rowData) => {
+        return rowData.props.value.length.toLocaleString() + " รายการ";
+      },
     },
     {
       field: "CanEditUser",
