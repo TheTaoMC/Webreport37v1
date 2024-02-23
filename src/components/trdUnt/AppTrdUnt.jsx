@@ -63,6 +63,16 @@ function AppTrdUnt() {
       header: "น้ำหนักต่อ 1 หน่วย",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.TradingUnitFactor === null ||
+          rowData.TradingUnitFactor === undefined
+        ) {
+          return "0";
+        }
+
+        return rowData.TradingUnitFactor.toLocaleString(undefined, {});
+      },
       footer: (rowData) => {
         return rowData.props.value.length.toLocaleString() + " รายการ";
       },

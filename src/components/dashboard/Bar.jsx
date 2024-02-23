@@ -45,6 +45,7 @@ function Barr() {
     plugins: {
       legend: {
         position: "top",
+        display: false,
       },
       title: {
         display: false,
@@ -57,7 +58,7 @@ function Barr() {
     labels,
     datasets: [
       {
-        label: "????",
+        label: "เป็นเงิน",
         data: datas,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },

@@ -28,7 +28,7 @@ function Piee() {
     labels,
     datasets: [
       {
-        label: "# of Votes",
+        label: "เป็นเงิน",
         data: datas,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -50,9 +50,31 @@ function Piee() {
       },
     ],
   };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+        align: "start",
+        display: true,
+        reverse: true,
+        //fullSize: true,
+        //maxHeight: 1000,
+      },
+      title: {
+        display: false,
+        text: "sdsdd",
+      },
+    },
+  };
   return (
     <div className="card flex justify-content-center">
-      <Pie data={data} className="w-[100%] md:w-30rem h-[30vh]" />
+      <Pie
+        options={options}
+        data={data}
+        className="w-[100%] md:w-30rem overflow-auto"
+      />
     </div>
   );
 }

@@ -93,7 +93,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    //basename: config.basename,
+    //basename: "/tww37_pepsii",
   }
 );
 function App() {

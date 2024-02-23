@@ -77,7 +77,7 @@ function AppDashboard() {
         </div>
 
         <Card
-          className="m-auto w-[95%] h-[70vh] mt-2 grid grid-cols-1 md:grid-cols-4 gap-1 "
+          className="m-auto w-[95%]  mt-2 grid grid-cols-1 md:grid-cols-4 gap-1 "
           decoration="top"
           decorationColor="blue"
         >

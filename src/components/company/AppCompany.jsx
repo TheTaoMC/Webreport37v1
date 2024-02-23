@@ -174,7 +174,7 @@ function AppCompany() {
     zuSetFromAddEdit(addedit);
     zuSetFetch(urlread, optionread);
     zuSetColumns(columns);
-    zuSetTitle("บริษัท");
+    zuSetTitle("โกดัง");
     zuFetch();
   }, []);
 

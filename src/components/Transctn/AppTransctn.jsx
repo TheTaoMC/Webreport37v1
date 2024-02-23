@@ -259,11 +259,17 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (rowData.Price === null || rowData.Price === undefined) {
+          return "0.00";
+        }
+
+        return rowData.Price.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      },
       footer: (rowData) => {
-        const totalNetAmount = rowData.props.value.reduce(
-          (total, item) => total + item.NetAmount,
-          0
-        );
         const sumAmount = rowData.props.value.reduce(
           (total, item) => total + item.Amount,
           0
@@ -274,7 +280,13 @@ function AppTransctn() {
         );
 
         const sumPrice = sumAmount / sumTradingWeight;
-        return isNaN(sumPrice) ? "0.00" : sumPrice.toFixed(2);
+
+        return isNaN(sumPrice)
+          ? "0.00"
+          : sumPrice.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            });
       },
     },
     {
@@ -290,6 +302,19 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.KgPerTradingUnit === null ||
+          rowData.KgPerTradingUnit === undefined
+        ) {
+          return "0";
+        }
+
+        return rowData.KgPerTradingUnit.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       //
@@ -320,6 +345,16 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.DeductWeight === null ||
+          rowData.DeductWeight === undefined
+        ) {
+          return "0.00";
+        }
+
+        return rowData.DeductWeight.toLocaleString(undefined);
+      },
     },
     {
       //
@@ -344,6 +379,19 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.FixedDeductAmount1 === null ||
+          rowData.FixedDeductAmount1 === undefined
+        ) {
+          return "0.00";
+        }
+
+        return rowData.FixedDeductAmount1.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       //
@@ -352,6 +400,19 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.VariedDeductAmount1 === null ||
+          rowData.VariedDeductAmount1 === undefined
+        ) {
+          return "0.00";
+        }
+
+        return rowData.VariedDeductAmount1.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       //
@@ -360,6 +421,19 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.FixedDeductAmount2 === null ||
+          rowData.FixedDeductAmount2 === undefined
+        ) {
+          return "0.00";
+        }
+
+        return rowData.FixedDeductAmount2.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       //
@@ -368,6 +442,19 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.VariedDeductAmount2 === null ||
+          rowData.VariedDeductAmount2 === undefined
+        ) {
+          return "0.00";
+        }
+
+        return rowData.VariedDeductAmount2.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       //
@@ -444,16 +531,26 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
-      body: (rowData) => {
+      /*       body: (rowData) => {
         return rowData.Amount.toLocaleString();
+      }, */
+      body: (rowData) => {
+        if (rowData.Amount === null || rowData.Amount === undefined) {
+          return "0.00";
+        }
+
+        return rowData.Amount.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
       },
       footer: (rowData) => {
         const totalAmount = rowData.props.value.reduce(
           (total, item) => total + item.Amount,
           0
         );
-
         return totalAmount.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });
       },
@@ -465,8 +562,18 @@ function AppTransctn() {
       minWidth: "15rem",
       align: "right",
       alignHeader: "right",
-      body: (rowData) => {
+      /*       body: (rowData) => {
         return rowData.NetAmount.toLocaleString();
+      }, */
+      body: (rowData) => {
+        if (rowData.NetAmount === null || rowData.NetAmount === undefined) {
+          return "0.00";
+        }
+
+        return rowData.NetAmount.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
       },
       footer: (rowData) => {
         const totalNetAmount = rowData.props.value.reduce(
@@ -474,6 +581,7 @@ function AppTransctn() {
           0
         );
         return totalNetAmount.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         });
       },
@@ -721,7 +829,12 @@ function AppTransctn() {
               </td>
 
               <td className="text-red-500 font-semibold border border-gray-950 p-2 text-right">
-                {zu_SelectedList.InboundWeight || "0"}
+                {zu_SelectedList.InboundWeight === undefined
+                  ? "0"
+                  : zu_SelectedList.InboundWeight.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })}
               </td>
               <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
                 {zu_SelectedList.InboundUsername}
@@ -739,7 +852,12 @@ function AppTransctn() {
               </td>
 
               <td className="text-red-500 font-semibold border border-gray-950 p-2 text-right">
-                {zu_SelectedList.OutboundWeight || "0"}
+                {zu_SelectedList.InboundWeight === undefined
+                  ? "0"
+                  : zu_SelectedList.InboundWeight.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })}
               </td>
               <td className="text-red-500 font-semibold border border-gray-950 p-2 text-center">
                 {zu_SelectedList.OutboundUsername}
@@ -752,7 +870,10 @@ function AppTransctn() {
               <td className="text-red-500 font-bold border border-gray-950 text-right p-2">
                 {Math.abs(
                   zu_SelectedList.InboundWeight - zu_SelectedList.OutboundWeight
-                )}
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                })}
               </td>
             </tr>
           </tbody>

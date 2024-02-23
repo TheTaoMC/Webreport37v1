@@ -2,10 +2,14 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import Cookies from "js-cookie";
 import moment from "moment/moment";
+
 //import config from '../assets/config'
 
 export const useStore = create((set, get) => ({
-
+    zu_Api_Key: '857F7237C03246028748D51C97D4BADE',
+    zu_Url_Base: "https://theothai.com/tww37_webreport/API/api/",
+    zu_Basename: './TTW37',
+    //zu_Url_Base: "http://192.168.1.208/tww37_webreport/API/api/",
     zu_ToggleResetState: false,
     zu_ToggleEdit: false,
     zu_ToggleVisible: false,
@@ -163,10 +167,7 @@ export const useStore = create((set, get) => ({
     zu_MasterMoistTHs: [],
 
 
-    zu_Api_Key: '857F7237C03246028748D51C97D4BADE',
-    zu_Url_Base: "https://theothai.com/tww37_webreport/API/api/",
-    zu_Basename: './TTW37',
-    //zu_Url_Base: "http://192.168.1.208/tww37_webreport/API/api/",
+
 
     zu_Url_Fetch: "",
     zu_Option_Fetch: {},

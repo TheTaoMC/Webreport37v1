@@ -82,6 +82,16 @@ function AppProduct() {
       header: "ราคา",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (rowData.Price === null || rowData.Price === undefined) {
+          return "0.00";
+        }
+
+        return rowData.Price.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+      },
     },
     {
       field: "TradingUnit",

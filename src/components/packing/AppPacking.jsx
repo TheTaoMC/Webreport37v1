@@ -66,6 +66,16 @@ function AppPacking() {
       header: "น้ำหนัก",
       align: "right",
       alignHeader: "right",
+      body: (rowData) => {
+        if (
+          rowData.PackingWeight === null ||
+          rowData.PackingWeight === undefined
+        ) {
+          return "0";
+        }
+
+        return rowData.PackingWeight.toLocaleString(undefined, {});
+      },
       footer: (rowData) => {
         return rowData.props.value.length.toLocaleString() + " รายการ";
       },
@@ -117,8 +127,8 @@ function AppPacking() {
           value={packingData.PackingWeight}
           onValueChange={handleInputChange}
           //onValueChange={handleInputChange}
-          minFractionDigits={2}
-          maxFractionDigits={5}
+          /*           minFractionDigits={2}
+          maxFractionDigits={5} */
         />{" "}
         กก.
       </div>
