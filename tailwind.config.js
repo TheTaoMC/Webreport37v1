@@ -12,7 +12,7 @@ export default {
     current: "currentColor",
     extend: {
       screens: {
-        'xs': '424px',
+        'xs': '431px',
       },
       colors: {
         // light mode

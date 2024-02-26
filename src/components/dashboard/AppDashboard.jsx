@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Chart } from "primereact/chart";
 import { useStore } from "../../zustand/Store";
 import Barr from "./Bar";
@@ -60,6 +60,44 @@ function AppDashboard() {
     zuSetTitle("dashboard");
     zuFetch();
     setData(zu_DataDashboard.SumByProduct);
+  }, []);
+
+  /*   window.onbeforeunload = (event) => {
+    if (event.clientY === 0) {
+      localStorage.removeItem("user");
+    }
+  }; */
+
+/*   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      // กำหนดข้อความที่ต้องการแสดงใน popup
+      event.returnValue = "คุณแน่ใจว่าต้องการออกจากเว็บไซต์?";
+    };
+
+    // เพิ่ม event listener เมื่อ component ถูก mount
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // เคลียร์ event listener เมื่อ component ถูก unmount เพื่อป้องกันการรั่วไหลของหน่วยความจำ
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []); */
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        // Perform logout or cleanup actions here
+        localStorage.getItem("Tab is being closed or hidden");
+        console.log("Tab is being closed or hidden");
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   return (

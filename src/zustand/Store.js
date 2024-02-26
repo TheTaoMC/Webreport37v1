@@ -428,9 +428,10 @@ export const useStore = create((set, get) => ({
                 const logInName = data.LogInName;
                 const permission = data.Permission;
                 const authenticatedUser = { logInName, permission };
-                Cookies.set("user", JSON.stringify(authenticatedUser), {
-                    expires: 1, // หาร1000 = 1 วินาที
-                });
+                /*                 Cookies.set("user", JSON.stringify(authenticatedUser), {
+                                    expires: 1, // หาร1000 = 1 วินาที
+                                }); */
+                localStorage.setItem('user', JSON.stringify(authenticatedUser));
                 return "success";
             }
         } catch (error) {
@@ -438,12 +439,12 @@ export const useStore = create((set, get) => ({
         }
     },
     zuCheckUser: async (func) => {
-        const storedUser = Cookies.get("user");
+        const storedUser = localStorage.getItem("user");
         if (!storedUser) {
             func();
             return;
         } else {
-            const res = await JSON.parse(Cookies.get("user"));
+            const res = await JSON.parse(localStorage.getItem("user"));
             //console.log(res.permission);
             set({ zu_permission: res.permission === "Y" ? true : false });
             //console.log(get().zu_permission);

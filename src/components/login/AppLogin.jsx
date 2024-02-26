@@ -5,7 +5,7 @@ import { Password } from "primereact/password";
 import { InputText } from "primereact/inputtext";
 import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
-import Cookies from "js-cookie";
+//import Cookies from "js-cookie";
 import { useStore } from "../../zustand/Store";
 
 function AppLogin() {
@@ -22,9 +22,9 @@ function AppLogin() {
 
   useEffect(() => {
     //ถ้ามีuser เก็บใน cookie ให้ไปหน้า main
-    if (Cookies.get("user")) {
+    /*     if (Cookies.get("user")) {
       return navigate("/main");
-    }
+    } */
     //zuCheckUser(() => navigate("/main"));
   }, []);
   const handleLogin = async () => {

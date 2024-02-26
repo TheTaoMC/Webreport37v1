@@ -31,9 +31,7 @@ function AppCard({ title, CountTransaction, SumWeightNet, SumAmountNet }) {
             <div>
               <div>จำนวน: {e.CountTransaction} คัน</div>
               <div>น้ำหนักรวม: {formattedSumWeightNet(e.SumWeightNet)} กก.</div>
-              <div>
-                SumAmountNet: {formattedSumAmountNet(e.SumAmountNet)} บาท.
-              </div>
+              <div>เงินรวม: {formattedSumAmountNet(e.SumAmountNet)} บาท.</div>
             </div>
           </Card>
         ))}
