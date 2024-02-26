@@ -118,7 +118,7 @@ function AppNavber({ title }) {
               icon="pi pi-home"
               className="p-2 w-26 h-10 col-start-2 md:col-start-3 "
               onClick={() => {
-                localStorage.removeItem("user");
+                sessionStorage.removeItem("user");
                 navigate("/");
               }}
               aria-controls="popup_menu_left"
