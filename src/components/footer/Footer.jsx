@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
 
-function Footer() {
+function Footer({ children }) {
   const datas = [
     {
       title: "เกี่ยวกับเรา",
@@ -29,25 +29,31 @@ function Footer() {
     },
   ];
   return (
-    <footer className="flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between">
-      <Typography color="blue-gray" className="font-normal">
-        &copy; บริษัท ธีโอเอ็นจิเนียริ่ง จำกัด © 2024. All Rights Reserved.
-      </Typography>
-      <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
-        {datas.map((data, index) => (
-          <li key={index}>
-            <Typography
-              as="a"
-              href={data.url}
-              color="blue-gray"
-              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-            >
-              {data.title}
-            </Typography>
-          </li>
-        ))}
-      </ul>
-    </footer>
+    <>
+      {children}
+
+      <div className="m-auto w-[95%]">
+        <footer className="flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between ">
+          <Typography color="blue-gray" className="font-normal">
+            &copy; บริษัท ธีโอเอ็นจิเนียริ่ง จำกัด © 2024. All Rights Reserved.
+          </Typography>
+          <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
+            {datas.map((data, index) => (
+              <li key={index}>
+                <Typography
+                  as="a"
+                  href={data.url}
+                  color="blue-gray"
+                  className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+                >
+                  {data.title}
+                </Typography>
+              </li>
+            ))}
+          </ul>
+        </footer>
+      </div>
+    </>
   );
 }
 

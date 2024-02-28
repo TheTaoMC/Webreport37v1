@@ -23,6 +23,7 @@ import AppTrdUnt from "./components/trdUnt/AppTrdUnt.jsx";
 import AppPacking from "./components/packing/AppPacking.jsx";
 import AppTranType from "./components/tranType/AppTranType.jsx";
 import AppTransctn from "./components/Transctn/AppTransctn.jsx";
+import Footer from "./components/footer/Footer";
 
 const router = createBrowserRouter(
   [
@@ -100,7 +101,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <Footer>
+        <RouterProvider router={router} />
+      </Footer>
     </>
   );
 }

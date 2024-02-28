@@ -126,9 +126,6 @@ function AppLogin() {
           </div>
         </div>
       </div>
-      <div className="m-auto w-[95%]">
-        <Footer />
-      </div>
     </div>
   );
 }

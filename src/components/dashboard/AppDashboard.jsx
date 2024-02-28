@@ -92,9 +92,9 @@ function AppDashboard() {
         </Card>
       </div>
 
-      <div className="m-auto w-[95%]">
+{/*       <div className="m-auto w-[95%]">
         <Footer />
-      </div>
+      </div> */}
     </>
   );
 }
