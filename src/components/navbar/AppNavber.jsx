@@ -82,15 +82,21 @@ function AppNavber({ title }) {
         <div className="flex gap-2 justify-between p-2 bg-blue-100 text-gray-500 text-lg">
           <div>
             <div className="flex  md:flex-row">
-              <img
-                src="https://webv3.theo.co.th/wp-content/uploads/2022/05/Logo_New-1.jpg"
-                alt=""
-                //width={45}
-                className="p-1 h-20 xs:h-10"
-              />
+              <a href="https://webv3.theo.co.th/">
+                <img
+                  src="https://webv3.theo.co.th/wp-content/uploads/2022/05/Logo_New-1.jpg"
+                  alt=""
+                  //width={45}
+                  className="p-1 h-20 xs:h-10"
+                />
+              </a>
               <div className="hidden xs:block xs:self-end">
-                <div className="text-xs">บริษัท ธีโอเอ็นจิเนียริ่งจำกัด </div>
-                <div className="text-xs">THEO Engineering Co, Ltd.</div>
+                <a href="https://webv3.theo.co.th/">
+                  <div className="text-xs">บริษัท ธีโอเอ็นจิเนียริ่งจำกัด </div>
+                </a>
+                <a href="https://webv3.theo.co.th/">
+                  <div className="text-xs">THEO Engineering Co, Ltd.</div>
+                </a>
               </div>
             </div>
           </div>

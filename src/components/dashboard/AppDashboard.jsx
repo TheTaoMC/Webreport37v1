@@ -12,6 +12,7 @@ import Area from "./Area";
 //import moment from "moment";
 import moment from "moment/min/moment-with-locales";
 import Pure from "./Pure";
+import Footer from "../footer/Footer";
 //import { data } from "../data/data.jsx";
 
 function AppDashboard() {
@@ -89,6 +90,10 @@ function AppDashboard() {
             <Barr />
           </div>
         </Card>
+      </div>
+
+      <div className="m-auto w-[95%]">
+        <Footer />
       </div>
     </>
   );

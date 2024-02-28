@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 //import Cookies from "js-cookie";
 import { useStore } from "../../zustand/Store";
+import Footer from "../footer/Footer";
 
 function AppLogin() {
   const { zuLogin, zuCheckUser, zuSetFetch, zuSetTitle } = useStore();
@@ -124,6 +125,9 @@ function AppLogin() {
             />
           </div>
         </div>
+      </div>
+      <div className="m-auto w-[95%]">
+        <Footer />
       </div>
     </div>
   );
