@@ -95,7 +95,7 @@ const router = createBrowserRouter(
   ],
   {
     //basename: "/tww37_pepsii",
-    //basename: "/tww37_demo",
+    basename: "/tww37_demo",
   }
 );
 function App() {
