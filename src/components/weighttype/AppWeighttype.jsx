@@ -10,6 +10,7 @@ import { useStore } from "../../zustand/Store";
 
 function AppWeighttype() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,

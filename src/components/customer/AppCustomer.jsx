@@ -7,12 +7,12 @@ import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
 function AppCustomer() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,
     zu_ToggleEdit,
     zu_Title_Form_AddEdit,
-    zu_Api_Key,
   } = useStore();
 
   const {

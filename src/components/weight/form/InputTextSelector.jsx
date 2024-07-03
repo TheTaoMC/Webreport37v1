@@ -4,6 +4,7 @@ import { useStore } from "../../../zustand/Store";
 
 function InputTextSelector({ title, value1, field, zu }) {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,

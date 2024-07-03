@@ -181,7 +181,7 @@ function AppSearch({ onSearchFiltersChange }) {
         {
           method: "GET",
           headers: {
-            "API-KEY": "857F7237C03246028748D51C97D4BADE",
+            "API-KEY": zu_Api_Key,
           },
         },
         setDataCustomers
@@ -484,7 +484,7 @@ function AppSearch({ onSearchFiltersChange }) {
 
   const handleSearch = () => {
     //onSearchFiltersChange(filters2);
-    zuSetTitleFromAddEdit('search')
+    zuSetTitleFromAddEdit("search");
     zuSetSearchFilters(filters2);
     zuToggleSearch();
   };

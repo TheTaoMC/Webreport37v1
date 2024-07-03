@@ -6,8 +6,8 @@ import moment from "moment/moment";
 //import config from '../assets/config'
 
 export const useStore = create((set, get) => ({
-  zu_Api_Key: "857F7237C03246028748D51C97D4BADE",
-  zu_Url_Base: "https://theothai.com/tww37_webreport/API/api/",
+  zu_Api_Key: "3224447069454886babb1c10ffc0f8be",
+  zu_Url_Base: "https://theothai.com/tww37_samui_waste/API/api/",
   zu_Basename: "./TTW37",
   //zu_Url_Base: "http://192.168.1.208/tww37_webreport/API/api/",
   zu_ToggleResetState: false,
@@ -199,49 +199,49 @@ export const useStore = create((set, get) => ({
         get().zu_Url_Base + "TranType/read.php",
         {
           method: "GET",
-          headers: { "API-KEY": "857F7237C03246028748D51C97D4BADE" },
+          headers: { "API-KEY": get().zu_Api_Key },
         }
       );
       const responseCompanys = await fetch(
         get().zu_Url_Base + "Company/read.php",
         {
           method: "GET",
-          headers: { "API-KEY": "857F7237C03246028748D51C97D4BADE" },
+          headers: { "API-KEY": get().zu_Api_Key },
         }
       );
       const responseCustomers = await fetch(
         get().zu_Url_Base + "Customer/read.php",
         {
           method: "GET",
-          headers: { "API-KEY": "857F7237C03246028748D51C97D4BADE" },
+          headers: { "API-KEY": get().zu_Api_Key },
         }
       );
       const responseProducts = await fetch(
         get().zu_Url_Base + "Product/read.php",
         {
           method: "GET",
-          headers: { "API-KEY": "857F7237C03246028748D51C97D4BADE" },
+          headers: { "API-KEY": get().zu_Api_Key },
         }
       );
       const responsePackings = await fetch(
         get().zu_Url_Base + "Packing/read.php",
         {
           method: "GET",
-          headers: { "API-KEY": "857F7237C03246028748D51C97D4BADE" },
+          headers: { "API-KEY": get().zu_Api_Key },
         }
       );
       const responseTrdUnts = await fetch(
         get().zu_Url_Base + "TrdUnt/read.php",
         {
           method: "GET",
-          headers: { "API-KEY": "857F7237C03246028748D51C97D4BADE" },
+          headers: { "API-KEY": get().zu_Api_Key },
         }
       );
       const responseMoistTHs = await fetch(
         get().zu_Url_Base + "MoistTH/read.php",
         {
           method: "GET",
-          headers: { "API-KEY": "857F7237C03246028748D51C97D4BADE" },
+          headers: { "API-KEY": get().zu_Api_Key },
         }
       );
 

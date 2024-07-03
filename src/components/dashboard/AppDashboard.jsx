@@ -17,6 +17,7 @@ import Footer from "../footer/Footer";
 
 function AppDashboard() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_DataDashboard,
     zu_SelectedList,
@@ -54,7 +55,7 @@ function AppDashboard() {
     const optionread = {
       method: "GET",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
     };
     zuSetFetch(urlread, optionread);
@@ -92,7 +93,7 @@ function AppDashboard() {
         </Card>
       </div>
 
-{/*       <div className="m-auto w-[95%]">
+      {/*       <div className="m-auto w-[95%]">
         <Footer />
       </div> */}
     </>

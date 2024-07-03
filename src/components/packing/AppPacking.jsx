@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { InputNumber } from "primereact/inputnumber";
 function AppPacking() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,
@@ -159,7 +160,7 @@ function AppPacking() {
     const optionread = {
       method: "GET",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
     };
     zuSetFromAddEdit(addedit);
@@ -177,7 +178,7 @@ function AppPacking() {
       const optionadd = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(packingData),
       };
@@ -192,7 +193,7 @@ function AppPacking() {
       const optionedit = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(packingData),
       };
@@ -212,7 +213,7 @@ function AppPacking() {
     const optiondel = {
       method: "POST",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
       body: JSON.stringify({
         PackingCode: packingData.PackingCode,

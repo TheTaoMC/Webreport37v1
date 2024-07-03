@@ -11,6 +11,7 @@ import { Dropdown } from "primereact/dropdown";
 
 function AppWeight() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,

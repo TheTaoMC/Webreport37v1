@@ -15,6 +15,7 @@ import debounce from "lodash/debounce";
 
 function AppWeight() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,

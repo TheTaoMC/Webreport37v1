@@ -13,7 +13,8 @@ import Footer from "../footer/Footer";
 import { Sugar } from "react-preloaders";
 
 function AppLogin() {
-  const { zuLogin, zuCheckUser, zuSetFetch, zuSetTitle } = useStore();
+  const { zuLogin, zuCheckUser, zuSetFetch, zuSetTitle, zu_Api_Key } =
+    useStore();
 
   const [time, setTime] = useState(false);
 
@@ -39,7 +40,7 @@ function AppLogin() {
     const option = {
       method: "POST",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
       body: JSON.stringify(formData),
     };

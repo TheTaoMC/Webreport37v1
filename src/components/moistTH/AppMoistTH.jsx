@@ -7,6 +7,7 @@ import { Checkbox } from "primereact/checkbox";
 import { useNavigate } from "react-router-dom";
 function AppMoistTH() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,
@@ -121,7 +122,7 @@ function AppMoistTH() {
     const optionread = {
       method: "GET",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
     };
     zuSetFromAddEdit(addedit);
@@ -139,7 +140,7 @@ function AppMoistTH() {
       const optionadd = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(moistTHData),
       };
@@ -154,7 +155,7 @@ function AppMoistTH() {
       const optionedit = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(moistTHData),
       };
@@ -174,7 +175,7 @@ function AppMoistTH() {
     const optiondel = {
       method: "POST",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
       body: JSON.stringify({
         TableCode: moistTHData.TableCode,

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "../../zustand/Store";
 function AppWeightreport() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,

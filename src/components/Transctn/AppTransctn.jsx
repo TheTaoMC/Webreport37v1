@@ -11,6 +11,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 function AppTransctn() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,
@@ -607,7 +608,7 @@ function AppTransctn() {
   const option = {
     method: "POST",
     headers: {
-      "API-KEY": "857F7237C03246028748D51C97D4BADE",
+      "API-KEY": zu_Api_Key,
     },
     body: JSON.stringify({
       WeightScaleIDInFilter: zu_SearchFilters[0].Filter,
@@ -1220,6 +1221,9 @@ function AppTransctn() {
     zuSetColumns(columns);
     zuSetTitle("ข้อมูลชั่งน้ำหนัก");
     zuFetch();
+    console.log("Load Data 1");
+    console.log(zu_Data);
+    console.log(urlread, optionread);
   }, []);
 
   //search
@@ -1232,6 +1236,7 @@ function AppTransctn() {
       zuSetFetch(urlread, optionread);
       zuFetch();
       console.log("Load Data 2");
+      console.log(zu_Data);
     }
   }, [zu_ToggleSearch]);
 
@@ -1243,7 +1248,7 @@ function AppTransctn() {
       const optionadd = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(transctnData),
       };
@@ -1259,7 +1264,7 @@ function AppTransctn() {
       const optionedit = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(transctnData),
       };
@@ -1279,7 +1284,7 @@ function AppTransctn() {
     const optiondel = {
       method: "POST",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
       body: JSON.stringify({
         TransactionKey: transctnData.TransactionKey,

@@ -10,6 +10,7 @@ import { useStore } from "../../zustand/Store";
 
 function AppTransporter() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,
@@ -195,7 +196,7 @@ function AppTransporter() {
     const optionread = {
       method: "GET",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
     };
     zuSetFetch(urlread, optionread);

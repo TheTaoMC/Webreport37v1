@@ -9,6 +9,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 function AppProduct() {
   const {
+    zu_Api_Key,
     zu_Data,
     zu_SelectedList,
     zu_ToggleResetState,
@@ -292,7 +293,7 @@ function AppProduct() {
     const optionread = {
       method: "GET",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
     };
     zuSetFromAddEdit(addedit);
@@ -310,7 +311,7 @@ function AppProduct() {
       const optionadd = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(productData),
       };
@@ -325,7 +326,7 @@ function AppProduct() {
       const optionedit = {
         method: "POST",
         headers: {
-          "API-KEY": "857F7237C03246028748D51C97D4BADE",
+          "API-KEY": zu_Api_Key,
         },
         body: JSON.stringify(productData),
       };
@@ -345,7 +346,7 @@ function AppProduct() {
     const optiondel = {
       method: "POST",
       headers: {
-        "API-KEY": "857F7237C03246028748D51C97D4BADE",
+        "API-KEY": zu_Api_Key,
       },
       body: JSON.stringify({
         ProductCode: productData.ProductCode,
