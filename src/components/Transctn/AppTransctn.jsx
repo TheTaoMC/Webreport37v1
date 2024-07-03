@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useStore } from "../../zustand/Store";
 import AppNavber from "../navbar/AppNavber";
 import AppTable from "../table/AppTable";
@@ -13,6 +13,7 @@ function AppTransctn() {
   const {
     zu_Api_Key,
     zu_Data,
+    zu_Title,
     zu_SelectedList,
     zu_ToggleResetState,
     zu_ToggleEdit,
@@ -41,8 +42,141 @@ function AppTransctn() {
     zuSetTitle,
     zuCheckUser,
     zuFetchMaster,
+    zuSetSearchFilters,
   } = useStore();
   const navigate = useNavigate();
+
+  const intiiiii = [
+    {
+      Title: "เครื่องชั่งขาเข้า",
+      Filter: false,
+      Typeinput: "text",
+      From: "",
+      To: "",
+      disabled: true,
+    },
+    {
+      Title: "เครื่องชั่งขาออก",
+      Filter: false,
+      Typeinput: "text",
+      From: "",
+      To: "",
+      disabled: true,
+    },
+    {
+      Title: "วันที่ชั่งเข้า",
+      Filter: false,
+      Typeinput: "calendar",
+      From: moment(new Date()).startOf("day"),
+      To: moment(new Date()).startOf("day"),
+      disabled: true,
+    },
+    {
+      Title: "วันที่ชั่ง",
+      Filter: true,
+      Typeinput: "calendar",
+      From: moment(new Date()).startOf("day"),
+      To: moment(new Date()).startOf("day"),
+    },
+    {
+      Title: "เลขที่เข้า",
+      Filter: false,
+      Typeinput: "text",
+      From: "",
+      To: "",
+    },
+    {
+      Title: "เลขที่ออก",
+      Filter: false,
+      Typeinput: "text",
+      From: "",
+      To: "",
+    },
+    {
+      Title: "ทะเบียนรถ",
+      Filter: false,
+      Typeinput: "text",
+      From: "80-0004",
+      To: "80-0004",
+    },
+    {
+      Tablename: "tranType",
+      Title: "ประเภทชั่ง",
+      Filter: false,
+      Typeinput: "dropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Tablename: "company",
+      Title: "บริษัท",
+      Filter: false,
+      Typeinput: "dropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Tablename: "customer",
+      Title: "คู่ค้า",
+      Filter: false,
+      Typeinput: "dropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Tablename: "product",
+      Title: "สินค้า",
+      Filter: false,
+      Typeinput: "dropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Tablename: "packing",
+      Title: "บรรจุภัณฑ์",
+      Filter: false,
+      Typeinput: "dropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Tablename: "trdUnt",
+      Title: "หน่วย",
+      Filter: false,
+      Typeinput: "dropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Tablename: "moistTH",
+      Title: "ตารางความชึ้น",
+      Filter: false,
+      Typeinput: "dropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Title: "สถานะการยกเลิก",
+      Filter: false,
+      Typeinput: "Singledropdown",
+      From: "",
+      To: "",
+    },
+    {
+      Title: "แสดงรถชั่งเสร็จ",
+      Filter: false,
+      Typeinput: "",
+      From: "",
+      To: "",
+    },
+    {
+      Title: "แสดงงรถค้างชั่ง",
+      Filter: false,
+      Typeinput: "",
+      From: "",
+      To: "",
+    },
+  ];
 
   const initialData = {
     TransactionKey: null,
@@ -1212,19 +1346,23 @@ function AppTransctn() {
   }, [memoizedZuFetchMaster]);
 
   useEffect(() => {
-    zuCheckUser(() => navigate("/"));
-    zuResetData();
-    const urlread = "/weightreport/read.php";
-    const optionread = option;
-    zuSetFromAddEdit(addedit);
-    zuSetFetch(urlread, optionread);
-    zuSetColumns(columns);
-    zuSetTitle("ข้อมูลชั่งน้ำหนัก");
-    zuFetch();
-    console.log("Load Data 1");
-    console.log(zu_Data);
-    console.log(urlread, optionread);
-  }, []);
+    const setupAndFetch = async () => {
+      zuCheckUser(() => navigate("/"));
+      zuResetData();
+      const urlread = "/weightreport/read.php";
+      const optionread = option;
+      zuSetFromAddEdit(addedit);
+      zuSetFetch(urlread, optionread);
+      zuSetColumns(columns);
+      zuSetTitle("ข้อมูลชั่งน้ำหนัก");
+      await zuSetSearchFilters(intiiiii);
+      await zuFetch();
+      console.log("Load Data 1");
+      console.log(zu_SearchFilters);
+      console.log("zu_Title ", zu_Title);
+    };
+    setupAndFetch();
+  }, [zu_Title]);
 
   //search
   useEffect(() => {
@@ -1236,7 +1374,8 @@ function AppTransctn() {
       zuSetFetch(urlread, optionread);
       zuFetch();
       console.log("Load Data 2");
-      console.log(zu_Data);
+      //console.log(zu_Data);
+      console.log(optionread);
     }
   }, [zu_ToggleSearch]);
 
