@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
+import ConfigLoader from "./components/ConfigLoader";
 
 import { PrimeReactProvider } from "primereact/api";
 //import "primereact/resources/themes/tailwind-light/theme.css"
@@ -15,9 +16,11 @@ import "primereact/resources/primereact.css"; // core css
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     {/*     <React.StrictMode> */}
-    <PrimeReactProvider>
-      <App />
-    </PrimeReactProvider>
+    <ConfigLoader>
+      <PrimeReactProvider>
+        <App />
+      </PrimeReactProvider>
+    </ConfigLoader>
     {/*     </React.StrictMode> */}
   </>
 );

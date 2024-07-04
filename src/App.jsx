@@ -1,5 +1,5 @@
 import "./App.css";
-
+import { useStore } from "./zustand/Store";
 import {
   BrowserRouter,
   createBrowserRouter,
@@ -24,81 +24,96 @@ import AppPacking from "./components/packing/AppPacking.jsx";
 import AppTranType from "./components/tranType/AppTranType.jsx";
 import AppTransctn from "./components/Transctn/AppTransctn.jsx";
 import Footer from "./components/footer/Footer";
+import { useEffect } from "react";
 
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      index: true,
-      element: <AppLogin />,
-    },
-    {
-      path: "main",
-      element: <AppMain />,
-    },
-    {
-      path: "weightreport",
-      element: <AppWeightreport />,
-    },
-    {
-      path: "product",
-      element: <AppProduct />,
-    },
-    {
-      path: "customer",
-      element: <AppCustomer />,
-    },
-    {
-      path: "weighttype",
-      element: <AppWeighttype />,
-    },
-    {
-      path: "driver",
-      element: <AppDriver />,
-    },
-    {
-      path: "transporter",
-      element: <AppTransporter />,
-    },
-    {
-      path: "user",
-      element: <AppUser />,
-    },
-    {
-      path: "company",
-      element: <AppCompany />,
-    },
-    {
-      path: "moistTH",
-      element: <AppMoistTH />,
-    },
-    {
-      path: "trdUnt",
-      element: <AppTrdUnt />,
-    },
-    {
-      path: "packing",
-      element: <AppPacking />,
-    },
-    {
-      path: "tranType",
-      element: <AppTranType />,
-    },
-    {
-      path: "transctn",
-      element: <AppTransctn />,
-    },
-    {
-      path: "login",
-      element: <AppLogin />,
-    },
-  ],
-  {
-    //basename: "/tww37_pepsii",
-    //basename: "/tww37_samui_waste",
-  }
-);
 function App() {
+  const { zu_Basename } = useStore();
+  const initConfig = useStore((state) => state.initConfig);
+
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        index: true,
+        element: <AppLogin />,
+      },
+      {
+        path: "main",
+        element: <AppMain />,
+      },
+      {
+        path: "weightreport",
+        element: <AppWeightreport />,
+      },
+      {
+        path: "product",
+        element: <AppProduct />,
+      },
+      {
+        path: "customer",
+        element: <AppCustomer />,
+      },
+      {
+        path: "weighttype",
+        element: <AppWeighttype />,
+      },
+      {
+        path: "driver",
+        element: <AppDriver />,
+      },
+      {
+        path: "transporter",
+        element: <AppTransporter />,
+      },
+      {
+        path: "user",
+        element: <AppUser />,
+      },
+      {
+        path: "company",
+        element: <AppCompany />,
+      },
+      {
+        path: "moistTH",
+        element: <AppMoistTH />,
+      },
+      {
+        path: "trdUnt",
+        element: <AppTrdUnt />,
+      },
+      {
+        path: "packing",
+        element: <AppPacking />,
+      },
+      {
+        path: "tranType",
+        element: <AppTranType />,
+      },
+      {
+        path: "transctn",
+        element: <AppTransctn />,
+      },
+      {
+        path: "login",
+        element: <AppLogin />,
+      },
+    ],
+    {
+      //basename: "/tww37_pepsii",
+      //basename: "/tww37_samui_waste",
+      //basename: zu_Basename,
+    }
+  );
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      // รอให้ script ถูกโหลดเสร็จ
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      initConfig();
+    };
+    loadConfig();
+  }, [initConfig]);
+
   return (
     <>
       <Footer>

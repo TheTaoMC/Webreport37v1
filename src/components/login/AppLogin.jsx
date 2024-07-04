@@ -83,7 +83,7 @@ function AppLogin() {
   useEffect(() => {
     setTimeout(() => {
       setTime(true);
-    }, 5000); // 3000 milliseconds = 3 seconds
+    }, 2000); // 3000 milliseconds = 3 seconds
   }, []);
 
   return (

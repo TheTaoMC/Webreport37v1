@@ -3,13 +3,16 @@ import { devtools, persist } from "zustand/middleware";
 import Cookies from "js-cookie";
 import moment from "moment/moment";
 
-//import config from '../assets/config'
 
 export const useStore = create((set, get) => ({
-  zu_Api_Key: "3224447069454886babb1c10ffc0f8be",
-  zu_Url_Base: "https://theothai.com/tww37_samui_waste/API/api/",
-  zu_Basename: "./TTW37",
-  //zu_Url_Base: "http://192.168.1.208/tww37_webreport/API/api/",
+  zu_Api_Key: "",
+  zu_Url_Base: "",
+  zu_Basename: "",
+  initConfig: () => set(state => ({
+    zu_Api_Key: window.runtimeConfig?.zu_Api_Key || "123",
+    zu_Url_Base: window.runtimeConfig?.zu_Url_Base || "https://123/API/api/",
+    zu_Basename: window.runtimeConfig?.zu_Basename || "123",
+  })),
   zu_ToggleResetState: false,
   zu_ToggleEdit: false,
   zu_ToggleVisible: false,
